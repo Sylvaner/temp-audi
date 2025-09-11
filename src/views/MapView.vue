@@ -203,6 +203,9 @@ onMounted(() => {
 onUnmounted(() => {
   // Nettoyer l'événement lors du démontage
   document.removeEventListener('keydown', handleKeyDown)
+  
+  // Note: On ne stopWatching() pas ici pour que la géolocalisation 
+  // continue en arrière-plan même si on quitte la vue carte
 })
 </script>
 
@@ -230,7 +233,7 @@ onUnmounted(() => {
   height: calc(100vh - 3.25rem); /* Hauteur - navbar */
 }
 
-/* Ajustement pour mobile - plus de bottom nav */
+/* Ajustement pour mobile */
 @media screen and (max-width: 768px) {
   :deep(.leaflet-map) {
     height: calc(100vh - 3.25rem); /* Hauteur - navbar seulement */

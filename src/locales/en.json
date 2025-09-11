@@ -42,7 +42,7 @@
     "about": "About"
   },
   "home": {
-    "title": "Enter the King's Kitchen Garden and<br />discover 350 years of history,<br />experimentation and flavors.",
+    "title": "Audio Guide of the King's Kitchen Garden<br />Discover 350 years of history<br />with audio commentary",
     "visitButton": "Visit",
     "aboutButton": "About",
     "freeExploration": "Free exploration",
@@ -75,6 +75,33 @@
       "exploreButton": "Explore with audio guide",
       "officialSiteButton": "Official website"
     }
+  },
+  "mapIntro": {
+    "title": "Discover your audio guide",
+    "subtitle": "Follow these 3 simple steps to make the most of your visit",
+    "start": "Start",
+    "end": "Ready!",
+    "step1": {
+      "title": "1. Locate yourself on the map",
+      "description": "Allow geolocation to see your real-time position and navigate through the King's Kitchen Garden.",
+      "tip": "Your position will appear with a blue icon on the map"
+    },
+    "step2": {
+      "title": "2. Explore points of interest",
+      "description": "Discover the remarkable places in the garden by tapping on the colored markers.",
+      "tip": "Each place has its own color and unique story"
+    },
+    "step3": {
+      "title": "3. Listen to information",
+      "description": "Press the play button to listen to audio commentary for each place you visit.",
+      "tip": "You can listen at your own pace and repeat as much as you want"
+    },
+    "startButton": "Start the visit",
+    "skipButton": "Skip introduction",
+    "dontShowAgain": "Don't show this introduction again",
+    "nextButton": "Next",
+    "previousButton": "Previous",
+    "visitButton": "Visit"
   },
   "settings": {
     "language": "Language",

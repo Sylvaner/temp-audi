@@ -11,12 +11,12 @@
           <h2 class="hero-subtitle" v-html="$t('home.title')"></h2>
 
           <div class="hero-buttons">
-            <router-link to="/map" class="hero-button primary">
+            <a href="#" class="hero-button primary" @click.prevent="navigateToMap">
               <span class="button-icon">
                 <i class="fas fa-map"></i>
               </span>
               <span class="button-text">{{ $t('home.visitButton') }}</span>
-            </router-link>
+            </a>
 
             <router-link to="/about" class="hero-button secondary">
               <span class="button-icon">
@@ -47,7 +47,22 @@
 </template>
 
 <script setup lang="ts">
+import { useRouter } from 'vue-router'
 import { useConfig } from '@/composables/useConfig'
+
+const router = useRouter()
+
+function navigateToMap() {
+  // Vérifier si l'introduction a déjà été vue
+  localStorage.setItem('mapIntroSeen', 'false')
+  const introSeen = localStorage.getItem('mapIntroSeen')
+  console.log(introSeen)
+  if (introSeen !== 'true') {
+    router.push('/map-intro')
+  } else {
+    router.push('/map')
+  }
+}
 import LanguageDebug from '@/components/ui/LanguageDebug.vue'
 import LanguageTester from '@/components/ui/LanguageTester.vue'
 
@@ -150,27 +165,27 @@ const { siteName } = useConfig()
 }
 
 .hero-button.primary {
-  background-color: rgba(139, 69, 19, 0.9);
-  color: white;
+  background-color: color-mix(in srgb, var(--color-accent) 90%, transparent);
+  color: var(--color-white);
 }
 
 .hero-button.secondary {
-  background-color: rgba(255, 255, 255, 0.9);
+  background-color: color-mix(in srgb, var(--color-surface) 90%, transparent);
   color: var(--color-primary);
 }
 
 .hero-button.primary:hover {
-  background-color: rgba(114, 47, 55, 0.9);
-  color: white;
+  background-color: color-mix(in srgb, var(--color-deep) 90%, transparent);
+  color: var(--color-white);
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+  box-shadow: var(--shadow-large);
 }
 
 .hero-button.secondary:hover {
-  background-color: rgba(255, 255, 255, 1);
+  background-color: var(--color-surface);
   color: var(--color-accent);
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+  box-shadow: var(--shadow-large);
 }
 
 .button-icon {
@@ -179,16 +194,16 @@ const { siteName } = useConfig()
 
 /* Section d'information en bas */
 .info-section {
-  background-color: var(--color-primary);
+  background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
   padding: 4rem 2rem;
-  color: white;
+  color: var(--color-white);
 }
 
 .info-icon-large {
   width: 5rem;
   height: 5rem;
   border-radius: 50%;
-  background-color: rgba(255, 255, 255, 0.2);
+  background-color: color-mix(in srgb, var(--color-white) 20%, transparent);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -200,12 +215,12 @@ const { siteName } = useConfig()
   font-size: 2.5rem;
   font-weight: bold;
   margin-bottom: 1rem;
-  color: white;
+  color: var(--color-white);
 }
 
 .info-description-large {
   font-size: 1.25rem;
-  color: white;
+  color: var(--color-white);
   opacity: 0.9;
   max-width: 600px;
   margin: 0 auto;

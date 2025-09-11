@@ -42,7 +42,7 @@
     "about": "À propos"
   },
   "home": {
-    "title": "Entrez dans le Potager du Roi et<br />découvrez 350 ans d'histoire,<br />d'expérimentations et de saveurs.",
+    "title": "Audio-guide du Potager du Roi<br />Découvrez 350 ans d'histoire<br />avec des commentaires audio",
     "visitButton": "Visiter",
     "aboutButton": "À propos",
     "freeExploration": "Exploration libre",
@@ -75,6 +75,33 @@
       "exploreButton": "Explorer avec l'audio-guide",
       "officialSiteButton": "Site officiel"
     }
+  },
+  "mapIntro": {
+    "title": "Découvrez votre audio-guide",
+    "subtitle": "Suivez ces 3 étapes simples pour profiter pleinement de votre visite",
+    "start": "Début",
+    "end": "Prêt !",
+    "step1": {
+      "title": "1. Localisez-vous sur la carte",
+      "description": "Autorisez la géolocalisation pour voir votre position en temps réel et vous orienter dans le Potager du Roi.",
+      "tip": "Votre position apparaîtra avec une icône bleue sur la carte"
+    },
+    "step2": {
+      "title": "2. Explorez les lieux d'intérêt",
+      "description": "Découvrez les différents points remarquables du jardin en touchant les marqueurs colorés.",
+      "tip": "Chaque lieu a sa propre couleur et son histoire unique"
+    },
+    "step3": {
+      "title": "3. Écoutez les informations",
+      "description": "Appuyez sur le bouton lecture pour écouter les commentaires audio de chaque lieu que vous visitez.",
+      "tip": "Vous pouvez écouter à votre rythme et répéter autant que vous le souhaitez"
+    },
+    "startButton": "Commencer la visite",
+    "skipButton": "Passer l'introduction",
+    "dontShowAgain": "Ne plus afficher cette introduction",
+    "nextButton": "Suivant",
+    "previousButton": "Précédent",
+    "visitButton": "Visiter"
   },
   "settings": {
     "language": "Langue",

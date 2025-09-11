@@ -7,8 +7,8 @@
   --z-map-controls: 100;
 
   /* Navigation */
-  --z-navbar: 500;
-  --z-bottom-nav: 500;
+  --z-navbar: 1000;
+  --z-bottom-nav: 1000;
 
   /* Popups et overlays */
   --z-popups: 600;

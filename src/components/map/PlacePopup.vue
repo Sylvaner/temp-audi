@@ -151,7 +151,7 @@ function showDetails() {
   height: 44px;
   border-radius: 50%;
   border: none;
-  background: rgba(0, 0, 0, 0.7);
+  background: rgba(0, 0, 0, 0.2);
   color: var(--color-white);
   display: flex;
   align-items: center;

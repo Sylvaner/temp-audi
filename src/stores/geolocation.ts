@@ -158,10 +158,18 @@ export const useGeolocationStore = defineStore('geolocation', () => {
   }
 
   function startWatching() {
-    if (!hasPermission.value || isWatching.value) return
+    if ((!hasPermission.value && permissionStatus.value !== 'granted') || isWatching.value) return
+
+    if (!navigator.geolocation) {
+      lastError.value = 'Géolocalisation non disponible sur ce navigateur'
+      return
+    }
+
+    console.log('Démarrage du suivi de géolocalisation...')
 
     watchId.value = navigator.geolocation.watchPosition(
       (position) => {
+        console.log('Nouvelle position reçue:', position.coords)
         userPosition.value = {
           latitude: position.coords.latitude,
           longitude: position.coords.longitude,
@@ -170,6 +178,12 @@ export const useGeolocationStore = defineStore('geolocation', () => {
       (error) => {
         console.error('Erreur de suivi de position:', error)
         lastError.value = 'Erreur lors du suivi de position'
+        
+        // Si l'erreur est due aux permissions, arrêter le suivi
+        if (error.code === error.PERMISSION_DENIED) {
+          stopWatching()
+          permissionStatus.value = 'denied'
+        }
       },
       {
         enableHighAccuracy: true,
@@ -179,6 +193,7 @@ export const useGeolocationStore = defineStore('geolocation', () => {
     )
 
     isWatching.value = true
+    console.log('Suivi de géolocalisation démarré')
   }
 
   function stopWatching() {
@@ -214,6 +229,10 @@ export const useGeolocationStore = defineStore('geolocation', () => {
               latitude: position.coords.latitude,
               longitude: position.coords.longitude,
             }
+            // Démarrer le suivi automatiquement si on a la permission
+            if (!isWatching.value) {
+              startWatching()
+            }
           },
           (error) => {
             // Si erreur, remettre le status à unknown pour redemander
@@ -222,6 +241,11 @@ export const useGeolocationStore = defineStore('geolocation', () => {
               localStorage.removeItem('geolocation-permission-status')
             }
           },
+          {
+            enableHighAccuracy: true,
+            timeout: 10000,
+            maximumAge: 60000,
+          }
         )
       }
     }

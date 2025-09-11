@@ -25,12 +25,12 @@
 
     <div class="navbar-menu" :class="{ 'is-active': isMobileMenuOpen }">
       <div class="navbar-start">
-        <router-link to="/map" class="navbar-item" @click="closeMobileMenu">
+        <a href="#" class="navbar-item" @click.prevent="navigateToMap">
           <span class="icon">
             <i class="fas fa-map"></i>
           </span>
           <span>{{ $t('navigation.map') }}</span>
-        </router-link>
+        </a>
 
         <router-link to="/about" class="navbar-item" @click="closeMobileMenu">
           <span class="icon">
@@ -52,11 +52,13 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 import LanguageSelector from '@/components/ui/LanguageSelector.vue'
 import { useConfig } from '@/composables/useConfig'
 
 // Configuration
 const { siteName } = useConfig()
+const router = useRouter()
 
 // État du menu mobile
 const isMobileMenuOpen = ref(false)
@@ -67,6 +69,19 @@ function toggleMobileMenu() {
 
 function closeMobileMenu() {
   isMobileMenuOpen.value = false
+}
+
+function navigateToMap() {
+  closeMobileMenu()
+
+  // Vérifier si l'introduction a déjà été vue
+  const introSeen = localStorage.getItem('mapIntroSeen')
+
+  if (!introSeen) {
+    router.push('/map-intro')
+  } else {
+    router.push('/map')
+  }
 }
 </script>
 

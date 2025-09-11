@@ -294,6 +294,15 @@ defineExpose({
   z-index: var(--z-popups) !important;
 }
 
+/* S'assurer que tous les éléments Leaflet restent sous la navbar */
+:deep(.leaflet-pane),
+:deep(.leaflet-control),
+:deep(.leaflet-marker-pane),
+:deep(.leaflet-tile-pane),
+:deep(.leaflet-overlay-pane) {
+  z-index: 400 !important;
+}
+
 /* Styles pour le marqueur de localisation utilisateur */
 :deep(.user-location-marker) {
   background: transparent !important;
