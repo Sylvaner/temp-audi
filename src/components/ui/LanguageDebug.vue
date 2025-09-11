@@ -12,10 +12,10 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useLanguageStore } from '@/stores/language'
-import { 
-  detectBrowserLanguage, 
-  getDefaultLanguage, 
-  getAppAvailableLanguages 
+import {
+  detectBrowserLanguage,
+  getDefaultLanguage,
+  getAppAvailableLanguages,
 } from '@/utils/language'
 
 interface Props {
@@ -23,7 +23,7 @@ interface Props {
 }
 
 withDefaults(defineProps<Props>(), {
-  showDebug: false
+  showDebug: false,
 })
 
 const languageStore = useLanguageStore()

@@ -15,7 +15,11 @@
       <!-- Zone de texte avec arrondi en haut -->
       <div class="place-text-area" @click="closePopup">
         <h1 class="place-title">{{ placeContent.title }}</h1>
-        <p class="place-description">{{ placeContent.text }}</p>
+        <div class="place-description">
+          <p v-for="(paragraph, index) in textParagraphs" :key="index">
+            {{ paragraph }}
+          </p>
+        </div>
       </div>
 
       <!-- Contrôles audio minimalistes -->
@@ -87,6 +91,15 @@ const audioStore = useAudioStore()
 const placeContent = computed(() => {
   const lang = languageStore.currentLanguage?.code || 'fr'
   return props.place.content[lang] || props.place.content['fr']
+})
+
+// Divise le texte en paragraphes basés sur les retours à la ligne
+const textParagraphs = computed(() => {
+  if (!placeContent.value?.text) return []
+  return placeContent.value.text
+    .split(/\n+/) // Divise sur un ou plusieurs \n
+    .map((p) => p.trim()) // Supprime les espaces en début/fin
+    .filter((p) => p.length > 0) // Supprime les paragraphes vides
 })
 
 // Audio computed depuis le store
@@ -216,6 +229,14 @@ function showDetails() {
   margin: 0 0 24px 0;
 }
 
+.place-description p {
+  margin: 0 0 1.2rem 0;
+}
+
+.place-description p:last-child {
+  margin-bottom: 0;
+}
+
 .place-read-more {
   background: none;
   border: none;
@@ -339,6 +360,10 @@ function showDetails() {
     font-size: 1.1rem;
   }
 
+  .place-description p {
+    margin: 0 0 1rem 0;
+  }
+
   .place-audio-controls {
     padding: 16px 24px;
     flex-shrink: 0;
@@ -370,6 +395,10 @@ function showDetails() {
 
   .place-description {
     font-size: 1rem;
+  }
+
+  .place-description p {
+    margin: 0 0 0.8rem 0;
   }
 
   .place-audio-controls {

@@ -35,10 +35,10 @@ export const useLanguageStore = defineStore('language', () => {
 
       // Sauvegarde en localStorage
       localStorage.setItem('preferred-language', languageCode)
-      
+
       // Mettre à jour l'i18n globalement
       if (globalI18n) {
-        globalI18n.global.locale = languageCode
+        globalI18n.global.locale.value = languageCode
       }
     }
   }
@@ -46,9 +46,9 @@ export const useLanguageStore = defineStore('language', () => {
   function initializeLanguage() {
     // Récupère la langue sauvegardée
     const savedLanguage = localStorage.getItem('preferred-language')
-    
+
     let targetLanguage: string
-    
+
     if (savedLanguage && isLanguageSupported(savedLanguage)) {
       // Utilise la langue sauvegardée si elle est valide
       targetLanguage = savedLanguage

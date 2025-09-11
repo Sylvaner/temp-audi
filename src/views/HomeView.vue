@@ -9,12 +9,22 @@
             {{ siteName }}
           </h1>
           <h2 class="hero-subtitle" v-html="$t('home.title')"></h2>
-          <router-link to="/map" class="hero-button">
-            <span class="button-icon">
-              <i class="fas fa-map"></i>
-            </span>
-            <span class="button-text">{{ $t('home.visitButton') }}</span>
-          </router-link>
+
+          <div class="hero-buttons">
+            <router-link to="/map" class="hero-button primary">
+              <span class="button-icon">
+                <i class="fas fa-map"></i>
+              </span>
+              <span class="button-text">{{ $t('home.visitButton') }}</span>
+            </router-link>
+
+            <router-link to="/about" class="hero-button secondary">
+              <span class="button-icon">
+                <i class="fas fa-info-circle"></i>
+              </span>
+              <span class="button-text">{{ $t('home.aboutButton') }}</span>
+            </router-link>
+          </div>
         </div>
       </div>
     </div>
@@ -27,7 +37,7 @@
         </div>
         <h3 class="info-title-large">{{ $t('home.freeExploration') }}</h3>
         <p class="info-description-large">{{ $t('home.freeExplorationDescription') }}</p>
-        
+
         <!-- Debug de langue (temporaire) -->
         <LanguageDebug :show-debug="true" />
         <LanguageTester />
@@ -117,12 +127,18 @@ const { siteName } = useConfig()
   margin-right: auto;
 }
 
+.hero-buttons {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 2rem;
+}
+
 .hero-button {
   display: inline-flex;
   align-items: center;
   gap: 1rem;
-  background-color: rgba(139, 69, 19, 0.9);
-  color: white;
   padding: 1rem 2.5rem;
   border-radius: 50px;
   text-decoration: none;
@@ -133,9 +149,26 @@ const { siteName } = useConfig()
   backdrop-filter: blur(10px);
 }
 
-.hero-button:hover {
+.hero-button.primary {
+  background-color: rgba(139, 69, 19, 0.9);
+  color: white;
+}
+
+.hero-button.secondary {
+  background-color: rgba(255, 255, 255, 0.9);
+  color: var(--color-primary);
+}
+
+.hero-button.primary:hover {
   background-color: rgba(114, 47, 55, 0.9);
   color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.hero-button.secondary:hover {
+  background-color: rgba(255, 255, 255, 1);
+  color: var(--color-accent);
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
 }
@@ -191,9 +224,17 @@ const { siteName } = useConfig()
     margin-bottom: 2rem;
   }
 
+  .hero-buttons {
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+
   .hero-button {
     padding: 0.8rem 2rem;
     font-size: 1.1rem;
+    width: 100%;
+    max-width: 280px;
   }
 
   .info-title-large {

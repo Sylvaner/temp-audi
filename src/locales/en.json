@@ -38,13 +38,43 @@
   },
   "navigation": {
     "home": "Home",
-    "map": "Map"
+    "map": "Map",
+    "about": "About"
   },
   "home": {
     "title": "Enter the King's Kitchen Garden and<br />discover 350 years of history,<br />experimentation and flavors.",
     "visitButton": "Visit",
+    "aboutButton": "About",
     "freeExploration": "Free exploration",
     "freeExplorationDescription": "Navigate the garden at your own pace"
+  },
+  "about": {
+    "title": "The King's Kitchen Garden",
+    "subtitle": "An exceptional heritage in the heart of Versailles",
+    "introduction": {
+      "title": "An exceptional garden",
+      "description1": "The King's Kitchen Garden of Versailles is a unique historical site, created between 1678 and 1683 by Jean-Baptiste de La Quintinie to supply the royal table of Louis XIV. This masterpiece of French garden art spans 9 hectares in the heart of Versailles.",
+      "description2": "With its 29 walled gardens and terraces, the King's Kitchen Garden represents the pinnacle of French horticultural art from the Grand Siècle. It bears witness to the genius of its creator who transformed marshy land into a productive garden of exceptional beauty.",
+      "imageAlt": "View of the Grand Basin of the King's Kitchen Garden"
+    },
+    "history": {
+      "title": "350 years of history",
+      "description1": "Commissioned by Louis XIV and designed by Jean-Baptiste de La Quintinie, the King's Kitchen Garden was intended to provide fruits and vegetables for the royal table. La Quintinie developed revolutionary techniques there to grow early produce and extend harvest seasons.",
+      "description2": "In the 19th century, Auguste Hardy founded the first National School of Horticulture there, transforming the place into a center of training and innovation. Today, this tradition continues with the National School of Landscape Architecture which continues to train tomorrow's landscape architects.",
+      "imageAlt": "The King's Gate, historic entrance to the Kitchen Garden"
+    },
+    "today": {
+      "title": "A living laboratory",
+      "description1": "Today, the King's Kitchen Garden remains a place of production, education and research. Students from the National School of Landscape Architecture learn traditional techniques while experimenting with tomorrow's sustainable practices.",
+      "description2": "Open to the public, it offers guided tours, educational workshops and cultural events. Its fruits and vegetables are sold on site, perpetuating the site's nourishing tradition while financing its conservation.",
+      "imageAlt": "Learning gardens of the King's Kitchen Garden"
+    },
+    "visit": {
+      "title": "Discover the King's Kitchen Garden",
+      "description": "Explore this exceptional heritage and dive into three centuries of French horticultural history",
+      "exploreButton": "Explore with audio guide",
+      "officialSiteButton": "Official website"
+    }
   },
   "settings": {
     "language": "Language",

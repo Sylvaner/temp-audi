@@ -1,11 +1,11 @@
 <template>
   <div class="language-tester">
     <h3>Test de détection de langue</h3>
-    
+
     <div class="test-section">
       <h4>Simulation de langues de navigateur</h4>
-      <button 
-        v-for="testCase in testCases" 
+      <button
+        v-for="testCase in testCases"
         :key="testCase.name"
         @click="simulateLanguage(testCase)"
         class="test-button"
@@ -19,12 +19,8 @@
       <button @click="resetToDefault" class="test-button">
         Réinitialiser à la langue par défaut
       </button>
-      <button @click="detectAndSet" class="test-button">
-        Re-détecter la langue du navigateur
-      </button>
-      <button @click="clearStorage" class="test-button">
-        Vider le localStorage
-      </button>
+      <button @click="detectAndSet" class="test-button">Re-détecter la langue du navigateur</button>
+      <button @click="clearStorage" class="test-button">Vider le localStorage</button>
     </div>
 
     <div class="test-results">
@@ -54,17 +50,17 @@ const testCases = [
   { name: 'Japonais + Français', languages: ['ja', 'fr'] },
 ]
 
-function simulateLanguage(testCase: typeof testCases[0]) {
+function simulateLanguage(testCase: (typeof testCases)[0]) {
   // Simulation de navigator.languages (pour le test uniquement)
   Object.defineProperty(navigator, 'languages', {
     value: testCase.languages,
-    configurable: true
+    configurable: true,
   })
-  
+
   // Re-détection
   const detected = detectBrowserLanguage()
   languageStore.setLanguage(detected)
-  
+
   console.log(`Test: ${testCase.name}`)
   console.log(`Langues simulées: ${testCase.languages.join(', ')}`)
   console.log(`Langue détectée: ${detected}`)
@@ -136,7 +132,8 @@ setInterval(updateStoredLanguage, 1000)
   margin-top: 1rem;
 }
 
-h3, h4 {
+h3,
+h4 {
   margin: 0 0 0.5rem 0;
   color: #333;
 }

@@ -38,13 +38,43 @@
   },
   "navigation": {
     "home": "Accueil",
-    "map": "Carte"
+    "map": "Carte",
+    "about": "À propos"
   },
   "home": {
     "title": "Entrez dans le Potager du Roi et<br />découvrez 350 ans d'histoire,<br />d'expérimentations et de saveurs.",
     "visitButton": "Visiter",
+    "aboutButton": "À propos",
     "freeExploration": "Exploration libre",
     "freeExplorationDescription": "Naviguez dans le potager à votre rythme"
+  },
+  "about": {
+    "title": "Le Potager du Roi",
+    "subtitle": "Un patrimoine exceptionnel au cœur de Versailles",
+    "introduction": {
+      "title": "Un jardin d'exception",
+      "description1": "Le Potager du Roi de Versailles est un site historique unique, créé entre 1678 et 1683 par Jean-Baptiste de La Quintinie pour alimenter la table royale de Louis XIV. Ce chef-d'œuvre de l'art des jardins français s'étend sur 9 hectares au cœur de la ville de Versailles.",
+      "description2": "Avec ses 29 jardins clos et ses terrasses, le Potager du Roi représente l'aboutissement de l'art horticole français du Grand Siècle. Il témoigne du génie de son créateur qui a su transformer un terrain marécageux en un jardin productif d'une beauté exceptionnelle.",
+      "imageAlt": "Vue du Grand Bassin du Potager du Roi"
+    },
+    "history": {
+      "title": "350 ans d'histoire",
+      "description1": "Voulu par Louis XIV et conçu par Jean-Baptiste de La Quintinie, le Potager du Roi était destiné à fournir fruits et légumes à la table royale. La Quintinie y développa des techniques révolutionnaires permettant de cultiver des primeurs et de prolonger les saisons de récolte.",
+      "description2": "Au XIXe siècle, Auguste Hardy y fonde la première École nationale d'horticulture, transformant le lieu en centre de formation et d'innovation. Aujourd'hui, cette tradition perdure avec l'École nationale supérieure de paysage qui continue de former les paysagistes de demain.",
+      "imageAlt": "La Grille du Roi, entrée historique du Potager"
+    },
+    "today": {
+      "title": "Un laboratoire vivant",
+      "description1": "Aujourd'hui, le Potager du Roi reste un lieu de production, d'enseignement et de recherche. Les étudiants de l'École nationale supérieure de paysage y apprennent les techniques traditionnelles tout en expérimentant les pratiques durables de demain.",
+      "description2": "Ouvert au public, il propose des visites guidées, des ateliers pédagogiques et des événements culturels. Ses fruits et légumes sont vendus sur place, perpétuant la tradition nourricière du lieu tout en finançant sa conservation.",
+      "imageAlt": "Jardins d'apprentissage du Potager du Roi"
+    },
+    "visit": {
+      "title": "Découvrez le Potager du Roi",
+      "description": "Explorez ce patrimoine exceptionnel et plongez dans trois siècles d'histoire horticole française",
+      "exploreButton": "Explorer avec l'audio-guide",
+      "officialSiteButton": "Site officiel"
+    }
   },
   "settings": {
     "language": "Langue",

@@ -179,6 +179,26 @@
           "audioFile": "point-de-vue-en.mp3"
         }
       }
+    },
+    {
+      "id": "figuerie",
+      "latitude": 48.79970508800055,
+      "longitude": 2.1203941561118094,
+      "imageFile": "figuerie.jpg",
+      "content": {
+        "fr": {
+          "title": "La Figuerie",
+          "description": "Ancien bâtiment d’expérimentation de La Quintinie",
+          "text": "La Figuerie doit son nom aux figuiers que Jean-Baptiste de La Quintinie y cultivait pour Louis XIV, grand amateur de ce fruit. Le bâtiment servait d’abri et de protection pour ces arbres fragiles, sensibles aux rigueurs du climat d’Île-de-France.\nOn raconte que La Quintinie avait mis au point un ingénieux système de caisses et de volets pour déplacer les figuiers ou les protéger selon la saison, afin de garantir au roi une récolte presque ininterrompue.\n\nAujourd’hui, la Figuerie conserve cette vocation d’expérimentation : elle abrite toujours des plantations et reste un lieu d’étude pour comprendre comment adapter les cultures aux conditions locales. Elle illustre la continuité entre l’audace agronomique du XVIIᵉ siècle et les recherches menées au Potager du Roi au XXIᵉ siècle.",
+          "audioFile": "figuerie-fr.mp3"
+        },
+        "en": {
+          "title": "The Figuerie",
+          "description": "La Quintinie’s experimental building for fig trees",
+          "text": "The Figuerie takes its name from the fig trees cultivated here by Jean-Baptiste de La Quintinie for Louis XIV, who was especially fond of this fruit. The building served as shelter and protection for these delicate trees, sensitive to the harsh climate of the Paris region.\nIt is said that La Quintinie devised a clever system of boxes and shutters, allowing the fig trees to be moved or shielded according to the season, so that the king could enjoy an almost uninterrupted supply.\n\nToday, the Figuerie still embodies this spirit of experimentation: it continues to house plantings and serves as a study site for adapting crops to local conditions. It stands as a bridge between 17th-century agronomic ingenuity and the research carried out at the King’s Kitchen Garden in the 21st century.",
+          "audioFile": "figuerie-en.mp3"
+        }
+      }
     }
   ],
   "config": {

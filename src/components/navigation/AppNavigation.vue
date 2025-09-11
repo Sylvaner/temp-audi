@@ -31,6 +31,13 @@
           </span>
           <span>{{ $t('navigation.map') }}</span>
         </router-link>
+
+        <router-link to="/about" class="navbar-item" @click="closeMobileMenu">
+          <span class="icon">
+            <i class="fas fa-info-circle"></i>
+          </span>
+          <span>{{ $t('navigation.about') }}</span>
+        </router-link>
       </div>
 
       <div class="navbar-end">

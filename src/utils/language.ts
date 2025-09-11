@@ -19,7 +19,7 @@ const config = dataJson.config as LanguageConfig
 export function getPlaceContent(
   place: Place,
   language: string,
-  defaultLanguage: string = 'fr'
+  defaultLanguage: string = 'fr',
 ): PlaceContent | null {
   // Essaie la langue demandée
   if (place.content[language]) {
@@ -61,21 +61,21 @@ export function getAvailableLanguages(place: Place): string[] {
 export function detectBrowserLanguage(): string {
   // Récupère toutes les langues préférées du navigateur
   const browserLanguages = navigator.languages || [navigator.language]
-  
+
   // Teste chaque langue du navigateur dans l'ordre de préférence
   for (const browserLang of browserLanguages) {
     // Teste d'abord la langue complète (ex: fr-FR)
     if (config.availableLanguages.includes(browserLang)) {
       return browserLang
     }
-    
+
     // Teste ensuite juste le code de langue (ex: fr de fr-FR)
     const langCode = browserLang.split('-')[0]
     if (config.availableLanguages.includes(langCode)) {
       return langCode
     }
   }
-  
+
   // Retourne la langue par défaut si aucune correspondance
   return config.defaultLanguage
 }
@@ -115,13 +115,13 @@ export function normalizeLanguageCode(languageCode: string): string {
   if (isLanguageSupported(languageCode)) {
     return languageCode
   }
-  
+
   // Sinon, essayer juste le code de base
   const baseCode = languageCode.split('-')[0]
   if (isLanguageSupported(baseCode)) {
     return baseCode
   }
-  
+
   // Retourner la langue par défaut si rien ne correspond
   return getDefaultLanguage()
 }

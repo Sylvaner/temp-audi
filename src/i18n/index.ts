@@ -3,6 +3,7 @@
  */
 
 import { createI18n } from 'vue-i18n'
+import { getDefaultLanguage } from '@/utils/language'
 
 // Import des messages de traduction
 import fr from '@/locales/fr.json'
@@ -25,19 +26,11 @@ export const availableLocales = [
 ]
 
 /**
- * Détecte la langue préférée du navigateur
- */
-function getDefaultLocale(): string {
-  const browserLocale = navigator.language.split('-')[0]
-  return Object.keys(messages).includes(browserLocale) ? browserLocale : 'fr'
-}
-
-/**
  * Instance i18n configurée
  */
 export const i18n = createI18n({
-  locale: getDefaultLocale(), // langue par défaut
-  fallbackLocale: 'fr', // langue de fallback
+  locale: getDefaultLanguage(), // langue par défaut depuis la configuration
+  fallbackLocale: getDefaultLanguage(), // langue de fallback depuis la configuration
   messages,
   legacy: false, // utilise Composition API
   globalInjection: true, // permet d'utiliser $t dans les templates
