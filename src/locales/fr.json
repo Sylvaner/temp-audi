@@ -1,0 +1,77 @@
+{
+  "app": {
+    "title": "Guide Audio Potager du Roi"
+  },
+  "common": {
+    "loading": "Chargement...",
+    "error": "Erreur",
+    "retry": "Réessayer",
+    "close": "Fermer",
+    "back": "Retour",
+    "next": "Suivant",
+    "previous": "Précédent",
+    "search": "Rechercher",
+    "settings": "Paramètres"
+  },
+  "audio": {
+    "play": "Lecture",
+    "pause": "Pause",
+    "stop": "Arrêt",
+    "volume": "Volume",
+    "position": "Position",
+    "duration": "Durée"
+  },
+  "map": {
+    "zoomIn": "Zoomer",
+    "zoomOut": "Dézoomer",
+    "centerOnUser": "Me localiser",
+    "fullscreen": "Plein écran",
+    "legend": "Légende",
+    "places": {
+      "title": "Lieux d'intérêt",
+      "empty": "Aucun lieu disponible"
+    },
+    "settings": {
+      "autoCenterEnabled": "Centrage automatique activé",
+      "autoCenterDisabled": "Centrage automatique désactivé"
+    }
+  },
+  "navigation": {
+    "home": "Accueil",
+    "map": "Carte"
+  },
+  "home": {
+    "title": "Entrez dans le Potager du Roi et<br />découvrez 350 ans d'histoire,<br />d'expérimentations et de saveurs.",
+    "visitButton": "Visiter",
+    "freeExploration": "Exploration libre",
+    "freeExplorationDescription": "Naviguez dans le potager à votre rythme"
+  },
+  "settings": {
+    "language": "Langue",
+    "volume": "Volume par défaut",
+    "theme": "Thème",
+    "accessibility": "Accessibilité"
+  },
+  "geolocation": {
+    "permission": {
+      "title": "Autoriser la géolocalisation",
+      "message": "Cette application fonctionne mieux avec votre position :",
+      "benefit1": "Affichage de votre position sur la carte",
+      "benefit2": "Commentaires audio adaptés à votre proximité",
+      "benefit3": "Navigation optimisée dans le potager",
+      "privacy": "Votre position n'est jamais transmise à des serveurs externes.",
+      "allow": "Autoriser",
+      "deny": "Continuer sans"
+    },
+    "denied": {
+      "title": "Géolocalisation désactivée",
+      "message": "L'application fonctionnera mieux si vous activez la géolocalisation.",
+      "alternative": "Vous pouvez toujours naviguer manuellement sur la carte.",
+      "howToEnable": "Pour activer la géolocalisation :",
+      "step1": "Cliquez sur l'icône de verrou ou d'information dans la barre d'adresse",
+      "step2": "Autorisez l'accès à votre position",
+      "step3": "Rechargez la page",
+      "retry": "Réessayer"
+    }
+  }
+}

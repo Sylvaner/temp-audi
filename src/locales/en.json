@@ -1,0 +1,77 @@
+{
+  "app": {
+    "title": "King's Kitchen Garden Audio Guide"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "retry": "Retry",
+    "close": "Close",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "search": "Search",
+    "settings": "Settings"
+  },
+  "audio": {
+    "play": "Play",
+    "pause": "Pause",
+    "stop": "Stop",
+    "volume": "Volume",
+    "position": "Position",
+    "duration": "Duration"
+  },
+  "map": {
+    "zoomIn": "Zoom in",
+    "zoomOut": "Zoom out",
+    "centerOnUser": "Center on me",
+    "fullscreen": "Fullscreen",
+    "legend": "Legend",
+    "places": {
+      "title": "Points of Interest",
+      "empty": "No places available"
+    },
+    "settings": {
+      "autoCenterEnabled": "Auto-center enabled",
+      "autoCenterDisabled": "Auto-center disabled"
+    }
+  },
+  "navigation": {
+    "home": "Home",
+    "map": "Map"
+  },
+  "home": {
+    "title": "Enter the King's Kitchen Garden and<br />discover 350 years of history,<br />experimentation and flavors.",
+    "visitButton": "Visit",
+    "freeExploration": "Free exploration",
+    "freeExplorationDescription": "Navigate the garden at your own pace"
+  },
+  "settings": {
+    "language": "Language",
+    "volume": "Default volume",
+    "theme": "Theme",
+    "accessibility": "Accessibility"
+  },
+  "geolocation": {
+    "permission": {
+      "title": "Allow Geolocation",
+      "message": "This application works better with your location:",
+      "benefit1": "Display your position on the map",
+      "benefit2": "Audio comments adapted to your proximity",
+      "benefit3": "Optimized navigation in the garden",
+      "privacy": "Your location is never transmitted to external servers.",
+      "allow": "Allow",
+      "deny": "Continue without"
+    },
+    "denied": {
+      "title": "Geolocation disabled",
+      "message": "The application will work better if you enable geolocation.",
+      "alternative": "You can still navigate manually on the map.",
+      "howToEnable": "To enable geolocation:",
+      "step1": "Click on the lock or information icon in the address bar",
+      "step2": "Allow access to your location",
+      "step3": "Reload the page",
+      "retry": "Try again"
+    }
+  }
+}

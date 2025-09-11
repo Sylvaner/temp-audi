@@ -1,0 +1,136 @@
+/* Variables CSS globales pour les z-index et la cohérence visuelle */
+
+:root {
+  /* === HIÉRARCHIE Z-INDEX === */
+  /* Carte et éléments de base */
+  --z-map: 1;
+  --z-map-controls: 100;
+
+  /* Navigation */
+  --z-navbar: 500;
+  --z-bottom-nav: 500;
+
+  /* Popups et overlays */
+  --z-popups: 600;
+
+  /* Contrôles de carte */
+  --z-map-ui-controls: 499;
+  --z-places-list: 600;
+  --z-dropdown: 700;
+
+  /* Modals */
+  --z-modal: 9000;
+  --z-modal-backdrop: 8999;
+
+  /* === COULEURS === */
+  /* Palette Automne */
+  --color-primary: #c0a15f; /* Jaune doré (C0 M16 J69 N0) */
+  --color-primary-dark: #a6904f;
+  --color-primary-light: #d4b877;
+
+  --color-secondary: #b87333; /* Orange terre (C23 M65 J80 N19) */
+  --color-secondary-dark: #9d622c;
+  --color-secondary-light: #c68a4a;
+
+  --color-accent: #8b4513; /* Marron chocolat (C35 M89 J85 N53) */
+  --color-accent-dark: #764a2b;
+  --color-accent-light: #a5643f;
+
+  --color-warm: #d2691e; /* Orange chaud (C1 M54 J87 N0) */
+  --color-warm-dark: #b8541a;
+  --color-warm-light: #e0804d;
+
+  --color-deep: #722f37; /* Bordeaux profond (C36 M100 J55 N55) */
+  --color-deep-dark: #5a252b;
+  --color-deep-light: #8b4a52;
+
+  /* Utilisateur sur la carte */
+  --color-user: #4682b4; /* Bleu acier */
+
+  /* Couleurs fonctionnelles basées sur la palette */
+  --color-info: var(--color-primary);
+  --color-success: #228b22; /* Vert forestier pour harmoniser */
+  --color-warning: var(--color-warm);
+  --color-danger: var(--color-deep);
+
+  /* Variantes de couleurs d'erreur */
+  --color-danger-light: color-mix(in srgb, var(--color-danger) 20%, var(--color-background));
+  --color-danger-dark: var(--color-deep-dark);
+
+  /* Couleurs de texte */
+  --color-text: #2f1b14; /* Brun très foncé pour le texte principal */
+  --color-text-secondary: #6b4423; /* Brun moyen pour le texte secondaire */
+  --color-text-light: #8b6f47; /* Brun clair pour le texte atténué */
+  --color-text-muted: #a08060;
+
+  /* Couleurs de fond */
+  --color-background: #fff8f0; /* Fond très léger crème */
+  --color-background-light: #fdf6e3; /* Fond léger */
+  --color-background-muted: #f5efe7; /* Fond atténué */
+  --color-background-hover: #f0e6d2; /* Fond au survol */
+
+  /* Couleurs de surface */
+  --color-surface: #ffffff;
+  --color-surface-hover: #fbf5eb;
+  --color-surface-secondary: #f8f0e6;
+
+  /* Couleurs de texte */
+  --color-white: #ffffff;
+
+  /* Couleurs de bordure */
+  --color-border: #e6d5b7; /* Bordure dorée claire */
+  --color-border-light: #f0e6d2; /* Bordure très claire */
+  --color-border-hover: #d4b877; /* Bordure au survol */
+
+  /* Couleurs de scrollbar */
+  --color-scrollbar-track: var(--color-background-light);
+  --color-scrollbar-thumb: var(--color-border);
+  --color-scrollbar-thumb-hover: var(--color-border-hover);
+
+  /* === BORDER RADIUS === */
+  --border-radius: 8px;
+  --border-radius-small: 4px;
+  --border-radius-large: 12px;
+
+  /* === TYPOGRAPHY === */
+  --font-family:
+    -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+
+  /* === TRANSITIONS === */
+  --transition-fast: 0.15s ease;
+  --transition-normal: 0.3s ease;
+  --transition-slow: 0.5s ease;
+
+  /* === SHADOWS === */
+  --shadow-light: 0 2px 4px rgba(47, 27, 20, 0.1);
+  --shadow-medium: 0 4px 8px rgba(47, 27, 20, 0.15);
+  --shadow-heavy: 0 8px 16px rgba(47, 27, 20, 0.2);
+  --shadow-small: 0 1px 3px rgba(47, 27, 20, 0.12);
+  --shadow-large: 0 6px 20px rgba(47, 27, 20, 0.15);
+}
+
+/* Classes utilitaires pour z-index */
+.z-map {
+  z-index: var(--z-map) !important;
+}
+.z-map-controls {
+  z-index: var(--z-map-controls) !important;
+}
+.z-navbar {
+  z-index: var(--z-navbar) !important;
+}
+.z-popups {
+  z-index: var(--z-popups) !important;
+}
+.z-map-ui-controls {
+  z-index: var(--z-map-ui-controls) !important;
+}
+.z-places-list {
+  z-index: var(--z-places-list) !important;
+}
+.z-dropdown {
+  z-index: var(--z-dropdown) !important;
+}
+.z-modal {
+  z-index: var(--z-modal) !important;
+}

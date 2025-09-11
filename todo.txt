@@ -1,0 +1,769 @@
+===============================================================================
+PHASE 1: DÉFINITION DES TYPES ET INTERFACES TYPESCRIPT [🟡 EN COURS]
+===============================================================================
+
+✅ 1.1 TYPES DE BASE [📅 Priorité Haute] [TERMINÉ - VERSION MINIMALISTE + I18N COMPLET]
+  ✅ Créer src/types/geolocation.ts
+    ✅ Interface Position (latitude, longitude uniquement)
+
+  ✅ Créer src/types/audio.ts
+    ✅ Enum AudioState basique (playing, paused, stopped)
+    ✅ Interface AudioPlayerState minimale (state, currentTime, volume)
+
+  ✅ Créer src/types/map.ts
+    ✅ Interface PlaceContent (contenu localisé)
+    ✅ Interface Place (avec contenu multilingue Record<string, PlaceContent>)
+    ✅ Interface MapConfig (center, zoom)
+
+  ✅ Créer src/types/data.ts
+    ✅ Interface AppConfig (map + defaultLanguage + availableLanguages)
+    ✅ Interface AppData (structure complète data.json)
+
+  ✅ Créer src/types/index.ts
+    ✅ Export centralisé de tous les types
+
+  ✅ SYSTÈME I18N COMPLET [AJOUTÉ]
+    ✅ Installation Vue I18n @9
+    ✅ Configuration TypeScript (resolveJsonModule)
+    ✅ Fichiers de traduction (fr.json, en.json)
+    ✅ Configuration i18n avec détection langue navigateur
+    ✅ Store Pinia language.ts avec gestion intelligente
+    ✅ Composant LanguageSelector.vue (dropdown Bulma)
+    ✅ Intégration dans main.ts
+    ✅ Data.json avec contenu français/anglais
+
+  ✅ Créer src/utils/language.ts (REMPLACÉ par store Pinia)
+
+  📝 NOTE: Types i18n-ready + Interface complètement traduite + Contenu multilingue
+
+🟡 1.2 TYPES MÉTIER [📅 Priorité Haute]
+  ⭕ Créer src/types/poi.ts (Point of Interest)
+    - Interface PointOfInterest avec géolocalisation
+    - Relation avec commentaires audio
+    - Métadonnées (catégorie, tags, description)
+
+  ⭕ Créer src/types/user.ts
+    - Interface UserPreferences (volume, vitesse lecture)
+    - Interface AccessibilitySettings (contraste, taille police)
+    - Type Language pour internationalisation future
+
+🟡 1.3 TYPES D'APPLICATION [📅 Priorité Haute]
+  ⭕ Créer src/types/app.ts
+    - Interface AppState global
+    - Type NavigationState
+    - Interface ErrorState pour gestion erreurs centralisée
+
+===============================================================================
+PHASE 2: DÉVELOPPEMENT DES STORES PINIA COMPLÉMENTAIRES [🔴 À FAIRE]
+===============================================================================
+
+🔴 2.1 STORE LECTEUR AUDIO [📅 Priorité Haute]
+  ⭕ Créer src/stores/audioPlayer.ts
+    - État: lecture en cours, volume, position
+    - Actions: play, pause, stop, seek, setVolume
+    - Getters: isPlaying, currentTime, progress
+    - File d'attente de lecture
+    - Sauvegarde position lecture
+
+🔴 2.2 STORE PARAMÈTRES UTILISATEUR [📅 Priorité Moyenne]
+  ⭕ Créer src/stores/settings.ts
+    - État: préférences utilisateur, accessibilité
+    - Actions: updateSettings, resetToDefaults
+    - Persistence localStorage
+    - Gestion thème sombre/clair
+    - Paramètres d'accessibilité (WCAG 2.1)
+
+🔴 2.3 STORE CARTE [📅 Priorité Haute]
+  ⭕ Créer src/stores/map.ts
+    - État: centre carte, zoom, marqueurs visibles
+    - Actions: setCenter, addMarker, updateBounds
+    - Getters: visibleMarkers, mapBounds
+    - Sauvegarde dernière vue carte
+    - Gestion couches (satellite, plan)
+
+===============================================================================
+PHASE 3: DÉVELOPPEMENT DES UTILITAIRES [🔴 À FAIRE]
+===============================================================================
+
+🔴 3.1 UTILITAIRES GÉOLOCALISATION [📅 Priorité Haute]
+  ⭕ Créer src/utils/geolocation.ts
+    - Fonction calculateDistance (Haversine)
+    - Fonction isWithinRadius
+    - Fonction getBearingBetweenPoints
+    - Gestion erreurs géolocalisation
+    - Conversion coordonnées (DMS ↔ DD)
+
+🔴 3.2 UTILITAIRES AUDIO [📅 Priorité Haute]
+  ⭕ Créer src/utils/audio.ts
+    - Classe AudioManager pour HTMLAudioElement
+    - Gestion file d'attente
+    - Crossfade entre pistes
+    - Normalisation volume
+    - Détection support formats audio
+
+🔴 3.3 UTILITAIRES FORMATAGE [📅 Priorité Moyenne]
+  ⭕ Créer src/utils/formatters.ts
+    - formatDuration pour temps audio
+    - formatDistance pour affichage distances
+    - formatCoordinates pour GPS
+    - formatDate/Time selon locale
+
+🔴 3.4 UTILITAIRES CACHE [📅 Priorité Basse]
+  ⭕ Créer src/utils/cache.ts
+    - Gestion Cache API pour mode hors ligne
+    - Compression données
+    - Nettoyage cache automatique
+    - Stratégies cache (Cache First, Network First)
+
+🔴 3.5 UTILITAIRES ACCESSIBILITÉ [📅 Priorité Moyenne]
+  ⭕ Créer src/utils/accessibility.ts
+    - Gestion focus clavier
+    - Annonces lecteur d'écran
+    - Détection préférences système (reduced-motion)
+    - Helpers ARIA
+
+===============================================================================
+PHASE 4: DÉVELOPPEMENT DES COMPOSANTS UI DE BASE [🔴 À FAIRE]
+===============================================================================
+
+✅ 4.1 ICÔNES [DÉJÀ DISPONIBLE]
+  ✅ Font Awesome 5 déjà intégré
+    ✅ fas fa-play (lecture audio)
+    ✅ fas fa-pause (pause audio)
+    ✅ fas fa-stop (arrêt audio)
+    ✅ fas fa-map-marker-alt (position GPS)
+    ✅ fas fa-search (recherche)
+    ✅ fas fa-cog (paramètres)
+    ✅ fas fa-volume-up (contrôle volume)
+    ✅ fas fa-expand (plein écran carte)
+    ✅ fas fa-times (fermeture modales)
+    ✅ fas fa-bars (menu hamburger)
+
+🔴 4.2 COMPOSANTS UI SPÉCIFIQUES [📅 Priorité Moyenne]
+  ⭕ Créer src/components/ui/AudioButton.vue
+    - Extension du button Bulma pour audio
+    - États play/pause/loading avec icônes FA
+    - Support ARIA et focus
+    - Animations transitions
+
+  ⭕ Créer src/components/ui/AudioSlider.vue (Bulma ne fournit pas de slider)
+    - Contrôle volume/progress custom
+    - Support clavier (flèches)
+    - ARIA valuemin/max/now
+    - Affichage valeur courante
+
+🔴 4.3 COMPOSANTS DE NAVIGATION [📅 Priorité Basse]
+  ⭕ Créer src/components/ui/TabNavigation.vue
+    - Extension des tabs Bulma
+    - Support clavier avancé (tab, flèches)
+    - ARIA tablist/tab/tabpanel
+    - Indicateur section active
+
+===============================================================================
+PHASE 5: DÉVELOPPEMENT DU LECTEUR AUDIO [🔴 À FAIRE]
+===============================================================================
+
+🔴 5.1 COMPOSANT LECTEUR PRINCIPAL [📅 Priorité Critique]
+  ⭕ Créer src/components/audio/AudioPlayer.vue
+    - Interface lecture/pause/stop (utilise icônes FA)
+    - Barre progression avec scrubbing (custom slider)
+    - Contrôle volume (custom slider)
+    - Affichage métadonnées (titre, durée)
+    - Timer position courante
+    - Support raccourcis clavier (espace, flèches)
+
+🔴 5.2 CONTRÔLES AUDIO AVANCÉS [📅 Priorité Haute]
+  ⭕ Créer src/components/audio/AudioControls.vue
+    - Boutons précédent/suivant (icônes FA)
+    - Vitesse lecture (0.5x, 1x, 1.5x, 2x)
+    - Boucle/répétition (icône FA)
+    - Mode aléatoire (icône FA)
+    - Égaliseur simple (optionnel)
+
+🔴 5.3 PLAYLIST ET HISTORIQUE [📅 Priorité Moyenne]
+  ⭕ Créer src/components/audio/AudioPlaylist.vue
+    - Liste commentaires à écouter (utilise classes Bulma)
+    - Réorganisation drag & drop
+    - Suppression éléments (icône FA)
+    - Sauvegarde entre sessions
+
+  ⭕ Créer src/components/audio/AudioHistory.vue
+    - Historique écoutes récentes (liste Bulma)
+    - Reprise lecture position
+    - Favoris utilisateur (icône FA heart)
+    - Statistiques écoute
+
+🔴 5.4 COMPOSANT MINI-LECTEUR [📅 Priorité Haute]
+  ⭕ Créer src/components/audio/MiniPlayer.vue
+    - Version compacte du lecteur
+    - Affiché pendant navigation
+    - Contrôles essentiels seulement (icônes FA)
+    - Expansion vers lecteur complet
+
+===============================================================================
+PHASE 6: DÉVELOPPEMENT DE LA CARTE INTERACTIVE [🔴 À FAIRE]
+===============================================================================
+
+🔴 6.1 COMPOSANT CARTE PRINCIPAL [📅 Priorité Critique]
+  ⭕ Créer src/components/map/InteractiveMap.vue
+    - Intégration Leaflet
+    - Affichage tuiles OpenStreetMap
+    - Gestion zoom/pan
+    - Responsive design (utilise Bulma grid)
+    - Support touch mobile
+
+🔴 6.2 MARQUEURS ET OVERLAYS [📅 Priorité Haute]
+  ⭕ Créer src/components/map/AudioMarker.vue
+    - Marqueurs points commentaires audio (icônes FA)
+    - Icônes différenciées par catégorie
+    - Animation hover/focus
+    - Tooltip informations (utilise Bulma tooltip)
+    - Cluster marqueurs proches
+
+  ⭕ Créer src/components/map/UserLocationMarker.vue
+    - Marqueur position utilisateur (icône FA)
+    - Animation pulsation
+    - Cercle précision GPS
+    - Orientation boussole (si disponible)
+
+🔴 6.3 CONTRÔLES CARTE [📅 Priorité Haute]
+  ⭕ Créer src/components/map/MapControls.vue
+    - Boutons zoom +/- (boutons Bulma + icônes FA)
+    - Centrer sur position utilisateur (icône FA crosshairs)
+    - Plein écran (icône FA expand)
+    - Sélection type carte (dropdown Bulma)
+    - Afficher/masquer marqueurs (icônes FA eye)
+
+🔴 6.4 POPUPS ET INFOBULLES [📅 Priorité Moyenne]
+  ⭕ Créer src/components/map/MarkerPopup.vue
+    - Contenu riche (titre, description, image) - utilise classes Bulma
+    - Bouton lecture directe audio (bouton Bulma + icône FA)
+    - Liens actions (favoris, partage) - icônes FA
+    - Fermeture accessible (icône FA times)
+
+🟡 6.5 LÉGENDE ET FILTRES [📅 Priorité Basse]
+  ⭕ Créer src/components/map/MapLegend.vue
+    - Explication symboles marqueurs (panel Bulma)
+    - Filtres par catégorie (checkboxes Bulma)
+    - Affichage/masquage couches (switches Bulma)
+    - Réduction pour mobile (responsive Bulma)
+
+===============================================================================
+PHASE 7: SYSTÈME DE RECHERCHE [🔴 À FAIRE]
+===============================================================================
+
+🔴 7.1 COMPOSANT RECHERCHE PRINCIPAL [📅 Priorité Haute]
+  ⭕ Créer src/components/search/SearchBar.vue
+    - Champ recherche avec autocomplétion (input Bulma + icône FA search)
+    - Raccourci clavier "/" pour focus
+    - Historique recherches récentes (dropdown Bulma)
+    - Suggestions temps réel
+    - Effacement rapide (icône FA times)
+
+🔴 7.2 FILTRES AVANCÉS [📅 Priorité Moyenne]
+  ⭕ Créer src/components/search/SearchFilters.vue
+    - Filtre par catégorie (select/checkboxes Bulma)
+    - Filtre par durée audio (range slider custom)
+    - Filtre par distance (range slider custom)
+    - Tri résultats (dropdown Bulma)
+    - Sauvegarde filtres préférés
+
+🔴 7.3 RÉSULTATS DE RECHERCHE [📅 Priorité Haute]
+  ⭕ Créer src/components/search/SearchResults.vue
+    - Liste résultats avec métadonnées (media object Bulma)
+    - Carte mini avec localisation
+    - Actions rapides (boutons Bulma + icônes FA play, map-marker)
+    - Pagination/infinite scroll
+    - Messages état (message Bulma)
+
+🔴 7.4 MOTEUR DE RECHERCHE [📅 Priorité Haute]
+  ⭕ Développer la logique recherche dans store
+    - Indexation textuelle commentaires
+    - Recherche floue (typos, synonymes)
+    - Pondération résultats (titre > description > tags)
+    - Cache résultats récents
+    - Recherche géographique (dans rayon X)
+
+===============================================================================
+PHASE 8: GESTION HORS LIGNE (PWA) [🟡 PRÉVU]
+===============================================================================
+
+🟡 8.1 SERVICE WORKER [📅 Priorité Basse]
+  ⭕ Configurer src/sw.js
+    - Cache stratégies différenciées
+    - Cache First: assets statiques, audio
+    - Network First: données dynamiques
+    - Stale While Revalidate: API non critiques
+    - Background sync pour actions différées
+
+🟡 8.2 CACHE MANAGEMENT [📅 Priorité Basse]
+  ⭕ Développer système cache intelligent
+    - Pré-cache commentaires populaires
+    - Cache adaptatif selon stockage disponible
+    - Nettoyage automatique ancien cache
+    - Compression données texte
+    - Indicateur statut hors ligne (notification Bulma)
+
+🟡 8.3 SYNCHRONISATION DONNÉES [📅 Priorité Basse]
+  ⭕ Implémenter sync background
+    - Upload favoris/historique quand connexion
+    - Download nouveaux commentaires
+    - Résolution conflits données
+    - Queue actions utilisateur offline
+
+🟡 8.4 INTERFACE HORS LIGNE [📅 Priorité Basse]
+  ⭕ Créer composants gestion offline
+    - Indicateur état connexion (tag Bulma + icône FA wifi)
+    - Download manuel zones (boutons Bulma + icône FA download)
+    - Gestion espace stockage (progress bar Bulma)
+    - Messages erreur réseau explicites (notification Bulma)
+
+===============================================================================
+PHASE 9: ACCESSIBILITÉ (WCAG 2.1 AA) [🔴 À FAIRE]
+===============================================================================
+
+🔴 9.1 NAVIGATION CLAVIER [📅 Priorité Haute]
+  ⭕ Implémenter navigation clavier complète
+    - Tab order logique (Bulma aide déjà)
+    - Indicateurs focus visibles
+    - Raccourcis clavier (j/k pour navigation, espace play/pause)
+    - Skip links pour contenu principal
+    - Focus trap dans modales
+
+🔴 9.2 LECTEURS D'ÉCRAN [📅 Priorité Haute]
+  ⭕ Optimiser pour screen readers
+    - Landmarks ARIA appropriés
+    - Live regions pour changements dynamiques
+    - Labels descriptifs sur tous contrôles
+    - Alternative textuelle images/cartes
+    - Description actions boutons
+
+✅ 9.3 CONTRASTES ET TYPOGRAPHIE [PARTIELLEMENT COUVERT]
+  ✅ Bulma respecte déjà ratios contraste WCAG
+  ⭕ Vérifications supplémentaires requises
+    - Test automatisé contrastes customs
+    - Zoom texte jusqu'à 200% sans scroll horizontal
+    - Validation police lisibilité
+
+🔴 9.4 PRÉFÉRENCES SYSTÈME [📅 Priorité Moyenne]
+  ⭕ Respecter prefer-reduced-motion
+    - Désactiver animations si demandé
+    - Transitions essentielles uniquement
+    - Alternative statique pour animations
+
+🔴 9.5 COMPOSANT PARAMÈTRES ACCESSIBILITÉ [📅 Priorité Basse]
+  ⭕ Créer src/components/settings/AccessibilityPanel.vue
+    - Taille police (utilise classes Bulma is-size-*)
+    - Contraste élevé
+    - Désactivation animations
+    - Mode lecteur d'écran optimisé
+    - Feedback haptique (mobile)
+
+===============================================================================
+PHASE 10: DÉVELOPPEMENT DES VUES PRINCIPALES [🔴 À FAIRE]
+===============================================================================
+
+🔴 10.1 VUE ACCUEIL [📅 Priorité Critique]
+  ⭕ Créer src/views/HomeView.vue
+    - Hero section avec localisation (hero Bulma)
+    - Carte overview du potager
+    - Commentaires audio populaires (cards Bulma)
+    - Recherche rapide (field Bulma + icône FA)
+    - Onboarding première visite (modal Bulma)
+
+🔴 10.2 VUE CARTE COMPLÈTE [📅 Priorité Critique]
+  ⭕ Créer src/views/MapView.vue
+    - Carte plein écran
+    - Tous contrôles et filtres (panels Bulma)
+    - Panel latéral informations (aside)
+    - Mode exploration libre
+    - Geofencing avec notifications (notification Bulma)
+
+🔴 10.3 VUE ÉCOUTE [📅 Priorité Haute]
+  ⭕ Créer src/views/ListenView.vue
+    - Lecteur audio principal
+    - Métadonnées détaillées commentaire (content Bulma)
+    - Carte mini avec position
+    - Commentaires liés/suggérés (media objects Bulma)
+    - Notes utilisateur (future)
+
+🔴 10.4 VUE RECHERCHE [📅 Priorité Haute]
+  ⭕ Créer src/views/SearchView.vue
+    - Interface recherche complète
+    - Filtres avancés (panels Bulma)
+    - Résultats détaillés (table ou media objects Bulma)
+    - Sauvegarde recherches
+    - Export résultats
+
+🔴 10.5 VUE PARAMÈTRES [📅 Priorité Moyenne]
+  ⭕ Créer src/views/SettingsView.vue
+    - Préférences audio (form Bulma)
+    - Paramètres carte
+    - Accessibilité (form Bulma)
+    - Gestion cache/stockage (progress Bulma)
+    - About et mentions légales (content Bulma)
+
+🔴 10.6 VUE PROFIL/FAVORIS [📅 Priorité Basse]
+  ⭕ Créer src/views/ProfileView.vue
+    - Historique écoutes (timeline ou media objects)
+    - Commentaires favoris (cards Bulma)
+    - Statistiques visite (tiles Bulma)
+    - Partage collections
+    - Progression découverte (progress Bulma)
+
+===============================================================================
+PHASE 11: ROUTAGE ET NAVIGATION [🟡 PARTIELLEMENT FAIT]
+===============================================================================
+
+✅ 11.1 CONFIGURATION ROUTER [DÉJÀ CONFIGURÉ]
+  ✅ Vue Router déjà installé et configuré
+  ⭕ Extensions requises:
+    - Routes principales avec lazy loading
+    - Nested routes pour sous-sections
+    - Guards navigation (permissions géolocalisation)
+    - Meta tags pour SEO/PWA
+
+🔴 11.2 NAVIGATION PRINCIPALE [📅 Priorité Haute]
+  ⭕ Créer src/components/navigation/MainNavigation.vue
+    - Bottom tab bar mobile (navbar Bulma + icônes FA)
+    - Sidebar desktop (menu Bulma)
+    - Indicateurs notifications (tag Bulma)
+    - Badge nombre favoris (tag Bulma)
+    - Animation transitions
+
+🔴 11.3 BREADCRUMB ET HISTORIQUE [📅 Priorité Basse]
+  ⭕ Implémenter navigation contextuelle
+    - Breadcrumb pour navigation profonde (breadcrumb Bulma)
+    - Bouton retour intelligent (button Bulma + icône FA)
+    - Historique navigation accessible
+    - Deep linking partage
+
+===============================================================================
+PHASE 12: DONNÉES ET API [🔴 À FAIRE]
+===============================================================================
+
+🔴 12.1 STRUCTURE DONNÉES DE TEST [📅 Priorité Critique]
+  ⭕ Étendre src/data/data.json existant
+    - 50+ commentaires audio réalistes (base déjà créée)
+    - Coordonnées GPS précises Potager du Roi
+    - Métadonnées riches (auteur, date, durée)
+    - Catégories variées (histoire, botanique, techniques)
+    - Multiple langues (préparer i18n)
+
+🔴 12.2 SERVICE API [📅 Priorité Haute]
+  ⭕ Créer src/services/api.ts
+    - Interface REST simulée
+    - Gestion erreurs et retry
+    - Cache réponses
+    - Pagination
+    - Authentification future
+
+🔴 12.3 GESTION ASSETS AUDIO [📅 Priorité Haute]
+  ⭕ Organisation fichiers audio
+    - Compression optimale (AAC/OGG)
+    - Multiple qualités (low/high)
+    - Nommage systématique
+    - Métadonnées ID3
+    - Fallbacks format
+
+🔴 12.4 IMAGES ET MÉDIAS [📅 Priorité Moyenne]
+  ⭕ Optimisation assets visuels
+    - Images WebP avec fallback
+    - Responsive images (srcset)
+    - Lazy loading
+    - Compression optimale
+    - Alt text descriptifs
+
+===============================================================================
+PHASE 13: PERFORMANCE ET OPTIMISATION
+===============================================================================
+
+□ 13.1 OPTIMISATION BUNDLE
+  □ Configuration build production
+    - Tree shaking agressif
+    - Code splitting par route
+    - Compression Gzip/Brotli
+    - Critical CSS inline
+    - Preload/prefetch resources
+
+□ 13.2 OPTIMISATION RUNTIME
+  □ Performance composants
+    - Virtual scrolling listes longues
+    - Debounce recherche
+    - Throttle événements scroll/resize
+    - Memoization calculs coûteux
+    - Web Workers pour traitement lourd
+
+□ 13.3 OPTIMISATION RÉSEAU
+  □ Stratégies chargement
+    - Lazy loading images
+    - Progressive enhancement
+    - Resource hints (dns-prefetch, preconnect)
+    - Cache HTTP optimal
+    - Compression assets
+
+□ 13.4 MONITORING PERFORMANCE
+  □ Métriques Core Web Vitals
+    - LCP < 2.5s
+    - FID < 100ms
+    - CLS < 0.1
+    - TTFB < 600ms
+    - Integration Lighthouse CI
+
+===============================================================================
+PHASE 14: STYLES ET DESIGN SYSTEM [✅ LARGEMENT COUVERT]
+===============================================================================
+
+✅ 14.1 FRAMEWORK CSS [DÉJÀ INTÉGRÉ]
+  ✅ Bulma CSS framework déjà configuré
+    ✅ Grid system responsive
+    ✅ Composants UI (buttons, forms, nav, etc.)
+    ✅ Typographie et spacing cohérents
+    ✅ Système de couleurs modulaire
+
+🔴 14.2 CUSTOMISATION THÈME [📅 Priorité Moyenne]
+  ⭕ Personnaliser variables SASS Bulma
+    - Palette couleurs (primaire: vert potager)
+    - Customisation composants spécifiques
+    - Variables responsive breakpoints
+    - Dark mode variables
+
+🔴 14.3 THÈME POTAGER DU ROI [📅 Priorité Moyenne]
+  ⭕ Design spécifique domaine
+    - Photos haute qualité optimisées
+    - Feeling historique/moderne
+    - Brand guidelines respect
+    - Favicon et meta images
+
+✅ 14.4 RESPONSIVE DESIGN [DÉJÀ COUVERT]
+  ✅ Bulma fournit déjà
+    ✅ Mobile first approach
+    ✅ Breakpoints: mobile, tablet, desktop, widescreen
+    ✅ Responsive utilities
+    ✅ Touch targets appropriés
+
+🟡 14.5 DARK MODE [📅 Priorité Basse]
+  ⭕ Support thème sombre avec Bulma
+    - Respect prefer-color-scheme
+    - Toggle manuel utilisateur
+    - Variables CSS custom properties
+    - Contraste optimal maintenu
+
+===============================================================================
+PHASE 15: SÉCURITÉ ET CONFIDENTIALITÉ
+===============================================================================
+
+□ 15.1 SÉCURITÉ DONNÉES
+  □ Protection données utilisateur
+    - Chiffrement localStorage sensible
+    - Pas de tracking sans consentement
+    - Géolocalisation précise limitée
+    - Nettoyage données sensibles
+    - RGPD compliance
+
+□ 15.2 SÉCURITÉ APPLICATION
+  □ Hardening application
+    - CSP headers stricts
+    - Sanitization inputs utilisateur
+    - XSS protection
+    - Validation côté client ET serveur
+    - Error messages non révélateurs
+
+□ 15.3 PERMISSIONS ET CONSENTEMENT
+  □ Gestion permissions transparente
+    - Explications claires géolocalisation
+    - Opt-in explicite tracking
+    - Révocation permissions facile
+    - Alternative fonctionnement sans GPS
+    - Privacy policy claire
+
+===============================================================================
+PHASE 16: INTERNATIONALISATION (PRÉPARATION)
+===============================================================================
+
+□ 16.1 STRUCTURE I18N
+  □ Préparer multilangue
+    - Extraction strings français
+    - Structure fichiers langues
+    - Pluralization rules
+    - Date/number formatting locale
+    - RTL support préparation
+
+□ 16.2 CONTENU MULTILINGUE
+  □ Commentaires audio multilingues
+    - Structure données i18n
+    - Fallback langue par défaut
+    - Détection langue navigateur
+    - Sélecteur langue UI
+    - Audio tracks par langue
+
+===============================================================================
+PHASE 17: DÉPLOIEMENT ET DISTRIBUTION
+===============================================================================
+
+□ 17.1 BUILD PRODUCTION
+  □ Configuration build optimisé
+    - Environment variables
+    - Source maps production
+    - Bundle analyzer
+    - Performance budget
+    - Error reporting (Sentry)
+
+□ 17.2 PWA CONFIGURATION
+  □ Manifest et Service Worker
+    - Icons toutes tailles
+    - Launch screen
+    - Display mode standalone
+    - Orientation lock
+    - Background sync
+
+□ 17.3 HÉBERGEMENT WEB
+  □ Déploiement web app
+    - CDN global
+    - HTTPS obligatoire
+    - Cache headers optimaux
+    - Monitoring uptime
+    - Analytics privacy-first
+
+□ 17.4 APP STORES PREPARATION
+  □ Préparer soumission stores
+    - Capacitor/Cordova setup
+    - Platform specific optimizations
+    - Store screenshots
+    - App descriptions
+    - Privacy policy compliance
+
+===============================================================================
+PHASE 18: MAINTENANCE ET ÉVOLUTION
+===============================================================================
+
+□ 18.1 MONITORING PRODUCTION
+  □ Surveillance application live
+    - Error tracking
+    - Performance monitoring
+    - Usage analytics
+    - Crash reports
+    - User feedback collection
+
+□ 18.2 MISE À JOUR CONTENU
+  □ CMS pour gestionnaires
+    - Interface admin commentaires
+    - Upload audio facilité
+    - Modération contenu
+    - Analytics usage
+    - A/B testing features
+
+□ 18.3 ÉVOLUTIONS FUTURES
+  □ Roadmap fonctionnalités
+    - Réalité augmentée markers
+    - Social features (partage)
+    - Gamification (achievements)
+    - Tours guidés virtuels
+    - IA recommandations personnalisées
+
+===============================================================================
+CHECKLIST QUALITÉ FINALE [🔴 À VALIDER]
+===============================================================================
+
+🔴 FONCTIONNEL [📅 Tests requis]
+  ⭕ Géolocalisation précise et rapide
+  ⭕ Lecture audio sans interruption
+  ⭕ Recherche performante
+  ⭕ Mode hors ligne complet
+  ⭕ Interface intuitive
+
+🔴 PERFORMANCE [📅 Optimisations requises]
+  ⭕ Chargement initial < 3s
+  ⭕ Interactions fluides 60fps
+  ⭕ Consommation batterie optimisée
+  ⭕ Bundle size < 500KB gzipped
+  ⭕ Core Web Vitals verts
+
+🔴 ACCESSIBILITÉ [📅 Tests WCAG requis]
+  ⭕ WCAG 2.1 AA compliance
+  ⭕ Navigation clavier complète
+  ⭕ Screen readers compatibles
+  ✅ Contrastes suffisants (Bulma aide)
+  ⭕ Animations respectueuses
+
+🔴 SÉCURITÉ [📅 Audit requis]
+  ⭕ Données chiffrées stockage
+  ⭕ Permissions transparentes
+  ⭕ RGPD compliant
+  ⭕ XSS/injection protégé
+  ⭕ CSP headers actifs
+
+🔴 COMPATIBILITÉ [📅 Tests multi-devices]
+  ⭕ iOS Safari 14+
+  ⭕ Android Chrome 90+
+  ⭕ Desktop moderne browsers
+  ⭕ PWA installable
+  ⭕ Offline fonctionnel
+
+✅ UX/UI [PARTIELLEMENT COUVERT]
+  ✅ Design cohérent responsive (Bulma)
+  ⭕ Feedback utilisateur clair
+  ⭕ Loading states appropriés
+  ⭕ Error handling gracieux
+  ⭕ Onboarding efficace
+
+===============================================================================
+LÉGENDE DES MARQUEURS D'ÉTAT
+===============================================================================
+
+✅ TERMINÉ - Fonctionnalité complètement implémentée
+🟢 EN TEST - Implémentée, en phase de validation
+🟡 EN COURS - Développement en cours
+🔴 À FAIRE - Pas encore commencé
+⭕ TÂCHE - Élément actionnable spécifique
+🟪 BLOQUÉ - Dépendance externe requise
+📅 PRIORITÉ - Niveau d'importance (Critique/Haute/Moyenne/Basse)
+
+===============================================================================
+OPTIMISATIONS APPORTÉES - RÉSUMÉ
+===============================================================================
+
+✅ SUPPRIMÉ - Icônes personnalisées (Font Awesome 5 déjà intégré)
+✅ SIMPLIFIÉ - Composants UI de base (Bulma CSS couvre 80% des besoins)
+✅ ADAPTÉ - Design System (utilise variables et composants Bulma)
+✅ OPTIMISÉ - Mentions spécifiques aux classes Bulma et icônes FA
+✅ PRIORISÉ - Ajout de niveaux de priorité pour focus développement
+
+ESTIMATION RÉVISÉE: ~100-120 heures (vs 150-200h original)
+GAIN: ~30-40% de temps grâce à Bulma CSS + Font Awesome
+
+===============================================================================
+RESSOURCES ET DOCUMENTATION
+===============================================================================
+
+□ DOCUMENTATION TECHNIQUE
+  - README.md complet
+  - API documentation
+  - Architecture decisions records
+  - Deployment guide
+  - Troubleshooting guide
+
+□ DOCUMENTATION UTILISATEUR
+  - Guide utilisation
+  - FAQ
+  - Support contact
+  - Privacy policy
+  - Terms of service
+
+□ FORMATION ÉQUIPE
+  - Code review guidelines
+  - Git workflow
+  - Deployment procedures
+  - Monitoring alerts
+
+===============================================================================
+FIN TODO OPTIMISÉ - AUDIO GUIDE GÉOLOCALISÉ DU POTAGER DU ROI
+===============================================================================
+
+Total estimation: ~150-200 heures développement (sans tests)
+Équipe recommandée: 2-3 développeurs frontend + 1 designer
+Timeline: 2-3 mois pour MVP complet
+
+Cette todo list optimisée se concentre sur le développement fonctionnel
+en s'appuyant sur le projet existant et en utilisant le store audioGuide
+déjà créé comme base solide.

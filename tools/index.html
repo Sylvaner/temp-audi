@@ -1,0 +1,466 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Places Editor - Open Audio Guide</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.0/css/bulma.min.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    />
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <style>
+      body {
+        background-color: #f0f0f0;
+      }
+      #map {
+        height: 400px;
+        width: 100%;
+        cursor: crosshair;
+      }
+      .box {
+        background-color: #fafafa;
+      }
+      .place-card {
+        margin-bottom: 1rem;
+      }
+      .language-tabs {
+        margin-bottom: 1rem;
+      }
+      .places-list {
+        max-height: 600px;
+        overflow-y: auto;
+        border-left: 1px solid #dbdbdb;
+        padding-left: 1rem;
+      }
+      .place-item {
+        cursor: pointer;
+        padding: 0.5rem;
+        margin-bottom: 0.5rem;
+        border-radius: 4px;
+        border: 1px solid #dbdbdb;
+      }
+      .place-item:hover {
+        background-color: #f5f5f5;
+      }
+      .place-item.is-active {
+        background-color: #f5f5f5;
+        color: #363636;
+        border-color: #00d1b2;
+        border-width: 2px;
+      }
+      .place-item.is-active .has-text-grey {
+        color: #4a4a4a !important;
+      }
+      .header-actions {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+      }
+      .tab.is-incomplete {
+        opacity: 0.6;
+      }
+      .tab.is-incomplete a {
+        color: #ff3860 !important;
+      }
+      .language-tags {
+        display: flex;
+        gap: 0.25rem;
+        flex-wrap: wrap;
+      }
+      .user-location-icon {
+        background: none !important;
+        border: none !important;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <section class="section">
+        <div class="container is-fluid">
+          <!-- Header -->
+          <div class="level">
+            <div class="level-left">
+              <div class="level-item">
+                <h1 class="title">Places Editor - Open Audio Guide</h1>
+              </div>
+            </div>
+            <div class="level-right">
+              <div class="level-item">
+                <div class="header-actions">
+                  <input
+                    type="file"
+                    @change="loadFile"
+                    accept=".json"
+                    class="file-input"
+                    id="file-input"
+                    style="display: none"
+                  />
+                  <button @click="triggerFileInput" class="button is-primary">
+                    <span class="icon"><i class="fas fa-upload"></i></span>
+                    <span>Load</span>
+                  </button>
+                  <button @click="saveFile" class="button is-success" :disabled="!data.places">
+                    <span class="icon"><i class="fas fa-download"></i></span>
+                    <span>Save</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="columns">
+            <!-- Main content -->
+            <div class="column is-three-quarters">
+              <!-- Map -->
+              <div class="box">
+                <h2 class="subtitle">Map - Click to add a place</h2>
+                <div id="map"></div>
+              </div>
+
+              <!-- Place editor -->
+              <div
+                class="box"
+                v-if="selectedPlaceIndex !== null && data.places[selectedPlaceIndex]"
+              >
+                <h2 class="subtitle">
+                  Edit Place: {{ data.places[selectedPlaceIndex].id }}
+                  <button
+                    @click="removePlace(selectedPlaceIndex)"
+                    class="button is-danger is-small is-pulled-right"
+                  >
+                    <span class="icon"><i class="fas fa-trash"></i></span>
+                    <span>Delete</span>
+                  </button>
+                </h2>
+
+                <div class="field is-grouped">
+                  <div class="control is-expanded">
+                    <label class="label">ID</label>
+                    <input
+                      v-model="data.places[selectedPlaceIndex].id"
+                      class="input"
+                      type="text"
+                      placeholder="Unique ID"
+                    />
+                  </div>
+                  <div class="control">
+                    <label class="label">Coordinates</label>
+                    <div class="field has-addons">
+                      <div class="control">
+                        <input
+                          v-model.number="data.places[selectedPlaceIndex].latitude"
+                          @change="updateMarker(selectedPlaceIndex)"
+                          class="input"
+                          type="number"
+                          step="any"
+                          placeholder="Latitude"
+                        />
+                      </div>
+                      <div class="control">
+                        <input
+                          v-model.number="data.places[selectedPlaceIndex].longitude"
+                          @change="updateMarker(selectedPlaceIndex)"
+                          class="input"
+                          type="number"
+                          step="any"
+                          placeholder="Longitude"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="field">
+                  <label class="label">Image File (Common to all languages)</label>
+                  <input
+                    v-model="data.places[selectedPlaceIndex].imageFile"
+                    class="input"
+                    type="text"
+                    placeholder="image-001.jpg"
+                  />
+                  <p class="help">Name of the image file (e.g., image-001.jpg, image-001.png)</p>
+                </div>
+
+                <!-- Language tabs -->
+                <div class="tabs language-tabs">
+                  <ul>
+                    <li
+                      v-for="lang in availableLanguages"
+                      :key="lang"
+                      :class="{ 
+                                            'is-active': currentLanguage === lang,
+                                            'is-incomplete': !isLanguageComplete(data.places[selectedPlaceIndex], lang)
+                                        }"
+                    >
+                      <a @click="currentLanguage = lang">
+                        {{ lang.toUpperCase() }}
+                        <span
+                          v-if="!isLanguageComplete(data.places[selectedPlaceIndex], lang)"
+                          class="icon is-small"
+                        >
+                          <i class="fas fa-exclamation-triangle"></i>
+                        </span>
+                      </a>
+                    </li>
+                    <li>
+                      <a @click="showAddLanguage = !showAddLanguage">
+                        <span class="icon"><i class="fas fa-plus"></i></span>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+
+                <!-- Add language -->
+                <div v-if="showAddLanguage" class="field has-addons">
+                  <div class="control">
+                    <input
+                      v-model="newLanguage"
+                      class="input"
+                      type="text"
+                      placeholder="Language code (e.g., en, es, de)"
+                    />
+                  </div>
+                  <div class="control">
+                    <button @click="addLanguage" class="button is-primary">Add Language</button>
+                  </div>
+                </div>
+
+                <!-- Current language content -->
+                <div v-if="data.places[selectedPlaceIndex].content[currentLanguage]">
+                  <div class="field">
+                    <label class="label">Title</label>
+                    <input
+                      v-model="data.places[selectedPlaceIndex].content[currentLanguage].title"
+                      class="input"
+                      type="text"
+                    />
+                  </div>
+
+                  <div class="field">
+                    <label class="label">Short Description</label>
+                    <input
+                      v-model="data.places[selectedPlaceIndex].content[currentLanguage].description"
+                      class="input"
+                      type="text"
+                    />
+                  </div>
+
+                  <div class="field">
+                    <label class="label">Full Text</label>
+                    <textarea
+                      v-model="data.places[selectedPlaceIndex].content[currentLanguage].text"
+                      class="textarea"
+                      rows="4"
+                    ></textarea>
+                  </div>
+
+                  <div class="field">
+                    <label class="label">Audio File</label>
+                    <input
+                      v-model="data.places[selectedPlaceIndex].content[currentLanguage].audioFile"
+                      class="input"
+                      type="text"
+                      placeholder="audio-001.mp3"
+                    />
+                    <p class="help">Name of the audio file (e.g., audio-001.mp3)</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- No place selected -->
+              <div v-else class="box">
+                <div class="content has-text-centered">
+                  <p>Select a place from the list or click on the map to add a new one.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Places list sidebar -->
+            <div class="column">
+              <div class="box">
+                <h3 class="subtitle">Places ({{ data.places.length }})</h3>
+                <div class="places-list">
+                  <div
+                    v-for="(place, index) in data.places"
+                    :key="place.id"
+                    @click="selectPlace(index)"
+                    :class="{ 'place-item': true, 'is-active': selectedPlaceIndex === index }"
+                  >
+                    <div class="has-text-weight-bold">{{ place.id }}</div>
+                    <div class="is-size-7 has-text-grey">
+                      {{ place.latitude.toFixed(4) }}, {{ place.longitude.toFixed(4) }}
+                    </div>
+                    <div class="is-size-7 language-tags">
+                      <span
+                        v-for="lang in availableLanguages"
+                        :key="lang"
+                        :class="{ 'tag': true, 'is-small': true, 'is-success': isLanguageComplete(place, lang), 'is-danger': !isLanguageComplete(place, lang) }"
+                      >
+                        {{ lang.toUpperCase() }}
+                      </span>
+                    </div>
+                  </div>
+                  <div v-if="data.places.length === 0" class="has-text-centered has-text-grey">
+                    No places yet. Load a file or add one!
+                  </div>
+                </div>
+              </div>
+
+              <!-- Map Configuration -->
+              <div class="box">
+                <h3 class="subtitle">Configuration</h3>
+                <div class="columns is-multiline">
+                  <div class="column is-half">
+                    <div class="field">
+                      <label class="label">Default Language</label>
+                      <div class="control">
+                        <div class="select is-fullwidth">
+                          <select v-model="data.config.defaultLanguage">
+                            <option v-for="lang in availableLanguages" :key="lang" :value="lang">
+                              {{ lang.toUpperCase() }}
+                            </option>
+                          </select>
+                        </div>
+                      </div>
+                      <p class="help">Language used when loading the application</p>
+                    </div>
+                  </div>
+                  <div class="column is-half">
+                    <!-- Spacer -->
+                  </div>
+                  <div class="column is-half">
+                    <div class="field">
+                      <label class="label">Initial Latitude</label>
+                      <input
+                        v-model.number="data.config.map.center.latitude"
+                        class="input"
+                        type="number"
+                        step="any"
+                      />
+                    </div>
+                  </div>
+                  <div class="column is-half">
+                    <div class="field">
+                      <label class="label">Initial Longitude</label>
+                      <input
+                        v-model.number="data.config.map.center.longitude"
+                        class="input"
+                        type="number"
+                        step="any"
+                      />
+                    </div>
+                  </div>
+                  <div class="column is-half">
+                    <div class="field">
+                      <label class="label">Initial Zoom</label>
+                      <input
+                        v-model.number="data.config.map.zoom"
+                        class="input"
+                        type="number"
+                        min="1"
+                        max="18"
+                      />
+                    </div>
+                  </div>
+                  
+                  <!-- Go To Initial User Location Configuration -->
+                  <div class="column is-full">
+                    <hr />
+                    <h4 class="subtitle is-6">Auto-Center on User Location</h4>
+                  </div>
+                  
+                  <div class="column is-half">
+                    <div class="field">
+                      <label class="label">Enable Auto-Center</label>
+                      <div class="control">
+                        <label class="checkbox">
+                          <input 
+                            type="checkbox" 
+                            v-model="data.config.goToInitialUserLocation.enable"
+                          />
+                          Center map on user if near initial center
+                        </label>
+                      </div>
+                      <p class="help">Automatically center the map on user location if they are within the threshold distance from the initial center</p>
+                    </div>
+                  </div>
+                  
+                  <div class="column is-half">
+                    <div class="field">
+                      <label class="label">Distance Threshold</label>
+                      <input
+                        v-model.number="data.config.goToInitialUserLocation.threshold"
+                        class="input"
+                        type="number"
+                        step="0.001"
+                        min="0.001"
+                        max="1"
+                      />
+                      <p class="help">Maximum distance (in degrees) from center to trigger auto-center</p>
+                    </div>
+                  </div>
+                  
+                  <div class="column is-half">
+                    <div class="field">
+                      <label class="label">Zoom Increase</label>
+                      <input
+                        v-model.number="data.config.goToInitialUserLocation.increaseZoom"
+                        class="input"
+                        type="number"
+                        min="0"
+                        max="5"
+                      />
+                      <p class="help">How much to increase zoom when centering on user</p>
+                    </div>
+                  </div>
+                  
+                  <div class="column is-half">
+                    <div class="field">
+                      <label class="label">Preview Threshold</label>
+                      <div class="control">
+                        <label class="checkbox">
+                          <input 
+                            type="checkbox" 
+                            v-model="showThresholdPreview"
+                            @change="toggleThresholdPreview"
+                          />
+                          Show threshold circle on map
+                        </label>
+                      </div>
+                      <p class="help">Display a circle showing the auto-center threshold area</p>
+                    </div>
+                  </div>
+                  <div class="column is-half">
+                    <div class="field">
+                      <label class="label">&nbsp;</label>
+                      <button @click="applyMapConfig" class="button is-primary is-fullwidth">
+                        <span class="icon"><i class="fas fa-map-marked-alt"></i></span>
+                        <span>Apply</span>
+                      </button>
+                    </div>
+                  </div>
+                  <div class="column is-half">
+                    <div class="field">
+                      <label class="label">&nbsp;</label>
+                      <button @click="captureCurrentView" class="button is-info is-fullwidth">
+                        <span class="icon"><i class="fas fa-crosshairs"></i></span>
+                        <span>Current</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <input type="file" id="file-input" @change="loadFile" accept=".json" style="display: none" />
+    <script src="app.js"></script>
+  </body>
+</html>

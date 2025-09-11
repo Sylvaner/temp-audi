@@ -1,0 +1,208 @@
+{
+  "places": [
+    {
+      "id": "statue-la-quintinie",
+      "latitude": 48.79908106692258,
+      "longitude": 2.1213753776846027,
+      "content": {
+        "fr": {
+          "title": "Statue de Jean-Baptiste de La Quintinie",
+          "description": "Créateur du Potager du Roi",
+          "text": "Jean-Baptiste de La Quintinie, né en 1626, était juriste de formation. Mais un voyage en Italie éveilla en lui une passion pour l’art des jardins. Sa réputation grandit si vite que Louis XIV lui confia une mission d’exception : créer le Potager du Roi, juste derrière le château de Versailles.\n\nSur un terrain marécageux, La Quintinie déploya tout son savoir-faire. Il dessina les grands carrés géométriques, aménagea les sols et inventa des techniques pour produire en toutes saisons. Le résultat émerveilla la cour : des asperges servies en plein mois de janvier, des fraises cueillies dès mars… Comme si les saisons cédaient devant la volonté royale.\n\nLe Potager du Roi n’était pas seulement un jardin nourricier. C’était aussi un véritable laboratoire d’innovation agricole, dont l’influence s’est étendue bien au-delà de Versailles, et qui demeure aujourd’hui un lieu d’expérimentation pour étudiants et chercheurs.",
+          "audioFile": "statue-la-quintinie-fr.mp3"
+        },
+        "en": {
+          "title": "Statue of Jean-Baptiste de La Quintinie",
+          "description": "Creator of the King's Kitchen Garden",
+          "text": "Jean-Baptiste de La Quintinie, born in 1626, was originally trained as a lawyer. But a journey to Italy awakened in him a passion for the art of gardens. His reputation grew so quickly that Louis XIV entrusted him with a remarkable mission: to create the King’s Kitchen Garden, right behind the Palace of Versailles.\n\nOn marshy land, La Quintinie deployed all his expertise. He designed the great geometric plots, improved the soil, and invented techniques to grow produce in every season. The court was astonished: asparagus in the middle of January, strawberries picked as early as March… It seemed as though the seasons themselves obeyed the royal will.\n\nThe King’s Kitchen Garden was more than a source of food. It was a true laboratory of agricultural innovation, whose influence spread far beyond Versailles — and which still serves today as a site of experimentation for students and researchers.",
+          "audioFile": "statue-la-quintinie-en.mp3"
+        }
+      },
+      "imageFile": "statue-la-quintinie.jpg"
+    },
+    {
+      "id": "statue-hardy",
+      "latitude": 48.798681774103265,
+      "longitude": 2.1231567122107275,
+      "content": {
+        "fr": {
+          "title": "Statue d’Auguste Hardy",
+          "description": "Directeur du Potager et fondateur de l’école",
+          "text": "Au XIXᵉ siècle, le Potager du Roi connaît un nouveau souffle grâce à son directeur Auguste Hardy. En 1874, il y fonde la première École nationale d’horticulture, transformant le lieu en un centre de formation unique. Les élèves y apprenaient autant dans les salles de cours que dans les carrés du Potager.\n\nOn raconte qu’Hardy passait chaque matin inspecter les plantations, et n’hésitait pas à reprendre un étudiant s’il voyait une taille mal faite. Pour lui, l’excellence passait par le geste autant que par la théorie. C’est cette exigence qui a marqué des générations de jardiniers et donné à l’école son prestige.\n\nAujourd’hui encore, l’esprit d’Hardy survit dans l’enseignement dispensé ici, qui mêle savoir académique et pratique sur le terrain.",
+          "audioFile": "statue-hardy-fr.mp3"
+        },
+        "en": {
+          "title": "Statue of Auguste Hardy",
+          "description": "Director of the Kitchen Garden and founder of the horticultural school",
+          "text": "In the 19th century, the King’s Kitchen Garden entered a new era under its director Auguste Hardy. In 1874, he founded here the first National School of Horticulture, turning the garden into a unique training center. Students learned as much in the classrooms as in the plots of the Potager.\n\nIt is said that Hardy inspected the plantations every morning, and would not hesitate to correct a student if he spotted a poorly made cut. For him, excellence depended as much on the gesture as on theory. This demanding spirit shaped generations of gardeners and gave the school its prestige.\n\nToday, Hardy’s legacy endures in the way horticultural knowledge continues to be taught here: combining academic expertise with hands-on practice.",
+          "audioFile": "statue-hardy-en.mp3"
+        }
+      },
+      "imageFile": "statue-hardy.jpg"
+    },
+    {
+      "id": "jardin-lelieur",
+      "latitude": 48.79843442304032,
+      "longitude": 2.1229748410095484,
+      "content": {
+        "fr": {
+          "title": "Jardin Lelieur",
+          "description": "Louis Lelieur, intendant de Louis XIV",
+          "text": "Le jardin Lelieur rend hommage à Louis Lelieur, intendant des jardins de Louis XIV. Botaniste passionné, il participa à l’organisation du Potager du Roi et fit entrer en France des plantes encore inconnues, comme certaines venues d’Orient.\n\nOn raconte qu’il rapporta un grenadier qui surprit les visiteurs par ses fleurs éclatantes, avant même que l’on pense à goûter ses fruits. Aujourd’hui encore, ce jardin conserve une vocation d’expérimentation : étudiants et chercheurs y observent, plantent et testent de nouvelles manières d’aménager. À la fois espace d’étude et lieu de mémoire, il rappelle que Versailles demeure un laboratoire vivant du paysage depuis le XVIIᵉ siècle.",
+          "audioFile": "jardin-lelieur-fr.mp3"
+        },
+        "en": {
+          "title": "Lelieur Garden",
+          "description": "Louis Lelieur, Intendant of Louis XIV",
+          "text": "The Lelieur Garden pays tribute to Louis Lelieur, superintendent of Louis XIV’s gardens. A passionate botanist, he helped organize the King’s Kitchen Garden and introduced plants previously unknown in France, including species from the East.\n\nIt is said that he once brought back a pomegranate tree whose brilliant blossoms amazed visitors long before anyone thought of tasting its fruit. Today, this garden still serves as a place of experimentation: students and researchers observe, plant, and test new approaches to landscape design. Both a study space and a memorial site, it shows how Versailles has remained a living laboratory of landscape since the 17th century.",
+          "audioFile": "jardin-lelieur-en.mp3"
+        }
+      },
+      "imageFile": "jardin-lelieur.jpg"
+    },
+    {
+      "id": "jardin-du-breuil",
+      "latitude": 48.79803017800775,
+      "longitude": 2.1227011544215557,
+      "content": {
+        "fr": {
+          "title": "Jardin du Breuil",
+          "description": "Auguste Rivière du Breuil, ingénieur agronome",
+          "text": "Le jardin du Breuil porte le nom d’Auguste Rivière du Breuil, ingénieur agronome du XIXᵉ siècle. Enseignant reconnu, il a profondément marqué l’histoire de l’école en défendant l’idée que l’horticulture devait s’appuyer sur l’observation scientifique.\n\nOn raconte qu’il demandait souvent à ses étudiants de décrire précisément une plante avant même de la toucher, pour affiner leur regard. Ses travaux ont contribué à moderniser les cultures, en introduisant des méthodes plus rigoureuses et adaptées aux besoins de l’époque. Ce jardin rappelle ainsi une étape clé de l’évolution de l’enseignement horticole, entre savoirs traditionnels et ouverture vers la recherche agronomique moderne.",
+          "audioFile": "jardin-du-breuil-fr.mp3"
+        },
+        "en": {
+          "title": "Du Breuil Garden",
+          "description": "Auguste Rivière du Breuil, agronomist",
+          "text": "The Du Breuil Garden is named after Auguste Rivière du Breuil, a 19th-century agronomist. A respected teacher, he left a deep mark on the school’s history by insisting that horticulture should be grounded in scientific observation.\n\nIt is said he often asked his students to describe a plant in detail before even touching it, to sharpen their eye. His work helped modernize cultivation practices, introducing more rigorous methods adapted to the needs of the time. This garden recalls a key moment in the evolution of horticultural education, balancing traditional knowledge with the emerging field of agricultural science.",
+          "audioFile": "jardin-du-breuil-en.mp3"
+        }
+      },
+      "imageFile": ""
+    },
+    {
+      "id": "terrasse-nord",
+      "latitude": 48.797825227375,
+      "longitude": 2.12060375503147,
+      "imageFile": "",
+      "content": {
+        "fr": {
+          "title": "Terrasse nord",
+          "description": "Entre le grand carré et les Onzes",
+          "text": "La terrasse nord du Potager du Roi offre un point de vue unique sur l’ensemble du jardin. Aménagée à la fin du XVIIᵉ siècle, elle servait autant à la promenade qu’à l’observation, permettant d’embrasser d’un seul regard l’organisation rigoureuse du potager conçu par La Quintinie.\n\nOn rapporte que les visiteurs de Louis XIV venaient ici admirer le spectacle des cultures parfaitement alignées, comme un tableau vivant. Ce belvédère illustre l’importance accordée à la géométrie et à la mise en scène dans l’art des jardins classiques. Depuis cette terrasse, on mesure combien le Potager du Roi était pensé non seulement comme un lieu de production, mais aussi comme une mise en scène destinée à émerveiller les invités du souverain.",
+          "audioFile": "terrasse-nord-fr.mp3"
+        },
+        "en": {
+          "title": "North Terrace",
+          "description": "Between the Grand Square and the Eleven Plots",
+          "text": "The north terrace of the King’s Kitchen Garden offers a unique view over the entire site. Built at the end of the 17th century, it served as much for strolling as for observing, allowing one sweeping glance over the rigorous organization of the garden designed by La Quintinie.\n\nIt is said that visitors of Louis XIV would stop here to marvel at the spectacle of perfectly aligned crops, like a living painting. This belvedere illustrates the importance of geometry and staging in the art of classical gardens. From this terrace, one understands that the Potager was conceived not only as a place of production but also as a spectacle meant to dazzle the King’s guests.",
+          "audioFile": "terrasse-nord-en.mp3"
+        }
+      }
+    },
+    {
+      "id": "jardin-legendre",
+      "latitude": 48.79764147781995,
+      "longitude": 2.122454655370825,
+      "imageFile": "",
+      "content": {
+        "fr": {
+          "title": "Jardin Legendre",
+          "description": "Professeur d’horticulture",
+          "text": "Le jardin Legendre rend hommage à Pierre-Charles François Legendre, professeur d’horticulture au XIXᵉ siècle. Enseignant passionné, il a joué un rôle important dans la transmission des savoirs horticoles et la formation de générations de jardiniers.\n\nOn dit qu’il avait pour habitude de donner rendez-vous à ses élèves directement au milieu des cultures, pour leur montrer que l’apprentissage passait avant tout par l’expérience directe. Ce jardin rappelle l’époque où l’école affirmait sa vocation scientifique et pédagogique, en intégrant les découvertes botaniques et agronomiques de son temps.",
+          "audioFile": "jardin-legendre-fr.mp3"
+        },
+        "en": {
+          "title": "Legendre Garden",
+          "description": "Professor of horticulture",
+          "text": "The Legendre Garden pays tribute to Pierre-Charles François Legendre, a 19th-century professor of horticulture. A passionate teacher, he played an important role in transmitting horticultural knowledge and training generations of gardeners.\n\nIt is said that he often gathered his students right among the crops, to show that learning was above all rooted in direct experience. This garden evokes the time when the school asserted its scientific and pedagogical vocation, integrating the latest botanical and agronomic discoveries.",
+          "audioFile": "jardin-legendre-en.mp3"
+        }
+      }
+    },
+    {
+      "id": "grille-du-roi",
+      "latitude": 48.79898778107424,
+      "longitude": 2.1191768110295905,
+      "imageFile": "grille-du-roi.jpg",
+      "content": {
+        "fr": {
+          "title": "La grille du Roi",
+          "description": "Entrée solennelle du Potager",
+          "text": "La grille du Roi marquait l’entrée principale du Potager du Roi. Elle servait à distinguer cet espace réservé au service du souverain des autres jardins de Versailles. Passer cette grille, c’était entrer dans un lieu à la fois utilitaire et prestigieux.\n\nOn raconte que Louis XIV venait parfois s’y arrêter pour échanger quelques mots avec La Quintinie, preuve de l’importance qu’il accordait à ce jardin. Aujourd’hui, cette entrée symbolise le lien entre patrimoine historique et ouverture au public, rappelant que le Potager reste un lieu vivant et partagé.",
+          "audioFile": "grille-du-roi-fr.mp3"
+        },
+        "en": {
+          "title": "The King’s Gate",
+          "description": "Solemn entrance to the Kitchen Garden",
+          "text": "The King’s Gate marked the main entrance to the King’s Kitchen Garden. It separated this royal service garden from the rest of Versailles. Passing through this gate meant entering a space that was both practical and prestigious.\n\nIt is said that Louis XIV sometimes paused here to exchange a few words with La Quintinie, showing how important the garden was to him. Today, the gate symbolizes the link between historical heritage and public access, reminding us that the Kitchen Garden remains a living, shared space.",
+          "audioFile": "grille-du-roi-en.mp3"
+        }
+      }
+    },
+    {
+      "id": "grand-bassin",
+      "latitude": 48.79849944114124,
+      "longitude": 2.120984278674905,
+      "imageFile": "grand-bassin.jpg",
+      "content": {
+        "fr": {
+          "title": "Le grand bassin",
+          "description": "Réserve d’eau et élément décoratif",
+          "text": "Le grand bassin, situé au centre du Potager, avait une fonction essentielle : stocker l’eau nécessaire à l’irrigation des cultures. Mais il était aussi un élément esthétique, reflétant le ciel et accentuant la symétrie du jardin.\n\nOn dit que les étudiants de l’école aimaient s’y retrouver à la pause pour profiter de sa fraîcheur. Aujourd’hui encore, il rappelle que l’eau est au cœur de l’art des jardins, ressource indispensable mais toujours précieuse.",
+          "audioFile": "grand-bassin-fr.mp3"
+        },
+        "en": {
+          "title": "The Grand Basin",
+          "description": "Water reservoir and decorative element",
+          "text": "The Grand Basin, located at the center of the Kitchen Garden, had a vital purpose: storing the water needed for irrigation. But it also served an aesthetic role, reflecting the sky and emphasizing the symmetry of the design.\n\nIt is said that students of the horticultural school once liked to gather here during their breaks to enjoy its coolness. Even today, it reminds us that water lies at the heart of garden art — an essential yet fragile resource.",
+          "audioFile": "grand-bassin-en.mp3"
+        }
+      }
+    },
+    {
+      "id": "point-de-vue",
+      "latitude": 48.79877576721084,
+      "longitude": 2.122439028832282,
+      "imageFile": "point-de-vue.jpg",
+      "content": {
+        "fr": {
+          "title": "Point de vue sur le grand carré",
+          "description": "Vue sur l’organisation du Potager",
+          "text": "Depuis ce point de vue, vous pouvez admirer le grand carré du Potager du Roi, composé de seize carrés parfaitement dessinés. Cette organisation reflète le goût du XVIIᵉ siècle pour la géométrie et la maîtrise de la nature.\n\nOn raconte que certains visiteurs croyaient contempler une œuvre d’art plutôt qu’un jardin nourricier, tant l’ordonnancement paraissait parfait. Aujourd’hui, ce point de vue illustre la continuité du Potager : un espace conçu pour émerveiller, produire et expérimenter.",
+          "audioFile": "point-de-vue-fr.mp3"
+        },
+        "en": {
+          "title": "View over the Grand Square",
+          "description": "Perspective on the garden’s organization",
+          "text": "From this viewpoint, you can admire the Grand Square of the King’s Kitchen Garden, composed of sixteen perfectly drawn plots. This layout reflects the 17th-century taste for geometry and the mastery of nature.\n\nIt is said that some visitors thought they were looking at a work of art rather than a kitchen garden, so perfect was the arrangement. Today, this viewpoint illustrates the continuity of the Potager: a place designed to amaze, to produce, and to experiment.",
+          "audioFile": "point-de-vue-en.mp3"
+        }
+      }
+    }
+  ],
+  "config": {
+    "siteName": {
+      "fr": "Potager du Roi",
+      "en": "King's Kitchen Garden"
+    },
+    "map": {
+      "center": {
+        "latitude": 48.79814325386045,
+        "longitude": 2.1209944351239463
+      },
+      "zoom": 16
+    },
+    "goToInitialUserLocation": {
+      "enable": true,
+      "threshold": 0.003,
+      "increaseZoom": 2
+    },
+    "defaultLanguage": "fr",
+    "availableLanguages": ["fr", "en"],
+    "icons": {
+      "place": "fa-monument",
+      "userLocation": "fa-person-walking"
+    }
+  }
+}
