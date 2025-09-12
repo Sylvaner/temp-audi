@@ -238,11 +238,8 @@
       "threshold": 0.003,
       "increaseZoom": 2
     },
-    "defaultLanguage": "fr",
-    "availableLanguages": [
-      "fr",
-      "en"
-    ],
+    "defaultLanguage": "en",
+    "availableLanguages": ["fr", "en"],
     "icons": {
       "place": "fa-monument",
       "userLocation": "fa-person-walking"

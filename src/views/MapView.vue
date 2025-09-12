@@ -64,6 +64,7 @@ const leafletMapRef = ref<any>(null)
 const showGeolocationModal = ref(false)
 const hasRequestedGeolocation = ref(false) // Flag pour éviter de redemander
 const selectedPlace = ref<any>(null) // Place sélectionnée pour le popup modal
+const hasInitialCentering = ref(false) // Flag pour ne centrer qu'au premier lancement
 
 // Computed
 const modalType = computed(() =>
@@ -105,13 +106,17 @@ async function handleAllowGeolocation() {
   if (success) {
     geolocationStore.startWatching()
 
-    // Vérifier si on doit centrer automatiquement selon la configuration
-    if (geolocationStore.shouldCenterOnUser && geolocationStore.userPosition) {
-      // Centrer avec un zoom augmenté de 1
-      centerOnUserWithIncreasedZoom()
-    } else if (geolocationStore.userPosition && geolocationStore.moveToUserLocation) {
-      // Centrage normal si l'option est activée
-      centerOnUser()
+    // Centrer seulement si c'est le premier lancement et qu'on a déjà une position
+    if (!hasInitialCentering.value && geolocationStore.userPosition) {
+      hasInitialCentering.value = true
+
+      if (geolocationStore.shouldCenterOnUser) {
+        centerOnUserWithIncreasedZoom()
+      } else if (geolocationStore.moveToUserLocation) {
+        centerOnUser()
+      }
+
+      console.log('Centrage initial effectué après acceptation de la géolocalisation')
     }
   } else {
     // Afficher le modal d'erreur
@@ -131,13 +136,17 @@ async function handleRetryGeolocation() {
   if (success) {
     geolocationStore.startWatching()
 
-    // Vérifier si on doit centrer automatiquement selon la configuration
-    if (geolocationStore.shouldCenterOnUser && geolocationStore.userPosition) {
-      // Centrer avec un zoom augmenté de 1
-      centerOnUserWithIncreasedZoom()
-    } else if (geolocationStore.userPosition && geolocationStore.moveToUserLocation) {
-      // Centrage normal si l'option est activée
-      centerOnUser()
+    // Centrer seulement si c'est le premier lancement et qu'on a déjà une position
+    if (!hasInitialCentering.value && geolocationStore.userPosition) {
+      hasInitialCentering.value = true
+
+      if (geolocationStore.shouldCenterOnUser) {
+        centerOnUserWithIncreasedZoom()
+      } else if (geolocationStore.moveToUserLocation) {
+        centerOnUser()
+      }
+
+      console.log('Centrage initial effectué après retry de la géolocalisation')
     }
   } else {
     // Réafficher le modal si échec
@@ -167,19 +176,27 @@ function goToPlace(position: Position) {
   }
 }
 
-// Watcher pour centrer automatiquement quand la position est obtenue
+// Watcher pour centrer automatiquement seulement au premier lancement
 watch(
   () => geolocationStore.userPosition,
   (newPosition) => {
     if (newPosition && mapInstance.value) {
-      // Vérifier si on doit centrer automatiquement selon la configuration
-      if (geolocationStore.shouldCenterOnUser) {
-        centerOnUserWithIncreasedZoom()
-      } else if (geolocationStore.moveToUserLocation) {
-        // Première fois qu'on obtient la position ET l'option est activée
-        centerOnUser()
-        // Désactiver l'option après le premier centrage pour éviter de recentrer à chaque mise à jour
-        geolocationStore.setMoveToUserLocation(false)
+      // Centrer seulement au premier lancement
+      if (!hasInitialCentering.value) {
+        hasInitialCentering.value = true
+
+        // Vérifier si on doit centrer automatiquement selon la configuration
+        if (geolocationStore.shouldCenterOnUser) {
+          centerOnUserWithIncreasedZoom()
+        } else if (geolocationStore.moveToUserLocation) {
+          // Première fois qu'on obtient la position
+          centerOnUser()
+        }
+
+        console.log('Centrage initial effectué sur la position utilisateur')
+      } else {
+        // Les mises à jour suivantes n'entraînent pas de centrage
+        console.log('Position utilisateur mise à jour (pas de centrage automatique)')
       }
     }
   },
@@ -203,8 +220,8 @@ onMounted(() => {
 onUnmounted(() => {
   // Nettoyer l'événement lors du démontage
   document.removeEventListener('keydown', handleKeyDown)
-  
-  // Note: On ne stopWatching() pas ici pour que la géolocalisation 
+
+  // Note: On ne stopWatching() pas ici pour que la géolocalisation
   // continue en arrière-plan même si on quitte la vue carte
 })
 </script>

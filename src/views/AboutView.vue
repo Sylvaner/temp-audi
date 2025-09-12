@@ -1,6 +1,5 @@
 <template>
   <div class="about-view">
-    <!-- Hero Bulma -->
     <section class="hero is-medium custom-hero">
       <div class="hero-body">
         <div class="container has-text-centered">
@@ -10,10 +9,8 @@
       </div>
     </section>
 
-    <!-- Contenu avec sections Bulma -->
     <div class="has-background-light">
       <div class="container">
-        <!-- Introduction -->
         <section class="section">
           <div class="columns is-vcentered">
             <div class="column is-7">
@@ -33,7 +30,6 @@
 
         <hr class="has-background-grey-lighter" />
 
-        <!-- Histoire -->
         <section class="section">
           <div class="columns is-vcentered">
             <div class="column is-5">
@@ -53,7 +49,6 @@
 
         <hr class="has-background-grey-lighter" />
 
-        <!-- Aujourd'hui -->
         <section class="section">
           <div class="columns is-vcentered">
             <div class="column is-7">
@@ -73,7 +68,6 @@
       </div>
     </div>
 
-    <!-- Section visite avec hero -->
     <section class="hero is-primary is-medium">
       <div class="hero-body">
         <div class="container has-text-centered">
@@ -98,7 +92,7 @@
               class="button is-white is-outlined is-large is-centered custom-button-secondary"
             >
               <span class="icon">
-                <i class="fas fa-external-link-alt"></i>
+                <i class="fas fa-globe"></i>
               </span>
               <span>{{ $t('about.visit.officialSiteButton') }}</span>
             </a>
@@ -109,9 +103,7 @@
   </div>
 </template>
 
-<script setup lang="ts">
-// Pas de logique spécifique nécessaire pour cette page
-</script>
+<script setup lang="ts"></script>
 
 <style scoped>
 /* Hero personnalisé avec image de fond */
