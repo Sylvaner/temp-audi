@@ -75,6 +75,29 @@
         background: none !important;
         border: none !important;
       }
+      .custom-marker {
+        background: transparent !important;
+        border: none !important;
+      }
+      .marker-preview {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.25rem 0.5rem;
+        border-radius: 4px;
+        background-color: #f5f5f5;
+        border: 1px solid #dbdbdb;
+      }
+      .marker-icon-preview {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 2px solid white;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+      }
     </style>
   </head>
   <body>
@@ -114,7 +137,7 @@
 
           <div class="columns">
             <!-- Main content -->
-            <div class="column is-three-quarters">
+            <div class="column is-two-thirds">
               <!-- Map -->
               <div class="box">
                 <h2 class="subtitle">Map - Click to add a place</h2>
@@ -126,16 +149,42 @@
                 class="box"
                 v-if="selectedPlaceIndex !== null && data.places[selectedPlaceIndex]"
               >
-                <h2 class="subtitle">
-                  Edit Place: {{ data.places[selectedPlaceIndex].id }}
-                  <button
-                    @click="removePlace(selectedPlaceIndex)"
-                    class="button is-danger is-small is-pulled-right"
-                  >
-                    <span class="icon"><i class="fas fa-trash"></i></span>
-                    <span>Delete</span>
-                  </button>
-                </h2>
+                <div class="level">
+                  <div class="level-left">
+                    <div class="level-item">
+                      <h2 class="subtitle">Edit Place: {{ data.places[selectedPlaceIndex].id }}</h2>
+                    </div>
+                    <div
+                      class="level-item"
+                      v-if="data.places[selectedPlaceIndex].markerColor || data.places[selectedPlaceIndex].markerIcon"
+                    >
+                      <div class="marker-preview">
+                        <div
+                          class="marker-icon-preview"
+                          :style="{ backgroundColor: data.places[selectedPlaceIndex].markerColor || '#B87333' }"
+                        >
+                          <i
+                            class="fas"
+                            :class="data.places[selectedPlaceIndex].markerIcon || 'fa-map-marker-alt'"
+                            style="color: white; font-size: 10px"
+                          ></i>
+                        </div>
+                        <span class="is-size-7">Preview</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="level-right">
+                    <div class="level-item">
+                      <button
+                        @click="removePlace(selectedPlaceIndex)"
+                        class="button is-danger is-small"
+                      >
+                        <span class="icon"><i class="fas fa-trash"></i></span>
+                        <span>Delete</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
 
                 <div class="field is-grouped">
                   <div class="control is-expanded">
@@ -183,6 +232,136 @@
                     placeholder="image-001.jpg"
                   />
                   <p class="help">Name of the image file (e.g., image-001.jpg, image-001.png)</p>
+                </div>
+
+                <!-- Marker customization -->
+                <div class="field is-grouped">
+                  <div class="control is-expanded">
+                    <label class="label">Marker Color</label>
+                    <div class="field has-addons">
+                      <div class="control">
+                        <input
+                          v-model="data.places[selectedPlaceIndex].markerColor"
+                          @change="updateMarker(selectedPlaceIndex)"
+                          class="input"
+                          type="color"
+                          :value="data.places[selectedPlaceIndex].markerColor || '#B87333'"
+                        />
+                      </div>
+                      <div class="control is-expanded">
+                        <input
+                          v-model="data.places[selectedPlaceIndex].markerColor"
+                          @change="updateMarker(selectedPlaceIndex)"
+                          class="input"
+                          type="text"
+                          placeholder="#B87333 or rgb(184, 115, 51)"
+                        />
+                      </div>
+                    </div>
+                    <p class="help">Custom color for the marker (CSS color value)</p>
+                  </div>
+                  <div class="control">
+                    <label class="label">Marker Icon</label>
+                    <input
+                      v-model="data.places[selectedPlaceIndex].markerIcon"
+                      @change="updateMarker(selectedPlaceIndex)"
+                      class="input"
+                      type="text"
+                      placeholder="fa-monument"
+                    />
+                    <p class="help">FontAwesome icon class (without 'fas ')</p>
+                  </div>
+                </div>
+
+                <!-- Predefined colors and icons -->
+                <div class="field">
+                  <label class="label">Quick Presets</label>
+                  <div class="buttons are-small">
+                    <button
+                      class="button"
+                      @click="applyPreset(selectedPlaceIndex, '#8B4513', 'fa-monument')"
+                      title="Monuments"
+                    >
+                      <span class="icon">
+                        <div
+                          class="marker-icon-preview"
+                          style="background-color: #8b4513; width: 16px; height: 16px"
+                        >
+                          <i class="fas fa-monument" style="color: white; font-size: 8px"></i>
+                        </div>
+                      </span>
+                      <span>Monument</span>
+                    </button>
+                    <button
+                      class="button"
+                      @click="applyPreset(selectedPlaceIndex, '#32CD32', 'fa-seedling')"
+                      title="Gardens"
+                    >
+                      <span class="icon">
+                        <div
+                          class="marker-icon-preview"
+                          style="background-color: #32cd32; width: 16px; height: 16px"
+                        >
+                          <i class="fas fa-seedling" style="color: white; font-size: 8px"></i>
+                        </div>
+                      </span>
+                      <span>Garden</span>
+                    </button>
+                    <button
+                      class="button"
+                      @click="applyPreset(selectedPlaceIndex, '#2E8B57', 'fa-user-graduate')"
+                      title="Education"
+                    >
+                      <span class="icon">
+                        <div
+                          class="marker-icon-preview"
+                          style="background-color: #2e8b57; width: 16px; height: 16px"
+                        >
+                          <i class="fas fa-user-graduate" style="color: white; font-size: 8px"></i>
+                        </div>
+                      </span>
+                      <span>Education</span>
+                    </button>
+                    <button
+                      class="button"
+                      @click="applyPreset(selectedPlaceIndex, '#4169E1', 'fa-binoculars')"
+                      title="Viewpoints"
+                    >
+                      <span class="icon">
+                        <div
+                          class="marker-icon-preview"
+                          style="background-color: #4169e1; width: 16px; height: 16px"
+                        >
+                          <i class="fas fa-binoculars" style="color: white; font-size: 8px"></i>
+                        </div>
+                      </span>
+                      <span>View</span>
+                    </button>
+                    <button
+                      class="button"
+                      @click="applyPreset(selectedPlaceIndex, '#DC143C', 'fa-building')"
+                      title="Buildings"
+                    >
+                      <span class="icon">
+                        <div
+                          class="marker-icon-preview"
+                          style="background-color: #dc143c; width: 16px; height: 16px"
+                        >
+                          <i class="fas fa-building" style="color: white; font-size: 8px"></i>
+                        </div>
+                      </span>
+                      <span>Building</span>
+                    </button>
+                    <button
+                      class="button"
+                      @click="applyPreset(selectedPlaceIndex, '', '')"
+                      title="Reset to default"
+                    >
+                      <span class="icon"><i class="fas fa-undo"></i></span>
+                      <span>Reset</span>
+                    </button>
+                  </div>
+                  <p class="help">Click on a preset to quickly apply color and icon combinations</p>
                 </div>
 
                 <!-- Language tabs -->
@@ -290,7 +469,34 @@
                     @click="selectPlace(index)"
                     :class="{ 'place-item': true, 'is-active': selectedPlaceIndex === index }"
                   >
-                    <div class="has-text-weight-bold">{{ place.id }}</div>
+                    <div class="level is-mobile" style="margin-bottom: 0.25rem">
+                      <div class="level-left">
+                        <div class="level-item">
+                          <div class="has-text-weight-bold">{{ place.id }}</div>
+                        </div>
+                      </div>
+                      <div class="level-right" v-if="place.markerColor || place.markerIcon">
+                        <div class="level-item">
+                          <div
+                            class="marker-icon-preview"
+                            :style="{ backgroundColor: place.markerColor || '#B87333' }"
+                            style="width: 16px; height: 16px"
+                          >
+                            <i
+                              class="fas"
+                              :class="place.markerIcon || 'fa-map-marker-alt'"
+                              style="color: white; font-size: 8px"
+                            ></i>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      class="is-size-7 has-text-grey"
+                      v-if="place.content[currentLanguage]?.description"
+                    >
+                      {{ place.content[currentLanguage].description }}
+                    </div>
                     <div class="is-size-7 has-text-grey">
                       {{ place.latitude.toFixed(4) }}, {{ place.longitude.toFixed(4) }}
                     </div>
@@ -366,29 +572,120 @@
                       />
                     </div>
                   </div>
-                  
+
+                  <!-- Default Markers Configuration -->
+                  <div class="column is-full">
+                    <hr />
+                    <h4 class="subtitle is-6">Default Markers Settings</h4>
+                  </div>
+
+                  <div class="column is-half">
+                    <div class="field">
+                      <label class="label">Default Marker Color</label>
+                      <div class="field has-addons">
+                        <div class="control">
+                          <input
+                            v-model="data.config.markers.defaultColor"
+                            class="input"
+                            type="color"
+                            :value="data.config.markers.defaultColor || '#B87333'"
+                          />
+                        </div>
+                        <div class="control is-expanded">
+                          <input
+                            v-model="data.config.markers.defaultColor"
+                            class="input"
+                            type="text"
+                            placeholder="#B87333"
+                          />
+                        </div>
+                      </div>
+                      <p class="help">Default color for new markers</p>
+                    </div>
+                  </div>
+
+                  <div class="column is-half">
+                    <div class="field">
+                      <label class="label">Place Icon</label>
+                      <div class="control has-icons-left">
+                        <input
+                          v-model="data.config.markers.place"
+                          class="input"
+                          type="text"
+                          placeholder="fa-monument"
+                        />
+                        <div class="icon is-small is-left">
+                          <i class="fas" :class="data.config.markers?.place || 'fa-monument'"></i>
+                        </div>
+                      </div>
+                      <p class="help">Icon for place markers (FontAwesome class)</p>
+                    </div>
+                  </div>
+
+                  <div class="column is-half">
+                    <div class="field">
+                      <label class="label">User Location Icon</label>
+                      <div class="control has-icons-left">
+                        <input
+                          v-model="data.config.markers.userLocation"
+                          class="input"
+                          type="text"
+                          placeholder="fa-person-walking"
+                        />
+                        <div class="icon is-small is-left">
+                          <i
+                            class="fas"
+                            :class="data.config.markers?.userLocation || 'fa-person-walking'"
+                          ></i>
+                        </div>
+                      </div>
+                      <p class="help">Icon for user location marker (FontAwesome class)</p>
+                    </div>
+                  </div>
+
+                  <div class="column is-full" v-if="data.config.markers">
+                    <div class="field">
+                      <div class="marker-preview">
+                        <div
+                          class="marker-icon-preview"
+                          :style="{ backgroundColor: data.config.markers.defaultColor || '#B87333' }"
+                        >
+                          <i
+                            class="fas"
+                            :class="data.config.markers?.place || 'fa-monument'"
+                            style="color: white; font-size: 10px"
+                          ></i>
+                        </div>
+                        <span class="is-size-7 has-text-grey">Default marker preview</span>
+                      </div>
+                    </div>
+                  </div>
+
                   <!-- Go To Initial User Location Configuration -->
                   <div class="column is-full">
                     <hr />
                     <h4 class="subtitle is-6">Auto-Center on User Location</h4>
                   </div>
-                  
+
                   <div class="column is-half">
                     <div class="field">
                       <label class="label">Enable Auto-Center</label>
                       <div class="control">
                         <label class="checkbox">
-                          <input 
-                            type="checkbox" 
+                          <input
+                            type="checkbox"
                             v-model="data.config.goToInitialUserLocation.enable"
                           />
                           Center map on user if near initial center
                         </label>
                       </div>
-                      <p class="help">Automatically center the map on user location if they are within the threshold distance from the initial center</p>
+                      <p class="help">
+                        Automatically center the map on user location if they are within the
+                        threshold distance from the initial center
+                      </p>
                     </div>
                   </div>
-                  
+
                   <div class="column is-half">
                     <div class="field">
                       <label class="label">Distance Threshold</label>
@@ -400,10 +697,12 @@
                         min="0.001"
                         max="1"
                       />
-                      <p class="help">Maximum distance (in degrees) from center to trigger auto-center</p>
+                      <p class="help">
+                        Maximum distance (in degrees) from center to trigger auto-center
+                      </p>
                     </div>
                   </div>
-                  
+
                   <div class="column is-half">
                     <div class="field">
                       <label class="label">Zoom Increase</label>
@@ -417,14 +716,14 @@
                       <p class="help">How much to increase zoom when centering on user</p>
                     </div>
                   </div>
-                  
+
                   <div class="column is-half">
                     <div class="field">
                       <label class="label">Preview Threshold</label>
                       <div class="control">
                         <label class="checkbox">
-                          <input 
-                            type="checkbox" 
+                          <input
+                            type="checkbox"
                             v-model="showThresholdPreview"
                             @change="toggleThresholdPreview"
                           />

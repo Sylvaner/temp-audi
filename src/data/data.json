@@ -24,6 +24,8 @@
       "id": "statue-hardy",
       "latitude": 48.798681774103265,
       "longitude": 2.1231567122107275,
+      "markerColor": "",
+      "markerIcon": "",
       "content": {
         "fr": {
           "title": "Statue d’Auguste Hardy",
@@ -44,6 +46,8 @@
       "id": "jardin-lelieur",
       "latitude": 48.79843442304032,
       "longitude": 2.1229748410095484,
+      "markerColor": "",
+      "markerIcon": "fa-seedling",
       "content": {
         "fr": {
           "title": "Jardin Lelieur",
@@ -78,7 +82,8 @@
           "audioFile": "jardin-du-breuil-en.mp3"
         }
       },
-      "imageFile": ""
+      "imageFile": "",
+      "markerIcon": "fa-seedling"
     },
     {
       "id": "terrasse-nord",
@@ -98,7 +103,8 @@
           "text": "The north terrace of the King’s Kitchen Garden offers a unique view over the entire site. Built at the end of the 17th century, it served as much for strolling as for observing, allowing one sweeping glance over the rigorous organization of the garden designed by La Quintinie.\n\nIt is said that visitors of Louis XIV would stop here to marvel at the spectacle of perfectly aligned crops, like a living painting. This belvedere illustrates the importance of geometry and staging in the art of classical gardens. From this terrace, one understands that the Potager was conceived not only as a place of production but also as a spectacle meant to dazzle the King’s guests.",
           "audioFile": "terrasse-nord-en.mp3"
         }
-      }
+      },
+      "markerIcon": ""
     },
     {
       "id": "jardin-legendre",
@@ -118,7 +124,8 @@
           "text": "The Legendre Garden pays tribute to Pierre-Charles François Legendre, a 19th-century professor of horticulture. A passionate teacher, he played an important role in transmitting horticultural knowledge and training generations of gardeners.\n\nIt is said that he often gathered his students right among the crops, to show that learning was above all rooted in direct experience. This garden evokes the time when the school asserted its scientific and pedagogical vocation, integrating the latest botanical and agronomic discoveries.",
           "audioFile": "jardin-legendre-en.mp3"
         }
-      }
+      },
+      "markerIcon": "fa-seedling"
     },
     {
       "id": "grille-du-roi",
@@ -219,6 +226,28 @@
           "audioFile": "grille-anjou-en.mp3"
         }
       }
+    },
+    {
+      "id": "boutique",
+      "latitude": 48.798959512610864,
+      "longitude": 2.1238045083433437,
+      "imageFile": "",
+      "markerColor": "#ca0202",
+      "markerIcon": "fa-basket-shopping",
+      "content": {
+        "en": {
+          "title": "The Kitchen Garden Shop",
+          "description": "Local and high-quality products",
+          "text": "The shop of the King’s Kitchen Garden offers a selection of products born from horticultural and artisanal expertise. Seasonal fruits and vegetables, jams, honey, and other specialties are prepared with care.\nEach product reflects the quality and excellence that define the Potager: combining tradition, respect for nature, and the pleasure of taste.",
+          "audioFile": ""
+        },
+        "fr": {
+          "title": "Boutique du potager",
+          "description": "Des produits de qualité",
+          "text": "La boutique du Potager du Roi propose une sélection de produits issus du savoir-faire horticole et artisanal. On y trouve des fruits et légumes de saison, des confitures, du miel et d’autres spécialités préparées avec soin.\nChaque produit reflète la qualité et l’exigence qui font la réputation du Potager : allier tradition, respect de la nature et plaisir du goût.",
+          "audioFile": ""
+        }
+      }
     }
   ],
   "config": {
@@ -240,7 +269,8 @@
     },
     "defaultLanguage": "en",
     "availableLanguages": ["fr", "en"],
-    "icons": {
+    "markers": {
+      "defaultColor": "#B87333",
       "place": "fa-monument",
       "userLocation": "fa-person-walking"
     }

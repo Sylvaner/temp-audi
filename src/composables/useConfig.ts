@@ -13,7 +13,8 @@ interface Config {
   }
   defaultLanguage: string
   availableLanguages: string[]
-  icons?: {
+  markers?: {
+    defaultColor: string
     place: string
     userLocation: string
   }
@@ -29,9 +30,10 @@ export function useConfig() {
     return config.value.siteName[lang] || config.value.siteName['fr'] || 'Audio Guide'
   })
 
-  const icons = computed(() => {
+  const markers = computed(() => {
     return (
-      config.value.icons || {
+      config.value.markers || {
+        defaultColor: '#B87333',
         place: 'fa-monument',
         userLocation: 'fa-person-walking',
       }
@@ -41,6 +43,6 @@ export function useConfig() {
   return {
     config: config.value,
     siteName,
-    icons,
+    markers,
   }
 }

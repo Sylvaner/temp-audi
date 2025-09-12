@@ -18,6 +18,11 @@ createApp({
           increaseZoom: 2,
         },
         defaultLanguage: 'fr',
+        markers: {
+          defaultColor: '#B87333',
+          place: 'fa-monument',
+          userLocation: 'fa-person-walking',
+        },
       },
     })
 
@@ -62,6 +67,8 @@ createApp({
         latitude: lat,
         longitude: lng,
         imageFile: '', // Image commune à toutes les langues
+        markerColor: '', // Couleur personnalisée du marqueur
+        markerIcon: '', // Icône personnalisée du marqueur
         content: {},
       }
 
@@ -106,10 +113,45 @@ createApp({
       map.setView([place.latitude, place.longitude], 15)
     }
 
+    const createCustomIcon = (place) => {
+      // Use custom color or default from config
+      const color = place.markerColor || data.config.markers?.defaultColor || '#B87333'
+      // Use custom icon or default from config
+      const iconClass = place.markerIcon || data.config.markers?.place || 'fa-monument'
+
+      return L.divIcon({
+        className: 'custom-marker',
+        html: `
+          <div style="
+            background-color: ${color}; 
+            width: 30px; 
+            height: 30px; 
+            border-radius: 50%; 
+            border: 3px solid white; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+          ">
+            <i class="fas ${iconClass}" style="color: white; font-size: 14px;"></i>
+          </div>
+        `,
+        iconSize: [30, 30],
+        iconAnchor: [15, 15],
+      })
+    }
+
     const addMarker = (place, index) => {
-      const marker = L.marker([place.latitude, place.longitude])
-        .addTo(map)
-        .bindPopup(`${place.id}<br>Lat: ${place.latitude}<br>Lng: ${place.longitude}`)
+      const icon = createCustomIcon(place)
+      const marker = L.marker([place.latitude, place.longitude], { icon }).addTo(map).bindPopup(`
+          <div>
+            <strong>${place.id}</strong><br>
+            Lat: ${place.latitude.toFixed(6)}<br>
+            Lng: ${place.longitude.toFixed(6)}<br>
+            ${place.markerColor ? `Color: ${place.markerColor}<br>` : ''}
+            ${place.markerIcon ? `Icon: ${place.markerIcon}<br>` : ''}
+          </div>
+        `)
 
       marker.on('click', () => {
         selectPlace(index)
@@ -229,6 +271,23 @@ createApp({
             if (!jsonData.config.defaultLanguage) {
               jsonData.config.defaultLanguage = 'fr'
             }
+            if (!jsonData.config.markers) {
+              jsonData.config.markers = {
+                defaultColor: '#B87333',
+                place: 'fa-monument',
+                userLocation: 'fa-person-walking',
+              }
+            } else {
+              if (!jsonData.config.markers.defaultColor) {
+                jsonData.config.markers.defaultColor = '#B87333'
+              }
+              if (!jsonData.config.markers.place) {
+                jsonData.config.markers.place = 'fa-monument'
+              }
+              if (!jsonData.config.markers.userLocation) {
+                jsonData.config.markers.userLocation = 'fa-person-walking'
+              }
+            }
           }
 
           // Clear current data
@@ -323,24 +382,26 @@ createApp({
       if (thresholdCircle) {
         map.removeLayer(thresholdCircle)
       }
-      
+
       const center = data.config.map.center
       const threshold = data.config.goToInitialUserLocation.threshold
-      
+
       // Convert threshold (in degrees) to meters for circle radius
       // Approximation: 1 degree ≈ 111,000 meters at the equator
       const radiusInMeters = threshold * 111000
-      
+
       thresholdCircle = L.circle([center.latitude, center.longitude], {
         radius: radiusInMeters,
         color: '#3498db',
         fillColor: '#3498db',
         fillOpacity: 0.1,
         weight: 2,
-        dashArray: '5, 5'
+        dashArray: '5, 5',
       }).addTo(map)
-      
-      thresholdCircle.bindPopup(`Auto-center threshold: ${threshold} degrees (≈${Math.round(radiusInMeters)}m)`)
+
+      thresholdCircle.bindPopup(
+        `Auto-center threshold: ${threshold} degrees (≈${Math.round(radiusInMeters)}m)`,
+      )
     }
 
     const hideThresholdCircle = () => {
@@ -355,21 +416,21 @@ createApp({
       if (userLocationMarker) {
         map.removeLayer(userLocationMarker)
       }
-      
+
       const center = data.config.map.center
-      
+
       // Create a custom icon using FontAwesome
       const userIcon = L.divIcon({
         html: '<i class="fas fa-person-walking" style="color: #e74c3c; font-size: 24px; text-shadow: 1px 1px 2px rgba(0,0,0,0.5);"></i>',
         iconSize: [24, 24],
         iconAnchor: [12, 12],
-        className: 'user-location-icon'
+        className: 'user-location-icon',
       })
-      
+
       userLocationMarker = L.marker([center.latitude, center.longitude], {
-        icon: userIcon
+        icon: userIcon,
       }).addTo(map)
-      
+
       userLocationMarker.bindPopup('User location (simulated at map center)')
     }
 
@@ -387,14 +448,25 @@ createApp({
     })
 
     // Watch for threshold changes and update circle if preview is active
-    watch(() => data.config.goToInitialUserLocation.threshold, () => {
-      if (showThresholdPreview.value && thresholdCircle) {
-        showThresholdCircle()
+    watch(
+      () => data.config.goToInitialUserLocation.threshold,
+      () => {
+        if (showThresholdPreview.value && thresholdCircle) {
+          showThresholdCircle()
+        }
+        if (showThresholdPreview.value && userLocationMarker) {
+          showUserLocationMarker()
+        }
+      },
+    )
+
+    const applyPreset = (index, color, icon) => {
+      if (data.places[index]) {
+        data.places[index].markerColor = color
+        data.places[index].markerIcon = icon
+        updateMarker(index)
       }
-      if (showThresholdPreview.value && userLocationMarker) {
-        showUserLocationMarker()
-      }
-    })
+    }
 
     return {
       data,
@@ -416,6 +488,7 @@ createApp({
       saveFile,
       initializeLanguage,
       toggleThresholdPreview,
+      applyPreset,
     }
   },
 }).mount('#app')

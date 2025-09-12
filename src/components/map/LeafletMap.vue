@@ -18,6 +18,8 @@ interface Place {
   latitude: number
   longitude: number
   imageFile?: string
+  markerColor?: string
+  markerIcon?: string
   content: Record<
     string,
     {
@@ -51,7 +53,7 @@ const props = withDefaults(defineProps<Props>(), {
 
 // Composables
 const languageStore = useLanguageStore()
-const { icons } = useConfig()
+const { markers } = useConfig()
 
 // État local
 const mapInstance = ref<any>(null)
@@ -71,14 +73,19 @@ const emit = defineEmits<{
 }>()
 
 // Fonction pour créer l'icône des lieux
-const createPlaceIcon = (isActive = false) => {
-  const color = isActive ? 'var(--color-warm)' : 'var(--color-secondary)' // Orange chaud si actif, orange terre sinon
+const createPlaceIcon = (place: Place, isActive = false) => {
+  // Couleur : utiliser la couleur personnalisée ou les couleurs par défaut
+  const color = isActive ? 'var(--color-warm)' : place.markerColor || markers.value.defaultColor
+
+  // Icône : utiliser l'icône personnalisée ou l'icône par défaut configurée
+  const iconClass = place.markerIcon || markers.value.place
+
   return L.divIcon({
     className: 'place-marker',
     html: `
       <div class="place-marker-icon">
         <div class="place-marker-circle" style="background-color: ${color};">
-          <i class="fas ${icons.value.place}"></i>
+          <i class="fas ${iconClass}"></i>
         </div>
       </div>
     `,
@@ -102,7 +109,7 @@ const createPlaceMarkers = () => {
     const isActive = activeMarkerId.value === place.id
 
     const marker = L.marker([place.latitude, place.longitude], {
-      icon: createPlaceIcon(isActive),
+      icon: createPlaceIcon(place, isActive),
       zIndexOffset: 500, // Au-dessus de la carte mais sous le marqueur utilisateur
     }) as ExtendedMarker
 
@@ -116,13 +123,14 @@ const createPlaceMarkers = () => {
       if (activeMarkerId.value !== place.id) {
         // Réinitialiser l'ancien marqueur actif
         if (activeMarkerId.value) {
+          const oldPlace = places.find((p) => p.id === activeMarkerId.value)
           const oldMarker = placeMarkers.value.find((m) => m.placeId === activeMarkerId.value)
-          if (oldMarker) {
-            oldMarker.setIcon(createPlaceIcon(false))
+          if (oldMarker && oldPlace) {
+            oldMarker.setIcon(createPlaceIcon(oldPlace, false))
           }
         }
         activeMarkerId.value = place.id
-        marker.setIcon(createPlaceIcon(true))
+        marker.setIcon(createPlaceIcon(place, true))
       }
     })
 
@@ -139,7 +147,7 @@ const createUserIcon = () => {
     html: `
       <div class="user-location-icon">
         <div class="user-location-circle" style="background-color: ${userColor};">
-          <i class="fas ${icons.value.userLocation}"></i>
+          <i class="fas ${markers.value.userLocation}"></i>
         </div>
       </div>
     `,
