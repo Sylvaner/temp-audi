@@ -331,7 +331,7 @@ defineExpose({
   justify-content: center;
   color: var(--color-white);
   font-size: 16px;
-  z-index: var(--z-map-controls);
+  z-index: var(--z-map-user);
   animation: user-pulse 2s infinite;
 }
 
@@ -382,7 +382,7 @@ defineExpose({
   color: var(--color-white);
   font-size: 16px;
   transition: all var(--transition-normal);
-  z-index: var(--z-map-controls);
+  z-index: var(--z-map-place);
 }
 
 :deep(.place-marker-circle.is-selected) {

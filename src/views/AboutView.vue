@@ -81,7 +81,10 @@
           <p class="subtitle is-4">{{ $t('about.visit.description') }}</p>
 
           <div class="buttons is-centered">
-            <router-link to="/map" class="button is-white is-large custom-button-primary">
+            <router-link
+              to="/map"
+              class="button is-white is-large is-centered custom-button-primary"
+            >
               <span class="icon">
                 <i class="fas fa-map"></i>
               </span>
@@ -92,7 +95,7 @@
               href="https://www.ecole-paysage.fr/fr/potager-du-roi"
               target="_blank"
               rel="noopener noreferrer"
-              class="button is-white is-outlined is-large custom-button-secondary"
+              class="button is-white is-outlined is-large is-centered custom-button-secondary"
             >
               <span class="icon">
                 <i class="fas fa-external-link-alt"></i>

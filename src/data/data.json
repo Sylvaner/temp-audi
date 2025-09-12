@@ -199,6 +199,26 @@
           "audioFile": "figuerie-en.mp3"
         }
       }
+    },
+    {
+      "id": "grille-anjou",
+      "latitude": 48.79791356826765,
+      "longitude": 2.1231466454832764,
+      "imageFile": "",
+      "content": {
+        "fr": {
+          "title": "La grille d’Anjou",
+          "description": "Entrée secondaire vers les jardins expérimentaux",
+          "text": "La grille d’Anjou, percée dans le mur d’enceinte du Potager, permettait d’accéder aux parcelles situées à l’est. Moins solennelle que la grille du Roi, elle servait surtout aux jardiniers et aux élèves qui allaient travailler dans les carrés d’expérimentation.\nOn raconte que les étudiants, au XIXᵉ siècle, passaient par cette entrée à l’aube pour commencer les travaux pratiques, parfois encore à la lueur des lampes.\n\nAujourd’hui, la grille d’Anjou garde ce rôle d’ouverture vers un espace d’étude et de recherche. Elle rappelle que le Potager n’a jamais été qu’un lieu de spectacle : c’est aussi un chantier permanent d’apprentissage et d’innovation horticole.",
+          "audioFile": "grille-anjou-fr.mp3"
+        },
+        "en": {
+          "title": "The Anjou Gate",
+          "description": "Secondary entrance to the experimental gardens",
+          "text": "The Anjou Gate, set into the surrounding wall of the Kitchen Garden, provided access to the plots on the eastern side. Less ceremonial than the King’s Gate, it was mainly used by gardeners and students heading to the experimental plots.\nIt is said that in the 19th century, students would pass through this entrance at dawn to begin their practical work, sometimes still by the light of lanterns.\n\nToday, the Anjou Gate still serves as a passage towards study and research areas. It reminds us that the King’s Kitchen Garden was never only a place of spectacle: it has always been a working ground for learning and horticultural innovation.",
+          "audioFile": "grille-anjou-en.mp3"
+        }
+      }
     }
   ],
   "config": {
@@ -219,7 +239,10 @@
       "increaseZoom": 2
     },
     "defaultLanguage": "fr",
-    "availableLanguages": ["fr", "en"],
+    "availableLanguages": [
+      "fr",
+      "en"
+    ],
     "icons": {
       "place": "fa-monument",
       "userLocation": "fa-person-walking"

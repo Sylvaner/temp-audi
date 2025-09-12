@@ -5,6 +5,8 @@
   /* Carte et éléments de base */
   --z-map: 1;
   --z-map-controls: 100;
+  --z-map-place: 100;
+  --z-map-user: 99;
 
   /* Navigation */
   --z-navbar: 1000;
@@ -115,6 +117,12 @@
 }
 .z-map-controls {
   z-index: var(--z-map-controls) !important;
+}
+.z-map-place {
+  z-index: var(--z-map-place) !important;
+}
+.z-map-user {
+  z-index: var(--z-map-user) !important;
 }
 .z-navbar {
   z-index: var(--z-navbar) !important;
