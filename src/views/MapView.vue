@@ -19,6 +19,7 @@
         @request-permission="showGeolocationModal = true"
         @click="centerOnUser"
       />
+      <AudioControls />
     </div>
 
     <!-- Modal de géolocalisation -->
@@ -46,6 +47,7 @@ import PlacesList from '@/components/map/PlacesList.vue'
 import PlacePopup from '@/components/map/PlacePopup.vue'
 import GeolocationButton from '@/components/ui/GeolocationButton.vue'
 import GeolocationModal from '@/components/ui/GeolocationModal.vue'
+import AudioControls from '@/components/ui/AudioControls.vue'
 import { useGeolocationStore } from '@/stores/geolocation'
 import type { Position } from '@/types'
 import data from '@/data/data.json'

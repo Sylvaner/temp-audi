@@ -14,6 +14,7 @@ export const useAudioStore = defineStore('audio', () => {
 
   // Computed
   const hasAudio = computed(() => currentAudio.value !== null)
+  const hasPlayedAnyAudio = computed(() => playedPlaces.value.size > 0)
   const progress = computed(() => {
     if (duration.value === 0) return 0
     return (currentTime.value / duration.value) * 100
@@ -191,6 +192,7 @@ export const useAudioStore = defineStore('audio', () => {
     currentTime,
     duration,
     hasAudio,
+    hasPlayedAnyAudio,
     progress,
 
     // Actions
