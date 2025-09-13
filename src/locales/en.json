@@ -17,6 +17,7 @@
     "play": "Play",
     "pause": "Pause",
     "stop": "Stop",
+    "listen": "Listen",
     "volume": "Volume",
     "position": "Position",
     "duration": "Duration"

@@ -12,13 +12,35 @@ export const useAudioStore = defineStore('audio', () => {
   const duration = ref(0)
   const playedPlaces = ref<Set<string>>(new Set()) // Places qui ont été jouées au moins une fois
 
+  // États de prétéléchargement
+  const preloadedAudios = ref<Map<string, HTMLAudioElement>>(new Map())
+  const downloadQueue = ref<string[]>([])
+  const downloadingFiles = ref<Set<string>>(new Set())
+  const downloadedFiles = ref<Set<string>>(new Set())
+  const maxConcurrentDownloads = 5
+
   // Computed
-  const hasAudio = computed(() => currentAudio.value !== null)
+  const hasAudio = computed(() => currentAudio.value !== null && isPlaying.value)
   const hasPlayedAnyAudio = computed(() => playedPlaces.value.size > 0)
   const progress = computed(() => {
     if (duration.value === 0) return 0
     return (currentTime.value / duration.value) * 100
   })
+
+  // Computed pour le prétéléchargement
+  const isDownloading = (audioFile: string) => {
+    return downloadingFiles.value.has(audioFile)
+  }
+
+  const isDownloaded = (audioFile: string) => {
+    return downloadedFiles.value.has(audioFile)
+  }
+
+  const getDownloadState = (audioFile: string): 'none' | 'downloading' | 'downloaded' => {
+    if (downloadingFiles.value.has(audioFile)) return 'downloading'
+    if (downloadedFiles.value.has(audioFile)) return 'downloaded'
+    return 'none'
+  }
 
   // Actions
   const stopCurrent = () => {
@@ -83,6 +105,110 @@ export const useAudioStore = defineStore('audio', () => {
     isPlaying.value = false
   }
 
+  // Fonctions de prétéléchargement
+  const preloadAudio = async (audioFile: string): Promise<HTMLAudioElement> => {
+    return new Promise((resolve, reject) => {
+      // Si déjà prétéléchargé, retourner l'instance existante
+      if (preloadedAudios.value.has(audioFile)) {
+        resolve(preloadedAudios.value.get(audioFile)!)
+        return
+      }
+
+      // Marquer comme en cours de téléchargement
+      downloadingFiles.value.add(audioFile)
+
+      const audio = new Audio()
+      audio.preload = 'auto'
+
+      const onCanPlayThrough = () => {
+        // Téléchargement terminé
+        downloadingFiles.value.delete(audioFile)
+        downloadedFiles.value.add(audioFile)
+        preloadedAudios.value.set(audioFile, audio)
+
+        // Nettoyer les listeners
+        audio.removeEventListener('canplaythrough', onCanPlayThrough)
+        audio.removeEventListener('error', onPreloadError)
+
+        // Traiter le prochain dans la queue
+        processDownloadQueue()
+
+        resolve(audio)
+      }
+
+      const onPreloadError = () => {
+        console.error('Erreur lors du prétéléchargement de:', audioFile)
+        downloadingFiles.value.delete(audioFile)
+
+        // Nettoyer les listeners
+        audio.removeEventListener('canplaythrough', onCanPlayThrough)
+        audio.removeEventListener('error', onPreloadError)
+
+        // Traiter le prochain dans la queue
+        processDownloadQueue()
+
+        reject(new Error(`Impossible de prétélécharger ${audioFile}`))
+      }
+
+      audio.addEventListener('canplaythrough', onCanPlayThrough)
+      audio.addEventListener('error', onPreloadError)
+
+      audio.src = `/audio/${audioFile}`
+    })
+  }
+
+  const processDownloadQueue = () => {
+    // Si on a atteint la limite de téléchargements simultanés, attendre
+    if (downloadingFiles.value.size >= maxConcurrentDownloads) {
+      return
+    }
+
+    // Prendre le prochain fichier dans la queue
+    const nextFile = downloadQueue.value.shift()
+    if (nextFile && !downloadingFiles.value.has(nextFile) && !downloadedFiles.value.has(nextFile)) {
+      preloadAudio(nextFile).catch(console.error)
+    }
+  }
+
+  const startPreloading = (audioFiles: string[]) => {
+    // Ajouter les fichiers à la queue s'ils ne sont pas déjà téléchargés ou en cours
+    audioFiles.forEach((audioFile) => {
+      if (
+        !downloadedFiles.value.has(audioFile) &&
+        !downloadingFiles.value.has(audioFile) &&
+        !downloadQueue.value.includes(audioFile)
+      ) {
+        downloadQueue.value.push(audioFile)
+      }
+    })
+
+    // Démarrer le téléchargement avec la limite de concurrence
+    for (let i = 0; i < Math.min(maxConcurrentDownloads, downloadQueue.value.length); i++) {
+      processDownloadQueue()
+    }
+  }
+
+  const startPreloadingForLanguage = (places: any[], language: string) => {
+    const audioFiles: string[] = []
+
+    // Trier par ordre et extraire les fichiers audio pour la langue donnée
+    places
+      .slice()
+      .sort((a, b) => a.order - b.order)
+      .forEach((place) => {
+        if (place.content[language]?.audioFile) {
+          audioFiles.push(place.content[language].audioFile)
+        }
+      })
+
+    console.log(`Démarrage du prétéléchargement pour ${language}:`, audioFiles.length, 'fichiers')
+    startPreloading(audioFiles)
+  }
+
+  const getPreloadedAudio = (audioFile: string): HTMLAudioElement | null => {
+    return preloadedAudios.value.get(audioFile) || null
+  }
+
   const playAudio = async (placeId: string, audioFile: string) => {
     if (!audioFile) {
       error.value = 'Aucun fichier audio spécifié'
@@ -108,21 +234,31 @@ export const useAudioStore = defineStore('audio', () => {
       error.value = null
       currentPlace.value = placeId
 
-      // Créer un nouvel élément audio
-      const audio = new Audio(`/audio/${audioFile}`)
-      currentAudio.value = audio
+      // Utiliser l'audio prétéléchargé si disponible
+      let audio = getPreloadedAudio(audioFile)
+
+      if (audio) {
+        // Si prétéléchargé, réutiliser directement sans cloner
+        audio.currentTime = 0
+        audio.pause() // S'assurer qu'il est en pause
+        currentAudio.value = audio
+      } else {
+        // Créer un nouvel élément audio
+        audio = new Audio(`/audio/${audioFile}`)
+        currentAudio.value = audio
+      }
 
       // Ajouter les event listeners
-      audio.addEventListener('loadstart', onLoadStart)
-      audio.addEventListener('canplay', onCanPlay)
-      audio.addEventListener('play', onPlay)
-      audio.addEventListener('pause', onPause)
-      audio.addEventListener('ended', onEnded)
-      audio.addEventListener('timeupdate', onTimeUpdate)
-      audio.addEventListener('error', onError)
+      currentAudio.value.addEventListener('loadstart', onLoadStart)
+      currentAudio.value.addEventListener('canplay', onCanPlay)
+      currentAudio.value.addEventListener('play', onPlay)
+      currentAudio.value.addEventListener('pause', onPause)
+      currentAudio.value.addEventListener('ended', onEnded)
+      currentAudio.value.addEventListener('timeupdate', onTimeUpdate)
+      currentAudio.value.addEventListener('error', onError)
 
       // Lancer la lecture
-      await audio.play()
+      await currentAudio.value.play()
       return true
     } catch (err) {
       console.error('Erreur lors du chargement audio:', err)
@@ -195,6 +331,11 @@ export const useAudioStore = defineStore('audio', () => {
     hasPlayedAnyAudio,
     progress,
 
+    // États de prétéléchargement
+    isDownloading,
+    isDownloaded,
+    getDownloadState,
+
     // Actions
     playAudio,
     pauseAudio,
@@ -206,5 +347,10 @@ export const useAudioStore = defineStore('audio', () => {
     isPlaceAudioLoading,
     hasPlaceBeenPlayed,
     markPlaceAsPlayed,
+
+    // Actions de prétéléchargement
+    startPreloading,
+    startPreloadingForLanguage,
+    getPreloadedAudio,
   }
 })

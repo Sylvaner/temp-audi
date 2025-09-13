@@ -1,7 +1,31 @@
 {
   "places": [
     {
+      "id": "saint-louis",
+      "latitude": 48.79906551926627,
+      "longitude": 2.123407781397289,
+      "imageFile": "",
+      "markerColor": "",
+      "markerIcon": "fa-building",
+      "content": {
+        "en": {
+          "title": "The Saint-Louis Building",
+          "description": "Administrative headquarters of the ENSP and the King’s Kitchen Garden",
+          "text": "The Saint-Louis Building, built in the 19th century, once housed classrooms and workshops for the students of the National School of Horticulture. It takes its name from the nearby district, one of the oldest in Versailles.\n\nIt is said that at the time, students sometimes brought their harvests inside to discuss them with their teachers, turning the corridors into improvised laboratories.\n\nToday, the building has a new role: it mainly houses the administrative offices of the École nationale supérieure de paysage and the King’s Kitchen Garden. A place of management and coordination, it ensures that this unique heritage continues to thrive through teaching, research, and experimentation.",
+          "audioFile": "saint-louis-en.mp3"
+        },
+        "fr": {
+          "title": "Le bâtiment Saint-Louis",
+          "description": "Siège administratif de l’ENSP et du Potager du Roi",
+          "text": "Le bâtiment Saint-Louis, construit au XIXᵉ siècle, a longtemps accueilli des salles de cours et des ateliers pour les étudiants de l’École nationale d’horticulture. Il doit son nom au quartier voisin, l’un des plus anciens de Versailles.\n\nOn raconte qu’à l’époque, les élèves y apportaient parfois leurs récoltes pour en discuter avec leurs professeurs, transformant les couloirs en véritables salles d’expérimentation improvisées.\n\nAujourd’hui, le bâtiment a changé de fonction : il abrite principalement les bureaux administratifs de l’École nationale supérieure de paysage et du Potager du Roi. Un lieu de gestion et de coordination, qui permet de faire vivre ce patrimoine unique et d’assurer la continuité de ses missions de formation, de recherche et d’expérimentation.",
+          "audioFile": "saint-louis-fr.mp3"
+        }
+      },
+      "order": 1
+    },
+    {
       "id": "statue-la-quintinie",
+      "order": 2,
       "latitude": 48.79908106692258,
       "longitude": 2.1213753776846027,
       "content": {
@@ -22,6 +46,7 @@
     },
     {
       "id": "statue-hardy",
+      "order": 3,
       "latitude": 48.798681774103265,
       "longitude": 2.1231567122107275,
       "markerColor": "",
@@ -44,8 +69,9 @@
     },
     {
       "id": "jardin-lelieur",
-      "latitude": 48.79843442304032,
-      "longitude": 2.1229748410095484,
+      "order": 4,
+      "latitude": 48.798447143951606,
+      "longitude": 2.1230000996751075,
       "markerColor": "",
       "markerIcon": "fa-seedling",
       "content": {
@@ -66,8 +92,9 @@
     },
     {
       "id": "jardin-du-breuil",
-      "latitude": 48.79803017800775,
-      "longitude": 2.1227011544215557,
+      "order": 5,
+      "latitude": 48.798051379749545,
+      "longitude": 2.1227105615823665,
       "content": {
         "fr": {
           "title": "Jardin du Breuil",
@@ -87,8 +114,9 @@
     },
     {
       "id": "terrasse-nord",
-      "latitude": 48.797825227375,
-      "longitude": 2.12060375503147,
+      "order": 6,
+      "latitude": 48.79784642920344,
+      "longitude": 2.1205867367015645,
       "imageFile": "",
       "content": {
         "fr": {
@@ -108,8 +136,9 @@
     },
     {
       "id": "jardin-legendre",
-      "latitude": 48.79764147781995,
-      "longitude": 2.122454655370825,
+      "order": 7,
+      "latitude": 48.79766974702608,
+      "longitude": 2.1224637398192985,
       "imageFile": "",
       "content": {
         "fr": {
@@ -129,6 +158,7 @@
     },
     {
       "id": "grille-du-roi",
+      "order": 8,
       "latitude": 48.79898778107424,
       "longitude": 2.1191768110295905,
       "imageFile": "grille-du-roi.jpg",
@@ -149,6 +179,7 @@
     },
     {
       "id": "grand-bassin",
+      "order": 9,
       "latitude": 48.79849944114124,
       "longitude": 2.120984278674905,
       "imageFile": "grand-bassin.jpg",
@@ -169,6 +200,7 @@
     },
     {
       "id": "point-de-vue",
+      "order": 10,
       "latitude": 48.79877576721084,
       "longitude": 2.122439028832282,
       "imageFile": "point-de-vue.jpg",
@@ -189,9 +221,11 @@
     },
     {
       "id": "figuerie",
+      "order": 11,
       "latitude": 48.79970508800055,
       "longitude": 2.1203941561118094,
       "imageFile": "figuerie.jpg",
+      "markerIcon": "fa-building",
       "content": {
         "fr": {
           "title": "La Figuerie",
@@ -209,6 +243,7 @@
     },
     {
       "id": "grille-anjou",
+      "order": 12,
       "latitude": 48.79791356826765,
       "longitude": 2.1231466454832764,
       "imageFile": "",
@@ -246,6 +281,29 @@
           "description": "Des produits de qualité",
           "text": "La boutique du Potager du Roi propose une sélection de produits issus du savoir-faire horticole et artisanal. On y trouve des fruits et légumes de saison, des confitures, du miel et d’autres spécialités préparées avec soin.\nChaque produit reflète la qualité et l’exigence qui font la réputation du Potager : allier tradition, respect de la nature et plaisir du goût.",
           "audioFile": ""
+        }
+      },
+      "order": 13
+    },
+    {
+      "id": "place-1757795839161",
+      "latitude": 48.79652483143497,
+      "longitude": 2.121423189055745,
+      "imageFile": "",
+      "markerColor": "",
+      "markerIcon": "fa-seedling",
+      "content": {
+        "en": {
+          "title": "Duhamel du Monceau Garden",
+          "description": "Tribute to a pioneer of agronomy",
+          "text": "The Duhamel du Monceau Garden honors Henri-Louis Duhamel du Monceau, a leading 18th-century agronomist. His studies on tree growth, pruning, grafting, and plant diseases left a lasting mark on the history of horticulture and forestry in France.\n\nIt is said that he would spend hours observing trees with a notebook in hand, carefully recording the slightest change in their branches. His scientific rigor paved the way for a modern approach to agriculture and landscape.\n\nToday, this garden continues that spirit of experimentation: it is used to test cultivation methods, compare species, and train students in close plant observation, following in the footsteps of Duhamel du Monceau.",
+          "audioFile": "duhamel-en.mp3"
+        },
+        "fr": {
+          "title": "Jardin Duhamel du Monceau",
+          "description": "Hommage à un pionnier de l’agronomie",
+          "text": "Le jardin Duhamel du Monceau rappelle la mémoire d’Henri-Louis Duhamel du Monceau, grand agronome du XVIIIᵉ siècle. Ses recherches sur la croissance des arbres, la taille, la greffe et les maladies des plantes ont marqué durablement l’histoire de l’horticulture et de la foresterie en France.\n\nOn raconte qu’il avait pour habitude d’observer les arbres pendant des heures, carnet en main, notant avec précision la moindre variation de leurs branches. Sa rigueur scientifique a ouvert la voie à une approche moderne de l’agriculture et du paysage.\n\nAujourd’hui, ce jardin prolonge cet esprit d’expérimentation : il est utilisé pour tester des méthodes de culture, comparer des essences et former les étudiants à l’observation attentive du végétal, dans la continuité des enseignements de Duhamel du Monceau.",
+          "audioFile": "duhamel-fr.mp3"
         }
       }
     }

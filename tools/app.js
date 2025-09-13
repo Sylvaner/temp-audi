@@ -107,10 +107,16 @@ createApp({
       }
     }
 
-    const selectPlace = (index) => {
+    const selectPlace = (index, centerOnMap = false) => {
       selectedPlaceIndex.value = index
       const place = data.places[index]
-      map.setView([place.latitude, place.longitude], 15)
+
+      // Centrer la carte seulement si explicitement demandé
+      if (centerOnMap) {
+        // Conserver le zoom actuel au lieu de forcer à 15
+        const currentZoom = map.getZoom()
+        map.setView([place.latitude, place.longitude], currentZoom)
+      }
     }
 
     const createCustomIcon = (place) => {
@@ -123,13 +129,13 @@ createApp({
         className: 'custom-marker',
         html: `
           <div style="
-            background-color: ${color}; 
-            width: 30px; 
-            height: 30px; 
-            border-radius: 50%; 
-            border: 3px solid white; 
-            display: flex; 
-            align-items: center; 
+            background-color: ${color};
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            border: 3px solid white;
+            display: flex;
+            align-items: center;
             justify-content: center;
             box-shadow: 0 2px 6px rgba(0,0,0,0.3);
           ">
@@ -143,7 +149,10 @@ createApp({
 
     const addMarker = (place, index) => {
       const icon = createCustomIcon(place)
-      const marker = L.marker([place.latitude, place.longitude], { icon }).addTo(map).bindPopup(`
+      const marker = L.marker([place.latitude, place.longitude], {
+        icon,
+        draggable: true, // Rendre le marker déplaçable
+      }).addTo(map).bindPopup(`
           <div>
             <strong>${place.id}</strong><br>
             Lat: ${place.latitude.toFixed(6)}<br>
@@ -155,6 +164,27 @@ createApp({
 
       marker.on('click', () => {
         selectPlace(index)
+      })
+
+      // Événement de déplacement du marker
+      marker.on('dragend', (e) => {
+        const newLatLng = e.target.getLatLng()
+        // Mettre à jour les coordonnées dans les données
+        data.places[index].latitude = newLatLng.lat
+        data.places[index].longitude = newLatLng.lng
+
+        // Mettre à jour le popup avec les nouvelles coordonnées
+        marker.setPopupContent(`
+          <div>
+            <strong>${place.id}</strong><br>
+            Lat: ${newLatLng.lat.toFixed(6)}<br>
+            Lng: ${newLatLng.lng.toFixed(6)}<br>
+            ${place.markerColor ? `Color: ${place.markerColor}<br>` : ''}
+            ${place.markerIcon ? `Icon: ${place.markerIcon}<br>` : ''}
+          </div>
+        `)
+
+        console.log(`Marker ${place.id} moved to:`, newLatLng.lat, newLatLng.lng)
       })
 
       markers[index] = marker
@@ -297,7 +327,7 @@ createApp({
           Object.assign(data, jsonData)
 
           // Migrate existing places to new structure
-          data.places.forEach((place) => {
+          data.places.forEach((place, index) => {
             // Si imageFile n'existe pas au niveau du lieu, l'ajouter
             if (!place.hasOwnProperty('imageFile')) {
               // Essayer de récupérer l'imageFile depuis le premier contenu disponible
@@ -316,7 +346,15 @@ createApp({
                 delete place.content[lang].imageFile
               }
             })
+
+            // Initialize order if not present
+            if (!place.hasOwnProperty('order')) {
+              place.order = index + 1
+            }
           })
+
+          // Sort places by order
+          data.places.sort((a, b) => (a.order || 0) - (b.order || 0))
 
           // Update map view with new config
           const center = data.config.map.center
@@ -468,6 +506,73 @@ createApp({
       }
     }
 
+    const movePlaceUp = (index) => {
+      if (index > 0) {
+        const place = data.places[index]
+        const previousPlace = data.places[index - 1]
+
+        // Swap order values
+        const tempOrder = place.order
+        place.order = previousPlace.order
+        previousPlace.order = tempOrder
+
+        // Swap positions in array
+        data.places.splice(index - 1, 2, place, previousPlace)
+
+        // Update selected index if needed
+        if (selectedPlaceIndex.value === index) {
+          selectedPlaceIndex.value = index - 1
+        } else if (selectedPlaceIndex.value === index - 1) {
+          selectedPlaceIndex.value = index
+        }
+
+        // Update map markers
+        updateAllMarkers()
+      }
+    }
+
+    const movePlaceDown = (index) => {
+      if (index < data.places.length - 1) {
+        const place = data.places[index]
+        const nextPlace = data.places[index + 1]
+
+        // Swap order values
+        const tempOrder = place.order
+        place.order = nextPlace.order
+        nextPlace.order = tempOrder
+
+        // Swap positions in array
+        data.places.splice(index, 2, nextPlace, place)
+
+        // Update selected index if needed
+        if (selectedPlaceIndex.value === index) {
+          selectedPlaceIndex.value = index + 1
+        } else if (selectedPlaceIndex.value === index + 1) {
+          selectedPlaceIndex.value = index
+        }
+
+        // Update map markers
+        updateAllMarkers()
+      }
+    }
+
+    const updateAllMarkers = () => {
+      // Clear existing markers
+      markers.forEach((marker) => map.removeLayer(marker))
+      markers = []
+
+      // Re-add all markers
+      data.places.forEach((place, index) => {
+        const marker = L.marker([place.latitude, place.longitude], {
+          icon: createCustomIcon(place),
+        }).addTo(map)
+
+        marker.bindPopup(`<strong>${place.id}</strong>`)
+        marker.on('click', () => selectPlace(index))
+        markers.push(marker)
+      })
+    }
+
     return {
       data,
       currentLanguage,
@@ -489,6 +594,8 @@ createApp({
       initializeLanguage,
       toggleThresholdPreview,
       applyPreset,
+      movePlaceUp,
+      movePlaceDown,
     }
   },
 }).mount('#app')

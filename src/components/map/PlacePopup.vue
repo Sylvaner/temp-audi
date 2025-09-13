@@ -31,12 +31,17 @@
               :class="{ 'has-pulse-animation': !hasBeenPlayed && !isPlaying }"
               @click="playAudio"
               :disabled="isLoading"
-              :title="isPlaying ? 'Pause' : 'Écouter'"
+              :title="isPlaying ? t('audio.pause') : t('audio.listen')"
             >
-              <i :class="isPlaying ? 'fas fa-pause' : 'fas fa-play'"></i>
+              <i
+                v-if="downloadState === 'downloading'"
+                class="fas fa-spinner fa-spin"
+                style="font-size: 0.7em"
+              ></i>
+              <i v-else :class="isPlaying ? 'fas fa-pause' : 'fas fa-play'"></i>
             </button>
           </div>
-          <span class="audio-label">{{ isPlaying ? 'Pause' : 'Écouter' }}</span>
+          <span class="audio-label">{{ isPlaying ? t('audio.pause') : t('audio.listen') }}</span>
         </div>
       </div>
     </div>
@@ -49,6 +54,7 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useLanguageStore } from '@/stores/language'
 import { useAudioStore } from '@/stores/audio'
 
@@ -82,6 +88,7 @@ const emit = defineEmits<{
 }>()
 
 // Composables
+const { t } = useI18n()
 const languageStore = useLanguageStore()
 const audioStore = useAudioStore()
 
@@ -107,6 +114,12 @@ const isPlaying = computed(() => audioStore.isPlacePlayingAudio(props.place.id))
 const isLoading = computed(() => audioStore.isPlaceAudioLoading(props.place.id))
 const error = computed(() => audioStore.error)
 const hasBeenPlayed = computed(() => audioStore.hasPlaceBeenPlayed(props.place.id))
+
+// États de prétéléchargement
+const downloadState = computed(() => {
+  if (!placeContent.value.audioFile) return 'none'
+  return audioStore.getDownloadState(placeContent.value.audioFile)
+})
 
 // Méthodes
 function closePopup() {
@@ -451,5 +464,39 @@ function showDetails() {
     transform: translate(-50%, -50%) scale(2);
     opacity: 0;
   }
+}
+
+/* Indicateurs de prétéléchargement */
+.download-indicator {
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+
+.download-indicator.downloading {
+  background: orange;
+  color: white;
+}
+
+.download-indicator.downloaded {
+  background: green;
+  color: white;
+}
+
+/* Style pour le bouton en cours de téléchargement */
+.audio-play-btn-minimal:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.audio-play-btn-minimal .fa-circle-notch {
+  color: #ffc107;
 }
 </style>

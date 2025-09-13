@@ -98,6 +98,46 @@
         border: 2px solid white;
         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
       }
+
+      /* Styles pour les boutons de réorganisation */
+      .place-item .buttons.has-addons {
+        opacity: 0;
+        transition: opacity 0.2s ease;
+      }
+
+      .place-item:hover .buttons.has-addons {
+        opacity: 1;
+      }
+
+      .place-item .button.is-small {
+        font-size: 0.6rem;
+        padding: 0.2rem 0.3rem;
+        height: auto;
+        border-color: #dbdbdb;
+        background-color: white;
+        color: #363636;
+      }
+
+      .place-item .button.is-small:hover:not(:disabled) {
+        background-color: #f5f5f5;
+        border-color: #b5b5b5;
+        color: #000;
+      }
+
+      .place-item .button.is-small:disabled {
+        opacity: 0.3;
+      }
+
+      /* Améliorer la largeur des inputs de couleur */
+      input[type='color'] {
+        min-width: 60px;
+        width: 60px;
+        height: 2.5em;
+        padding: 0;
+        border: 1px solid #dbdbdb;
+        border-radius: 4px;
+        cursor: pointer;
+      }
     </style>
   </head>
   <body>
@@ -175,13 +215,27 @@
                   </div>
                   <div class="level-right">
                     <div class="level-item">
-                      <button
-                        @click="removePlace(selectedPlaceIndex)"
-                        class="button is-danger is-small"
-                      >
-                        <span class="icon"><i class="fas fa-trash"></i></span>
-                        <span>Delete</span>
-                      </button>
+                      <div class="field is-grouped">
+                        <div class="control">
+                          <button
+                            @click="selectPlace(selectedPlaceIndex, true)"
+                            class="button is-info is-small"
+                            title="Center map on this place"
+                          >
+                            <span class="icon"><i class="fas fa-crosshairs"></i></span>
+                            <span>Center</span>
+                          </button>
+                        </div>
+                        <div class="control">
+                          <button
+                            @click="removePlace(selectedPlaceIndex)"
+                            class="button is-danger is-small"
+                          >
+                            <span class="icon"><i class="fas fa-trash"></i></span>
+                            <span>Delete</span>
+                          </button>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -475,8 +529,8 @@
                           <div class="has-text-weight-bold">{{ place.id }}</div>
                         </div>
                       </div>
-                      <div class="level-right" v-if="place.markerColor || place.markerIcon">
-                        <div class="level-item">
+                      <div class="level-right">
+                        <div class="level-item" v-if="place.markerColor || place.markerIcon">
                           <div
                             class="marker-icon-preview"
                             :style="{ backgroundColor: place.markerColor || '#B87333' }"
@@ -487,6 +541,30 @@
                               :class="place.markerIcon || 'fa-map-marker-alt'"
                               style="color: white; font-size: 8px"
                             ></i>
+                          </div>
+                        </div>
+                        <div class="level-item">
+                          <div class="buttons has-addons are-small">
+                            <button
+                              class="button is-small is-outlined"
+                              :disabled="index === 0"
+                              @click.stop="movePlaceUp(index)"
+                              title="Déplacer vers le haut"
+                            >
+                              <span class="icon is-small">
+                                <i class="fas fa-chevron-up"></i>
+                              </span>
+                            </button>
+                            <button
+                              class="button is-small is-outlined"
+                              :disabled="index === data.places.length - 1"
+                              @click.stop="movePlaceDown(index)"
+                              title="Déplacer vers le bas"
+                            >
+                              <span class="icon is-small">
+                                <i class="fas fa-chevron-down"></i>
+                              </span>
+                            </button>
                           </div>
                         </div>
                       </div>
@@ -536,7 +614,17 @@
                     </div>
                   </div>
                   <div class="column is-half">
-                    <!-- Spacer -->
+                    <div class="field">
+                      <label class="label">Initial Zoom</label>
+                      <input
+                        v-model.number="data.config.map.zoom"
+                        class="input"
+                        type="number"
+                        min="1"
+                        max="18"
+                      />
+                      <p class="help">Default zoom level for the map</p>
+                    </div>
                   </div>
                   <div class="column is-half">
                     <div class="field">
@@ -557,18 +645,6 @@
                         class="input"
                         type="number"
                         step="any"
-                      />
-                    </div>
-                  </div>
-                  <div class="column is-half">
-                    <div class="field">
-                      <label class="label">Initial Zoom</label>
-                      <input
-                        v-model.number="data.config.map.zoom"
-                        class="input"
-                        type="number"
-                        min="1"
-                        max="18"
                       />
                     </div>
                   </div>

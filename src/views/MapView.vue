@@ -49,11 +49,15 @@ import GeolocationButton from '@/components/ui/GeolocationButton.vue'
 import GeolocationModal from '@/components/ui/GeolocationModal.vue'
 import AudioControls from '@/components/ui/AudioControls.vue'
 import { useGeolocationStore } from '@/stores/geolocation'
+import { useAudioStore } from '@/stores/audio'
+import { useLanguageStore } from '@/stores/language'
 import type { Position } from '@/types'
 import data from '@/data/data.json'
 
 // Stores
 const geolocationStore = useGeolocationStore()
+const audioStore = useAudioStore()
+const languageStore = useLanguageStore()
 
 // État local
 const mapCenter = ref<Position>({
@@ -85,6 +89,17 @@ function onMapReady(map: any) {
       showGeolocationModal.value = true
     }, 1000) // Délai pour laisser la carte se charger
   }
+
+  // Démarrer le prétéléchargement des fichiers audio
+  startAudioPreloading()
+}
+
+// Fonction pour démarrer le prétéléchargement
+function startAudioPreloading() {
+  const currentLanguage = languageStore.currentLanguage?.code || 'fr'
+
+  // Prétélécharger uniquement la langue sélectionnée
+  audioStore.startPreloadingForLanguage(data.places, currentLanguage)
 }
 
 function onMapClick(event: any) {
@@ -200,6 +215,17 @@ watch(
         // Les mises à jour suivantes n'entraînent pas de centrage
         console.log('Position utilisateur mise à jour (pas de centrage automatique)')
       }
+    }
+  },
+)
+
+// Watcher pour relancer le prétéléchargement lors du changement de langue
+watch(
+  () => languageStore.currentLanguage?.code,
+  (newLanguage) => {
+    if (newLanguage) {
+      console.log('Changement de langue détecté, relance du prétéléchargement:', newLanguage)
+      startAudioPreloading()
     }
   },
 )

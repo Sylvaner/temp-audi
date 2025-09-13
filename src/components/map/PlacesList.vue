@@ -46,8 +46,18 @@
             <p class="place-description">{{ getPlaceContent(place).description }}</p>
           </div>
           <div class="place-actions">
-            <span class="icon has-text-primary">
-              <i class="fas fa-map-marker-alt"></i>
+            <span
+              class="icon"
+              :class="
+                getDownloadState(place) === 'downloading' ? 'has-text-warning' : 'has-text-primary'
+              "
+            >
+              <i
+                v-if="getDownloadState(place) === 'downloading'"
+                class="fas fa-circle-notch fa-spin"
+              ></i>
+              <i v-else-if="getDownloadState(place) === 'downloaded'" class="fas fa-volume-up"></i>
+              <i v-else class="fas fa-map-marker-alt"></i>
             </span>
           </div>
         </div>
@@ -65,12 +75,14 @@ import { ref, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useLanguageStore } from '@/stores/language'
 import { useGeolocationStore } from '@/stores/geolocation'
+import { useAudioStore } from '@/stores/audio'
 import type { Position } from '@/types'
 import data from '@/data/data.json'
 
 // Types locaux
 interface Place {
   id: string
+  order?: number // Ordre d'affichage des lieux
   latitude: number
   longitude: number
   content: Record<
@@ -88,12 +100,17 @@ interface Place {
 const { t } = useI18n()
 const languageStore = useLanguageStore()
 const geolocationStore = useGeolocationStore()
+const audioStore = useAudioStore()
 
 // État local
 const isOpen = ref(false)
 
 // Données
-const places = computed(() => data.places as Place[])
+const places = computed(() => {
+  const placesArray = data.places as Place[]
+  // Trier par ordre croissant (si order n'existe pas, utiliser l'index comme fallback)
+  return placesArray.slice().sort((a, b) => (a.order || 0) - (b.order || 0))
+})
 
 // Émissions
 const emit = defineEmits<{
@@ -121,6 +138,12 @@ function goToPlace(place: Place) {
 
 function toggleAutoCenter() {
   geolocationStore.toggleMoveToUserLocation()
+}
+
+function getDownloadState(place: Place) {
+  const placeContent = getPlaceContent(place)
+  if (!placeContent.audioFile) return 'none'
+  return audioStore.getDownloadState(placeContent.audioFile)
 }
 </script>
 
@@ -282,5 +305,18 @@ function toggleAutoCenter() {
 .button.is-autumn-light:hover:not(:disabled) {
   background-color: var(--color-background);
   border-color: var(--color-primary);
+}
+
+/* Styles pour les états de téléchargement */
+.place-actions .icon {
+  transition: color 0.3s ease;
+}
+
+.place-actions .has-text-warning {
+  color: #ffc107 !important;
+}
+
+.place-actions .fa-circle-notch {
+  animation: fa-spin 1s infinite linear;
 }
 </style>

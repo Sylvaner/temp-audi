@@ -1,11 +1,6 @@
 <template>
   <div v-if="hasAudio" class="audio-controls">
-    <button
-      class="control-button"
-      @click="stopAudio"
-      :disabled="isLoading"
-      title="Arrêter l'audio"
-    >
+    <button class="control-button" @click="stopAudio" :disabled="isLoading" title="Arrêter l'audio">
       <i class="fas fa-stop"></i>
     </button>
   </div>
