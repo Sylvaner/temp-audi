@@ -1,15 +1,24 @@
 <template>
   <div v-if="hasAudio" class="audio-controls">
-    <button class="control-button" @click="stopAudio" :disabled="isLoading" title="Arrêter l'audio">
-      <i class="fas fa-stop"></i>
+    <button 
+      class="button is-rounded is-normal is-autumn-warning" 
+      @click="stopAudio" 
+      :disabled="isLoading" 
+      :title="t('audio.stop')"
+    >
+      <span class="icon">
+        <i class="fas fa-stop"></i>
+      </span>
     </button>
   </div>
 </template>
 
 <script setup lang="ts">
 import { computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useAudioStore } from '@/stores/audio'
 
+const { t } = useI18n()
 const audioStore = useAudioStore()
 
 // Audio state computed properties
@@ -27,43 +36,22 @@ function stopAudio() {
   justify-content: center;
 }
 
-.control-button {
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  border: none;
-  background: var(--color-warm);
+/* Classe personnalisée pour le bouton d'arrêt */
+.button.is-autumn-warning {
+  background-color: var(--color-warm);
+  border-color: var(--color-warm);
   color: var(--color-white);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 16px;
-  backdrop-filter: blur(4px);
-  transition: all var(--transition-fast);
+  box-shadow: var(--shadow-light);
 }
 
-.control-button:hover {
-  background: var(--color-secondary);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+.button.is-autumn-warning:hover:not(:disabled) {
+  background-color: var(--color-warm-dark);
+  border-color: var(--color-warm-dark);
   transform: scale(1.05);
+  box-shadow: var(--shadow-medium);
 }
 
-.control-button:active {
+.button.is-autumn-warning:active {
   transform: scale(1.02);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.control-button:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-  transform: none;
-}
-
-.control-button:disabled:hover {
-  background: var(--color-warm);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-  transform: none;
 }
 </style>

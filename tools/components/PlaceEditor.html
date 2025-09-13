@@ -1,0 +1,84 @@
+<!-- Composant pour éditer un lieu -->
+<div class="box" v-if="selectedPlace">
+  <header class="card-header">
+    <p class="card-header-title">{{ selectedPlace.id }}</p>
+    <button class="delete" @click="selectedPlaceIndex = null"></button>
+  </header>
+
+  <div class="card-content">
+    <!-- Configuration du marker -->
+    <div class="field is-grouped">
+      <div class="control">
+        <label class="label">Couleur</label>
+        <input type="color" v-model="selectedPlace.markerColor" class="input is-small" />
+      </div>
+      <div class="control is-expanded">
+        <label class="label">Icône</label>
+        <div class="select is-small is-fullwidth">
+          <select v-model="selectedPlace.markerIcon">
+            <option value="">Par défaut</option>
+            <option value="fa-monument">Monument</option>
+            <option value="fa-tree">Arbre</option>
+            <option value="fa-leaf">Feuille</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Langues -->
+    <div class="tabs is-small">
+      <ul>
+        <li
+          v-for="lang in availableLanguages"
+          :class="{ 'is-active': currentLanguage === lang }"
+          @click="currentLanguage = lang"
+        >
+          <a>{{ lang.toUpperCase() }}</a>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Contenu pour la langue sélectionnée -->
+    <div class="field" v-if="selectedPlace.content[currentLanguage]">
+      <label class="label">Titre</label>
+      <div class="control">
+        <input class="input" v-model="selectedPlace.content[currentLanguage].title" />
+      </div>
+    </div>
+
+    <div class="field">
+      <label class="label">Description</label>
+      <div class="control">
+        <textarea
+          class="textarea"
+          v-model="selectedPlace.content[currentLanguage].description"
+        ></textarea>
+      </div>
+    </div>
+
+    <div class="field">
+      <label class="label">Texte complet</label>
+      <div class="control">
+        <textarea
+          class="textarea"
+          rows="6"
+          v-model="selectedPlace.content[currentLanguage].text"
+        ></textarea>
+      </div>
+    </div>
+
+    <div class="field">
+      <label class="label">Fichier audio</label>
+      <div class="control">
+        <input class="input" v-model="selectedPlace.content[currentLanguage].audioFile" />
+      </div>
+    </div>
+  </div>
+
+  <footer class="card-footer">
+    <button class="button is-danger is-small" @click="removePlace(selectedPlaceIndex)">
+      <span class="icon"><i class="fas fa-trash"></i></span>
+      <span>Supprimer</span>
+    </button>
+  </footer>
+</div>
