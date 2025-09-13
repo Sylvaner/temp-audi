@@ -20,7 +20,7 @@
           <div v-show="currentStep === 1" class="content">
             <div class="has-text-primary mb-5">
               <span class="icon is-large user-location-icon">
-                <i :class="`fas ${icons.userLocation} fa-3x`"></i>
+                <i :class="`fas ${markers.userLocation} fa-3x`"></i>
               </span>
             </div>
             <h2 class="title is-4">{{ $t('mapIntro.step1.title') }}</h2>
@@ -31,7 +31,7 @@
           <div v-show="currentStep === 2" class="content">
             <div class="has-text-primary mb-5">
               <span class="icon is-large place-location-icon">
-                <i :class="`fas ${icons.place} fa-3x`"></i>
+                <i :class="`fas ${markers.place} fa-3x`"></i>
               </span>
             </div>
             <h2 class="title is-4">{{ $t('mapIntro.step2.title') }}</h2>
@@ -94,7 +94,7 @@ import { useConfig } from '@/composables/useConfig'
 
 // Composables
 const router = useRouter()
-const { icons } = useConfig()
+const { markers } = useConfig()
 
 // État local
 const currentStep = ref(1)
