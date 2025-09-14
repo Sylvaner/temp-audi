@@ -35,8 +35,8 @@
 
   <!-- Affichage plein écran pour le lieu sélectionné - Téléporté au niveau body -->
   <Teleport to="body">
-    <div v-if="selectedPlace" class="place-fullscreen-view">
-      <PlacePopup :place="selectedPlace" @close="closePopup" />
+    <div v-show="selectedPlace" class="place-fullscreen-view">
+      <PlacePopup v-if="selectedPlace" :place="selectedPlace" @close="closePopup" />
     </div>
   </Teleport>
 </template>
