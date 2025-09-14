@@ -282,11 +282,17 @@ onUnmounted(() => {
 /* Ajustement pour mobile avec navbar fixe */
 @media screen and (max-width: 1023px) {
   .map-view {
-    height: calc(100vh - 52px);
+    position: fixed;
+    top: 52px; /* Sous la navbar */
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: auto; /* Laisse la position gérer la hauteur */
   }
 
   :deep(.leaflet-map) {
     height: 100%;
+    width: 100%;
   }
 
   .map-controls {

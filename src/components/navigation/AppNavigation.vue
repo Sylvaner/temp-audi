@@ -52,14 +52,13 @@
 
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue'
-import { useRouter, useRoute } from 'vue-router'
+import { useRouter } from 'vue-router'
 import LanguageSelector from '@/components/ui/LanguageSelector.vue'
 import { useConfig } from '@/composables/useConfig'
 
 // Configuration
 const { siteName } = useConfig()
 const router = useRouter()
-const route = useRoute()
 
 // État du menu mobile
 const isMobileMenuOpen = ref(false)
@@ -85,45 +84,22 @@ function navigateToMap() {
   }
 }
 
-// Empêcher la fermeture automatique du menu sur la page de la carte
-function handleClick(event: Event) {
+// Gestion simple du menu mobile
+function handleOutsideClick(event: Event) {
   const target = event.target as Element
 
-  // Sur les pages de carte, comportement spécialisé
-  if (route.path === '/map' || route.path === '/map-intro') {
-    // Fermer le menu si on clique sur un élément de navigation
-    if (target.closest('.navbar-item') || target.closest('.navbar-burger')) {
-      return // Laisser le comportement normal
-    }
-
-    // Permettre les clics sur les markers et popups
-    if (
-      target.closest('.leaflet-marker-icon') ||
-      target.closest('.leaflet-popup') ||
-      target.closest('.leaflet-control')
-    ) {
-      return // Laisser passer ces clics
-    }
-
-    // Fermer le menu seulement si on clique en dehors de la navbar ET de la carte interactive
-    if (!target.closest('.navbar') && !target.closest('.leaflet-container')) {
-      closeMobileMenu()
-    }
-    return
-  }
-
-  // Sur les autres pages, comportement normal de Bulma
+  // Fermer le menu si on clique en dehors de la navbar
   if (!target.closest('.navbar') && isMobileMenuOpen.value) {
     closeMobileMenu()
   }
 }
 
 onMounted(() => {
-  document.addEventListener('click', handleClick, true)
+  document.addEventListener('click', handleOutsideClick)
 })
 
 onUnmounted(() => {
-  document.removeEventListener('click', handleClick, true)
+  document.removeEventListener('click', handleOutsideClick)
 })
 </script>
 
@@ -165,17 +141,17 @@ onUnmounted(() => {
     z-index: var(--z-navbar);
   }
 
-  /* Menu mobile avec taille appropriée */
+  /* Menu mobile au-dessus de tout */
   .navbar-menu.is-active {
-    position: absolute;
-    top: 100%;
+    position: fixed;
+    top: 52px; /* Juste sous la navbar fixe */
     left: 0;
     right: 0;
     background-color: var(--color-deep);
-    z-index: calc(var(--z-navbar) - 1);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    z-index: calc(var(--z-navbar) + 1); /* Au-dessus de la navbar */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
     border-radius: 0 0 6px 6px;
-    max-height: 80vh;
+    max-height: calc(100vh - 52px);
     overflow-y: auto;
   }
 }
