@@ -1,5 +1,5 @@
 <template>
-  <div class="place-popup">
+  <div class="place-popup is-fullheight-viewport">
     <!-- Bouton de fermeture -->
     <button class="delete is-large" @click="closePopup"></button>
 
@@ -10,7 +10,7 @@
 
     <!-- Contenu -->
     <div class="content-section">
-      <div class="content-area" @click="closePopup">
+      <div class="content-area has-custom-scrollbar" @click="closePopup">
         <h1 class="title is-3">{{ placeContent.title }}</h1>
         <div class="content">
           <p v-for="(paragraph, index) in textParagraphs" :key="index">
@@ -28,7 +28,7 @@
               :class="{
                 'is-loading': isLoading,
                 'is-warning': isPlaying,
-                'has-pulse': !hasBeenPlayed && !isPlaying,
+                'has-pulse-animation': !hasBeenPlayed && !isPlaying,
               }"
               @click="playAudio"
               :disabled="isLoading"
@@ -139,14 +139,10 @@ async function playAudio() {
   right: 0;
   bottom: 0;
   background: white;
-  z-index: var(--z-modal) !important; /* Forcer au-dessus de tout */
+  z-index: var(--z-modal);
   display: flex;
   flex-direction: column;
-  height: 100vh;
-  height: 100dvh; /* Utilise la hauteur dynamique du viewport */
   width: 100vw;
-  max-height: 100vh;
-  max-height: 100dvh;
   overflow: hidden; /* Empêche le scroll sur le conteneur principal */
 }
 
@@ -154,7 +150,7 @@ async function playAudio() {
   position: absolute;
   top: 1rem;
   right: 1rem;
-  z-index: calc(var(--z-modal) + 1) !important;
+  z-index: calc(var(--z-modal) + 1);
 }
 
 .image-section {
@@ -184,31 +180,7 @@ async function playAudio() {
   min-height: 0; /* Permet au contenu de se rétrécir */
 }
 
-/* Styles pour la scrollbar */
-.content-area::-webkit-scrollbar {
-  width: 8px;
-}
-
-.content-area::-webkit-scrollbar-track {
-  background: var(--color-scrollbar-track);
-  border-radius: var(--border-radius-small);
-}
-
-.content-area::-webkit-scrollbar-thumb {
-  background: var(--color-scrollbar-thumb);
-  border-radius: var(--border-radius-small);
-  border: 1px solid var(--color-border-light);
-}
-
-.content-area::-webkit-scrollbar-thumb:hover {
-  background: var(--color-scrollbar-thumb-hover);
-}
-
-/* Pour Firefox */
-.content-area {
-  scrollbar-width: thin;
-  scrollbar-color: var(--color-scrollbar-thumb) var(--color-scrollbar-track);
-}
+/* Scrollbar utilise maintenant la classe utilitaire has-custom-scrollbar */
 
 .audio-controls {
   flex: 0 0 auto; /* Ne jamais shrink, toujours visible */
@@ -230,21 +202,7 @@ async function playAudio() {
   margin: 0; /* Supprimer les marges par défaut */
 }
 
-.has-pulse {
-  animation: pulse 2s ease-out infinite;
-}
-
-@keyframes pulse {
-  0% {
-    box-shadow: 0 0 0 0 var(--color-primary);
-  }
-  70% {
-    box-shadow: 0 0 0 10px rgba(0, 0, 0, 0);
-  }
-  100% {
-    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
-  }
-}
+/* Animation pulse utilise maintenant la classe utilitaire has-pulse-animation */
 
 /* Mobile - empiler verticalement */
 @media screen and (max-width: 768px) {

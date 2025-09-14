@@ -286,12 +286,12 @@ defineExpose({
   height: 100%;
   min-height: 400px;
   position: relative;
-  z-index: var(--z-map);
+  z-index: var(--z-base);
 }
 
 /* Override des z-index Leaflet pour respecter notre hiérarchie */
 :deep(.leaflet-control-container) {
-  z-index: var(--z-map-controls) !important;
+  z-index: var(--z-ui) !important;
 }
 
 :deep(.leaflet-popup-pane) {
@@ -347,7 +347,7 @@ defineExpose({
   justify-content: center;
   color: var(--color-white);
   font-size: 16px;
-  z-index: var(--z-map-user);
+  z-index: var(--z-ui);
   animation: user-pulse 2s infinite;
 }
 
@@ -398,13 +398,13 @@ defineExpose({
   color: var(--color-white);
   font-size: 16px;
   transition: all var(--transition-normal);
-  z-index: var(--z-map-place);
+  z-index: var(--z-ui);
 }
 
 :deep(.place-marker-circle.is-selected) {
   background: var(--color-warm);
   transform: translate(-50%, -50%) scale(1.1);
-  z-index: var(--z-map-controls);
+  z-index: var(--z-overlay);
 }
 
 :deep(.place-marker-circle:hover) {
@@ -431,7 +431,7 @@ defineExpose({
 
 /* Contrôles de la carte */
 :deep(.leaflet-control-container) {
-  z-index: var(--z-map-controls);
+  z-index: var(--z-ui);
 }
 
 .leaflet-attribution-flag {

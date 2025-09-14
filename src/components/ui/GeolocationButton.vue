@@ -122,7 +122,7 @@ function handleLocationClick() {
   box-shadow: var(--shadow-light);
   transition: all var(--transition-normal);
   position: relative;
-  z-index: var(--z-ui); /* Plus élevé que les tiles */
+  z-index: var(--z-ui);
   border: none;
 }
 

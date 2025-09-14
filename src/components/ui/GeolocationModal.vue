@@ -116,17 +116,12 @@ function retryGeolocation() {
 
 <style scoped>
 .modal {
-  z-index: var(--z-modal) !important;
-}
-
-.modal-background {
-  z-index: var(--z-modal) !important;
+  z-index: var(--z-modal);
 }
 
 .modal-card {
   max-width: 500px;
   margin: 0 auto;
-  z-index: var(--z-modal) !important;
   position: relative;
   border-radius: var(--border-radius);
   box-shadow: var(--shadow-large);

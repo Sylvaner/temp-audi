@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- Hero Section utilisant les classes Bulma natives -->
-    <section class="hero is-fullheight has-background">
+    <section class="hero is-fullheight has-background has-autumn-overlay">
       <div class="hero-body">
         <div class="container has-text-centered">
           <h1 class="title is-1 has-text-white has-text-weight-bold">
@@ -93,21 +93,7 @@ function navigateToMap() {
   background-repeat: no-repeat;
 }
 
-.hero.has-background::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(
-    135deg,
-    rgba(167, 140, 83, 0.6) 0%,
-    rgba(150, 94, 41, 0.5) 50%,
-    rgba(107, 53, 15, 0.6) 100%
-  );
-  z-index: var(--z-base);
-}
+/* L'overlay automne est maintenant géré par la classe utilitaire .has-autumn-overlay */
 
 .hero-body {
   position: relative;

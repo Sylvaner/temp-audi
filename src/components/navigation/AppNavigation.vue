@@ -127,7 +127,7 @@ onUnmounted(() => {
 }
 
 .navbar {
-  z-index: var(--z-navbar);
+  z-index: var(--z-overlay);
   position: relative;
 }
 
@@ -138,7 +138,7 @@ onUnmounted(() => {
     top: 0;
     left: 0;
     right: 0;
-    z-index: var(--z-navbar);
+    z-index: var(--z-overlay);
   }
 
   /* Menu mobile au-dessus de tout */
@@ -148,7 +148,7 @@ onUnmounted(() => {
     left: 0;
     right: 0;
     background-color: var(--color-deep);
-    z-index: calc(var(--z-navbar) + 1); /* Au-dessus de la navbar */
+    z-index: calc(var(--z-overlay) + 1); /* Au-dessus de la navbar */
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
     border-radius: 0 0 6px 6px;
     overflow: visible; /* Permettre au dropdown de déborder */

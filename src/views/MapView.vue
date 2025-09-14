@@ -269,7 +269,7 @@ onUnmounted(() => {
   position: absolute;
   top: 1rem;
   right: 1rem;
-  z-index: var(--z-ui); /* Plus élevé que les tiles Leaflet */
+  z-index: var(--z-ui);
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
@@ -310,7 +310,7 @@ onUnmounted(() => {
   left: 0;
   right: 0;
   bottom: 0;
-  z-index: var(--z-modal) !important; /* Forcer au-dessus de tout */
+  z-index: var(--z-modal);
   /* Pas de background ici car PlacePopup le gère */
 }
 
