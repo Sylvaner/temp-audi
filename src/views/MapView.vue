@@ -282,7 +282,6 @@ onUnmounted(() => {
 /* Ajustement pour mobile avec navbar fixe */
 @media screen and (max-width: 1023px) {
   .map-view {
-    margin-top: 52px; /* Hauteur de la navbar fixe */
     height: calc(100vh - 52px);
   }
 

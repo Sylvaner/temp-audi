@@ -186,7 +186,14 @@ html {
   scrollbar-color: var(--color-scrollbar-thumb) var(--color-scrollbar-track);
 }
 
-/* Responsive padding pour mobile */
+/* Responsive padding pour mobile avec navbar fixe */
+@media screen and (max-width: 1023px) {
+  .main-content {
+    margin-top: 52px; /* Hauteur de la navbar fixe */
+    min-height: calc(100vh - 52px);
+  }
+}
+
 @media screen and (max-width: 768px) {
   .main-content {
     padding-bottom: 4rem;
