@@ -14,13 +14,26 @@
     "settings": "Settings"
   },
   "audio": {
-    "play": "Play",
-    "pause": "Pause",
+    "play": "Play {place}",
+    "pause": "Pause {place}",
     "stop": "Stop",
     "listen": "Listen",
+    "loading": "Loading audio for {place}",
+    "error": "Audio error for {place}",
     "volume": "Volume",
     "position": "Position",
-    "duration": "Duration"
+    "duration": "Duration",
+    "description": {
+      "control": "Audio control for {place}",
+      "progress": "Progress: {percent}%",
+      "keyboard": "Use Space for play/pause, Escape to stop, arrows to navigate"
+    },
+    "status": {
+      "playing": "Now playing: {place}",
+      "paused": "Audio paused: {place}",
+      "loading": "Loading audio: {place}",
+      "error": "Error loading audio: {place}"
+    }
   },
   "map": {
     "zoomIn": "Zoom in",

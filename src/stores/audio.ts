@@ -1,6 +1,10 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
-import { useAudioEventHandlers, attachAudioEventHandlers, detachAudioEventHandlers } from '@/composables/useAudioEventHandlers'
+import {
+  useAudioEventHandlers,
+  attachAudioEventHandlers,
+  detachAudioEventHandlers,
+} from '@/composables/useAudioEventHandlers'
 import { useAudioPreload } from '@/composables/useAudioPreload'
 
 export const useAudioStore = defineStore('audio', () => {
@@ -117,7 +121,7 @@ export const useAudioStore = defineStore('audio', () => {
         onTimeUpdate: () => {
           eventHandlers.onTimeUpdate()
           updateAudioCurrentTime()
-        }
+        },
       })
 
       // Lancer la lecture

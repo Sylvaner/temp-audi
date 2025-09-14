@@ -15,7 +15,7 @@ export function useMapGeolocation(leafletMapRef: any) {
 
   // Computed
   const modalType = computed(() =>
-    geolocationStore.permissionStatus === 'denied' ? 'denied' : 'request'
+    geolocationStore.permissionStatus === 'denied' ? 'denied' : 'request',
   )
 
   /**
@@ -106,6 +106,6 @@ export function useMapGeolocation(leafletMapRef: any) {
     centerOnUser,
     handleAllowGeolocation,
     handleDenyGeolocation,
-    handleRetryGeolocation
+    handleRetryGeolocation,
   }
 }

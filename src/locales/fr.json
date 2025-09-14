@@ -14,13 +14,26 @@
     "settings": "Paramètres"
   },
   "audio": {
-    "play": "Lecture",
-    "pause": "Pause",
-    "stop": "Arrêt",
+    "play": "Écouter {place}",
+    "pause": "Mettre en pause {place}",
+    "stop": "Arrêter",
     "listen": "Écouter",
+    "loading": "Chargement audio de {place}",
+    "error": "Erreur audio pour {place}",
     "volume": "Volume",
     "position": "Position",
-    "duration": "Durée"
+    "duration": "Durée",
+    "description": {
+      "control": "Contrôle audio pour {place}",
+      "progress": "Progression : {percent}%",
+      "keyboard": "Utilisez Espace pour lecture/pause, Échap pour arrêter, flèches pour naviguer"
+    },
+    "status": {
+      "playing": "Lecture en cours : {place}",
+      "paused": "Audio en pause : {place}",
+      "loading": "Chargement de l'audio : {place}",
+      "error": "Erreur lors du chargement de l'audio : {place}"
+    }
   },
   "map": {
     "zoomIn": "Zoomer",

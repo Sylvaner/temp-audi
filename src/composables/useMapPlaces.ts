@@ -1,6 +1,7 @@
 import { ref } from 'vue'
 import { useAudioStore } from '@/stores/audio'
 import { useLanguageStore } from '@/stores/language'
+import type { Place } from '@/types'
 
 /**
  * Composable pour la gestion des lieux dans la vue carte
@@ -38,16 +39,12 @@ export function useMapPlaces(leafletMapRef: any, data: any) {
   }
 
   /**
-   * Navigue vers un lieu spécifique
+   * Navigue vers un lieu spécifique (zoom uniquement, sans ouvrir le popup)
    */
-  const goToPlace = (place: any) => {
+  const goToPlace = (place: Place) => {
     if (leafletMapRef.value) {
-      leafletMapRef.value.setView(
-        { latitude: place.latitude, longitude: place.longitude },
-        18
-      )
-      // Optionnel : ouvrir aussi le popup
-      selectedPlace.value = place
+      leafletMapRef.value.setView({ latitude: place.latitude, longitude: place.longitude }, 18)
+      // Ne pas ouvrir le popup automatiquement, juste zoomer sur le lieu
     }
   }
 
@@ -71,6 +68,6 @@ export function useMapPlaces(leafletMapRef: any, data: any) {
     onPlaceDetails,
     closePopup,
     goToPlace,
-    onMapClick
+    onMapClick,
   }
 }

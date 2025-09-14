@@ -1,8 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '@/views/HomeView.vue'
 import MapView from '@/views/MapView.vue'
-import AboutView from '@/views/AboutView.vue'
 import MapIntroView from '@/views/MapIntroView.vue'
+
+// Lazy loading pour composants non-critiques
+const AboutView = () => import('@/views/AboutView.vue')
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),

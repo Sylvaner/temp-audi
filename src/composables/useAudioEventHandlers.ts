@@ -28,14 +28,7 @@ export interface AudioEventHandlersOptions {
  * Crée un ensemble d'event handlers pour un élément audio
  */
 export function useAudioEventHandlers(options: AudioEventHandlersOptions): AudioEventHandlers {
-  const {
-    isLoading,
-    isPlaying,
-    currentTime,
-    error,
-    currentPlace,
-    onPlaceMarkedAsPlayed,
-  } = options
+  const { isLoading, isPlaying, currentTime, error, currentPlace, onPlaceMarkedAsPlayed } = options
 
   const handlers: AudioEventHandlers = {
     onLoadStart: () => {
@@ -84,7 +77,7 @@ export function useAudioEventHandlers(options: AudioEventHandlersOptions): Audio
  */
 export function attachAudioEventHandlers(
   audio: HTMLAudioElement,
-  handlers: AudioEventHandlers
+  handlers: AudioEventHandlers,
 ): void {
   audio.addEventListener('loadstart', handlers.onLoadStart)
   audio.addEventListener('canplay', handlers.onCanPlay)
@@ -100,7 +93,7 @@ export function attachAudioEventHandlers(
  */
 export function detachAudioEventHandlers(
   audio: HTMLAudioElement,
-  handlers: AudioEventHandlers
+  handlers: AudioEventHandlers,
 ): void {
   audio.removeEventListener('loadstart', handlers.onLoadStart)
   audio.removeEventListener('canplay', handlers.onCanPlay)

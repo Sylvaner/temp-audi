@@ -76,17 +76,11 @@ const {
   centerOnUser,
   handleAllowGeolocation,
   handleDenyGeolocation,
-  handleRetryGeolocation
+  handleRetryGeolocation,
 } = useMapGeolocation(leafletMapRef)
 
-const {
-  selectedPlace,
-  startAudioPreloading,
-  onPlaceDetails,
-  closePopup,
-  goToPlace,
-  onMapClick
-} = useMapPlaces(leafletMapRef, data)
+const { selectedPlace, startAudioPreloading, onPlaceDetails, closePopup, goToPlace, onMapClick } =
+  useMapPlaces(leafletMapRef, data)
 
 // Gestion des événements de carte
 function onMapReady(map: any) {

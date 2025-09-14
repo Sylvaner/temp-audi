@@ -76,7 +76,6 @@ import { useI18n } from 'vue-i18n'
 import { useLanguageStore } from '@/stores/language'
 import { useGeolocationStore } from '@/stores/geolocation'
 import { useAudioStore } from '@/stores/audio'
-import type { Position } from '@/types'
 import data from '@/data/data.json'
 
 // Types locaux
@@ -114,7 +113,7 @@ const places = computed(() => {
 
 // Émissions
 const emit = defineEmits<{
-  goToPlace: [position: Position]
+  goToPlace: [place: Place]
 }>()
 
 // Méthodes
@@ -128,11 +127,8 @@ function getPlaceContent(place: Place) {
 }
 
 function goToPlace(place: Place) {
-  const position: Position = {
-    latitude: place.latitude,
-    longitude: place.longitude,
-  }
-  emit('goToPlace', position)
+  // Émettre l'objet Place complet au lieu d'une simple Position
+  emit('goToPlace', place)
   isOpen.value = false // Fermer la liste après sélection
 }
 
