@@ -13,13 +13,13 @@
 
     <!-- Contrôles de géolocalisation -->
     <div class="map-controls">
-      <PlacesList @go-to-place="goToPlace" />
       <GeolocationButton
         size="normal"
         @request-permission="showGeolocationModal = true"
         @click="centerOnUser"
       />
       <AudioControls />
+      <PlacesList @go-to-place="goToPlace" />
     </div>
 
     <!-- Modal de géolocalisation -->
@@ -31,12 +31,14 @@
       @deny="handleDenyGeolocation"
       @retry="handleRetryGeolocation"
     />
+  </div>
 
-    <!-- Affichage plein écran pour le lieu sélectionné -->
+  <!-- Affichage plein écran pour le lieu sélectionné - Téléporté au niveau body -->
+  <Teleport to="body">
     <div v-if="selectedPlace" class="place-fullscreen-view">
       <PlacePopup :place="selectedPlace" @close="closePopup" />
     </div>
-  </div>
+  </Teleport>
 </template>
 
 <script setup lang="ts">
@@ -267,7 +269,7 @@ onUnmounted(() => {
   position: absolute;
   top: 1rem;
   right: 1rem;
-  z-index: var(--z-map-ui-controls);
+  z-index: var(--z-ui); /* Plus élevé que les tiles Leaflet */
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
@@ -308,7 +310,7 @@ onUnmounted(() => {
   left: 0;
   right: 0;
   bottom: 0;
-  z-index: var(--z-modal);
+  z-index: var(--z-modal) !important; /* Forcer au-dessus de tout */
   /* Pas de background ici car PlacePopup le gère */
 }
 

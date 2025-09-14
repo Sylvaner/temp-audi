@@ -151,8 +151,7 @@ onUnmounted(() => {
     z-index: calc(var(--z-navbar) + 1); /* Au-dessus de la navbar */
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
     border-radius: 0 0 6px 6px;
-    max-height: calc(100vh - 52px);
-    overflow-y: auto;
+    overflow: visible; /* Permettre au dropdown de déborder */
   }
 }
 </style>

@@ -173,7 +173,7 @@ function getDownloadState(place: Place) {
   border-radius: var(--border-radius);
   box-shadow: var(--shadow-large);
   overflow: hidden;
-  z-index: var(--z-dropdown);
+  z-index: var(--z-ui);
 }
 
 .places-header {

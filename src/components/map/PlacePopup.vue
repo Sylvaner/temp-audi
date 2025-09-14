@@ -139,7 +139,7 @@ async function playAudio() {
   right: 0;
   bottom: 0;
   background: white;
-  z-index: var(--z-modal);
+  z-index: var(--z-modal) !important; /* Forcer au-dessus de tout */
   display: flex;
   flex-direction: column;
   height: 100vh;
@@ -154,7 +154,7 @@ async function playAudio() {
   position: absolute;
   top: 1rem;
   right: 1rem;
-  z-index: calc(var(--z-modal) + 1);
+  z-index: calc(var(--z-modal) + 1) !important;
 }
 
 .image-section {

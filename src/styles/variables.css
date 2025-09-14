@@ -1,28 +1,17 @@
 /* Variables CSS globales pour les z-index et la cohérence visuelle */
 
 :root {
-  /* === HIÉRARCHIE Z-INDEX === */
-  /* Carte et éléments de base */
-  --z-map: 1;
+  /* === HIÉRARCHIE Z-INDEX SIMPLIFIÉE === */
+  /* Niveaux de base (0-100) */
+  --z-base: 1;
   --z-map-controls: 100;
-  --z-map-place: 100;
-  --z-map-user: 99;
 
-  /* Navigation */
+  /* Interface utilisateur (500-1000) */
+  --z-ui: 500;
   --z-navbar: 1000;
-  --z-bottom-nav: 1000;
 
-  /* Popups et overlays */
-  --z-popups: 600;
-
-  /* Contrôles de carte */
-  --z-map-ui-controls: 499;
-  --z-places-list: 600;
-  --z-dropdown: 700;
-
-  /* Modals */
-  --z-modal: 9000;
-  --z-modal-backdrop: 8999;
+  /* Overlays et modals (9999+) */
+  --z-modal: 9999;
 
   /* === COULEURS === */
   /* Palette Automne */
@@ -127,17 +116,12 @@
 .z-navbar {
   z-index: var(--z-navbar) !important;
 }
-.z-popups {
-  z-index: var(--z-popups) !important;
+
+.z-map-controls {
+  z-index: var(--z-map-controls) !important;
 }
-.z-map-ui-controls {
-  z-index: var(--z-map-ui-controls) !important;
-}
-.z-places-list {
-  z-index: var(--z-places-list) !important;
-}
-.z-dropdown {
-  z-index: var(--z-dropdown) !important;
+.z-ui {
+  z-index: var(--z-ui) !important;
 }
 .z-modal {
   z-index: var(--z-modal) !important;

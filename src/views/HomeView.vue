@@ -106,12 +106,12 @@ function navigateToMap() {
     rgba(150, 94, 41, 0.5) 50%,
     rgba(107, 53, 15, 0.6) 100%
   );
-  z-index: 1;
+  z-index: var(--z-base);
 }
 
 .hero-body {
   position: relative;
-  z-index: 2;
+  z-index: calc(var(--z-base) + 1);
 }
 
 /* Ombre portée pour améliorer la lisibilité */

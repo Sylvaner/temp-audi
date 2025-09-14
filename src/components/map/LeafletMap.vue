@@ -295,20 +295,28 @@ defineExpose({
 }
 
 :deep(.leaflet-popup-pane) {
-  z-index: var(--z-popups) !important;
+  z-index: var(--z-ui) !important;
 }
 
 :deep(.leaflet-tooltip-pane) {
-  z-index: var(--z-popups) !important;
+  z-index: var(--z-ui) !important;
 }
 
-/* S'assurer que tous les éléments Leaflet restent sous la navbar */
-:deep(.leaflet-pane),
-:deep(.leaflet-control),
-:deep(.leaflet-marker-pane),
+/* S'assurer que tous les éléments Leaflet de base restent sous les contrôles */
 :deep(.leaflet-tile-pane),
 :deep(.leaflet-overlay-pane) {
-  z-index: 400 !important;
+  z-index: var(--z-base) !important;
+}
+
+/* Les contrôles Leaflet (zoom, etc.) au niveau UI */
+:deep(.leaflet-control),
+:deep(.leaflet-marker-pane) {
+  z-index: var(--z-ui) !important;
+}
+
+/* S'assurer que les panes généraux ne dépassent pas */
+:deep(.leaflet-pane) {
+  z-index: auto !important;
 }
 
 /* Styles pour le marqueur de localisation utilisateur */
@@ -396,7 +404,7 @@ defineExpose({
 :deep(.place-marker-circle.is-selected) {
   background: var(--color-warm);
   transform: translate(-50%, -50%) scale(1.1);
-  z-index: var(--z-map-ui-controls);
+  z-index: var(--z-map-controls);
 }
 
 :deep(.place-marker-circle:hover) {

@@ -80,7 +80,7 @@ onUnmounted(() => {
 <style scoped>
 .dropdown {
   position: relative;
-  z-index: var(--z-dropdown);
+  z-index: var(--z-ui);
 }
 
 .dropdown-trigger .button {
@@ -106,7 +106,8 @@ onUnmounted(() => {
 }
 
 .dropdown-menu {
-  z-index: var(--z-dropdown) !important;
+  position: absolute !important; /* Position relative au dropdown */
+  z-index: calc(var(--z-navbar) + 5) !important; /* Au-dessus du menu mobile mais sous les modals */
   border-radius: var(--border-radius);
   box-shadow: var(--shadow-medium);
 }
