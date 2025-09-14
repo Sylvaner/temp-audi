@@ -1,8 +1,10 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
+import { useAudioEventHandlers, attachAudioEventHandlers, detachAudioEventHandlers } from '@/composables/useAudioEventHandlers'
+import { useAudioPreload } from '@/composables/useAudioPreload'
 
 export const useAudioStore = defineStore('audio', () => {
-  // État
+  // État principal de lecture
   const currentPlace = ref<string | null>(null)
   const currentAudio = ref<HTMLAudioElement | null>(null)
   const isPlaying = ref(false)
@@ -12,12 +14,8 @@ export const useAudioStore = defineStore('audio', () => {
   const duration = ref(0)
   const playedPlaces = ref<Set<string>>(new Set()) // Places qui ont été jouées au moins une fois
 
-  // États de prétéléchargement
-  const preloadedAudios = ref<Map<string, HTMLAudioElement>>(new Map())
-  const downloadQueue = ref<string[]>([])
-  const downloadingFiles = ref<Set<string>>(new Set())
-  const downloadedFiles = ref<Set<string>>(new Set())
-  const maxConcurrentDownloads = 5
+  // Gestionnaire de prétéléchargement (composable)
+  const preloadManager = useAudioPreload(5)
 
   // Computed
   const hasAudio = computed(() => currentAudio.value !== null && isPlaying.value)
@@ -27,32 +25,26 @@ export const useAudioStore = defineStore('audio', () => {
     return (currentTime.value / duration.value) * 100
   })
 
-  // Computed pour le prétéléchargement
-  const isDownloading = (audioFile: string) => {
-    return downloadingFiles.value.has(audioFile)
+  // Méthode pour marquer une place comme jouée
+  const markPlaceAsPlayed = (placeId: string) => {
+    playedPlaces.value.add(placeId)
   }
 
-  const isDownloaded = (audioFile: string) => {
-    return downloadedFiles.value.has(audioFile)
-  }
-
-  const getDownloadState = (audioFile: string): 'none' | 'downloading' | 'downloaded' => {
-    if (downloadingFiles.value.has(audioFile)) return 'downloading'
-    if (downloadedFiles.value.has(audioFile)) return 'downloaded'
-    return 'none'
-  }
+  // Event handlers (composable)
+  const eventHandlers = useAudioEventHandlers({
+    isLoading,
+    isPlaying,
+    currentTime,
+    error,
+    currentPlace,
+    onPlaceMarkedAsPlayed: markPlaceAsPlayed,
+  })
 
   // Actions
   const stopCurrent = () => {
     if (currentAudio.value) {
       currentAudio.value.pause()
-      currentAudio.value.removeEventListener('loadstart', onLoadStart)
-      currentAudio.value.removeEventListener('canplay', onCanPlay)
-      currentAudio.value.removeEventListener('play', onPlay)
-      currentAudio.value.removeEventListener('pause', onPause)
-      currentAudio.value.removeEventListener('ended', onEnded)
-      currentAudio.value.removeEventListener('timeupdate', onTimeUpdate)
-      currentAudio.value.removeEventListener('error', onError)
+      detachAudioEventHandlers(currentAudio.value, eventHandlers)
       currentAudio.value = null
     }
     currentPlace.value = null
@@ -63,150 +55,17 @@ export const useAudioStore = defineStore('audio', () => {
     error.value = null
   }
 
-  // Event handlers
-  const onLoadStart = () => {
-    isLoading.value = true
-  }
-
-  const onCanPlay = () => {
-    isLoading.value = false
+  // Méthodes de mise à jour depuis les event handlers
+  const updateAudioDuration = () => {
     if (currentAudio.value) {
       duration.value = currentAudio.value.duration || 0
     }
   }
 
-  const onPlay = () => {
-    isPlaying.value = true
-    // Marquer la place comme jouée
-    if (currentPlace.value) {
-      markPlaceAsPlayed(currentPlace.value)
-    }
-  }
-
-  const onPause = () => {
-    isPlaying.value = false
-  }
-
-  const onEnded = () => {
-    isPlaying.value = false
-    currentTime.value = 0
-  }
-
-  const onTimeUpdate = () => {
+  const updateAudioCurrentTime = () => {
     if (currentAudio.value) {
       currentTime.value = currentAudio.value.currentTime || 0
     }
-  }
-
-  const onError = (e: Event) => {
-    console.error('Erreur lors de la lecture audio:', e)
-    error.value = 'Erreur lors de la lecture du fichier audio'
-    isLoading.value = false
-    isPlaying.value = false
-  }
-
-  // Fonctions de prétéléchargement
-  const preloadAudio = async (audioFile: string): Promise<HTMLAudioElement> => {
-    return new Promise((resolve, reject) => {
-      // Si déjà prétéléchargé, retourner l'instance existante
-      if (preloadedAudios.value.has(audioFile)) {
-        resolve(preloadedAudios.value.get(audioFile)!)
-        return
-      }
-
-      // Marquer comme en cours de téléchargement
-      downloadingFiles.value.add(audioFile)
-
-      const audio = new Audio()
-      audio.preload = 'auto'
-
-      const onCanPlayThrough = () => {
-        // Téléchargement terminé
-        downloadingFiles.value.delete(audioFile)
-        downloadedFiles.value.add(audioFile)
-        preloadedAudios.value.set(audioFile, audio)
-
-        // Nettoyer les listeners
-        audio.removeEventListener('canplaythrough', onCanPlayThrough)
-        audio.removeEventListener('error', onPreloadError)
-
-        // Traiter le prochain dans la queue
-        processDownloadQueue()
-
-        resolve(audio)
-      }
-
-      const onPreloadError = () => {
-        console.error('Erreur lors du prétéléchargement de:', audioFile)
-        downloadingFiles.value.delete(audioFile)
-
-        // Nettoyer les listeners
-        audio.removeEventListener('canplaythrough', onCanPlayThrough)
-        audio.removeEventListener('error', onPreloadError)
-
-        // Traiter le prochain dans la queue
-        processDownloadQueue()
-
-        reject(new Error(`Impossible de prétélécharger ${audioFile}`))
-      }
-
-      audio.addEventListener('canplaythrough', onCanPlayThrough)
-      audio.addEventListener('error', onPreloadError)
-
-      audio.src = `/audio/${audioFile}`
-    })
-  }
-
-  const processDownloadQueue = () => {
-    // Si on a atteint la limite de téléchargements simultanés, attendre
-    if (downloadingFiles.value.size >= maxConcurrentDownloads) {
-      return
-    }
-
-    // Prendre le prochain fichier dans la queue
-    const nextFile = downloadQueue.value.shift()
-    if (nextFile && !downloadingFiles.value.has(nextFile) && !downloadedFiles.value.has(nextFile)) {
-      preloadAudio(nextFile).catch(console.error)
-    }
-  }
-
-  const startPreloading = (audioFiles: string[]) => {
-    // Ajouter les fichiers à la queue s'ils ne sont pas déjà téléchargés ou en cours
-    audioFiles.forEach((audioFile) => {
-      if (
-        !downloadedFiles.value.has(audioFile) &&
-        !downloadingFiles.value.has(audioFile) &&
-        !downloadQueue.value.includes(audioFile)
-      ) {
-        downloadQueue.value.push(audioFile)
-      }
-    })
-
-    // Démarrer le téléchargement avec la limite de concurrence
-    for (let i = 0; i < Math.min(maxConcurrentDownloads, downloadQueue.value.length); i++) {
-      processDownloadQueue()
-    }
-  }
-
-  const startPreloadingForLanguage = (places: any[], language: string) => {
-    const audioFiles: string[] = []
-
-    // Trier par ordre et extraire les fichiers audio pour la langue donnée
-    places
-      .slice()
-      .sort((a, b) => a.order - b.order)
-      .forEach((place) => {
-        if (place.content[language]?.audioFile) {
-          audioFiles.push(place.content[language].audioFile)
-        }
-      })
-
-    console.log(`Démarrage du prétéléchargement pour ${language}:`, audioFiles.length, 'fichiers')
-    startPreloading(audioFiles)
-  }
-
-  const getPreloadedAudio = (audioFile: string): HTMLAudioElement | null => {
-    return preloadedAudios.value.get(audioFile) || null
   }
 
   const playAudio = async (placeId: string, audioFile: string) => {
@@ -235,7 +94,7 @@ export const useAudioStore = defineStore('audio', () => {
       currentPlace.value = placeId
 
       // Utiliser l'audio prétéléchargé si disponible
-      let audio = getPreloadedAudio(audioFile)
+      let audio = preloadManager.getPreloadedAudio(audioFile)
 
       if (audio) {
         // Si prétéléchargé, réutiliser directement sans cloner
@@ -248,14 +107,18 @@ export const useAudioStore = defineStore('audio', () => {
         currentAudio.value = audio
       }
 
-      // Ajouter les event listeners
-      currentAudio.value.addEventListener('loadstart', onLoadStart)
-      currentAudio.value.addEventListener('canplay', onCanPlay)
-      currentAudio.value.addEventListener('play', onPlay)
-      currentAudio.value.addEventListener('pause', onPause)
-      currentAudio.value.addEventListener('ended', onEnded)
-      currentAudio.value.addEventListener('timeupdate', onTimeUpdate)
-      currentAudio.value.addEventListener('error', onError)
+      // Ajouter les event listeners via le composable
+      attachAudioEventHandlers(currentAudio.value, {
+        ...eventHandlers,
+        onCanPlay: () => {
+          eventHandlers.onCanPlay()
+          updateAudioDuration()
+        },
+        onTimeUpdate: () => {
+          eventHandlers.onTimeUpdate()
+          updateAudioCurrentTime()
+        }
+      })
 
       // Lancer la lecture
       await currentAudio.value.play()
@@ -314,11 +177,6 @@ export const useAudioStore = defineStore('audio', () => {
     return playedPlaces.value.has(placeId)
   }
 
-  // Méthode pour marquer une place comme jouée
-  const markPlaceAsPlayed = (placeId: string) => {
-    playedPlaces.value.add(placeId)
-  }
-
   return {
     // État
     currentPlace,
@@ -331,10 +189,10 @@ export const useAudioStore = defineStore('audio', () => {
     hasPlayedAnyAudio,
     progress,
 
-    // États de prétéléchargement
-    isDownloading,
-    isDownloaded,
-    getDownloadState,
+    // États de prétéléchargement (délégués au preload manager)
+    isDownloading: preloadManager.isDownloading,
+    isDownloaded: preloadManager.isDownloaded,
+    getDownloadState: preloadManager.getDownloadState,
 
     // Actions
     playAudio,
@@ -348,9 +206,9 @@ export const useAudioStore = defineStore('audio', () => {
     hasPlaceBeenPlayed,
     markPlaceAsPlayed,
 
-    // Actions de prétéléchargement
-    startPreloading,
-    startPreloadingForLanguage,
-    getPreloadedAudio,
+    // Actions de prétéléchargement (délégués au preload manager)
+    startPreloading: preloadManager.startPreloading,
+    startPreloadingForLanguage: preloadManager.startPreloadingForLanguage,
+    getPreloadedAudio: preloadManager.getPreloadedAudio,
   }
 })

@@ -43,7 +43,7 @@
 
 <script setup lang="ts">
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { ref, onMounted, onUnmounted, computed, watch } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 import LeafletMap from '@/components/map/LeafletMap.vue'
 import PlacesList from '@/components/map/PlacesList.vue'
 import PlacePopup from '@/components/map/PlacePopup.vue'
@@ -51,17 +51,15 @@ import GeolocationButton from '@/components/ui/GeolocationButton.vue'
 import GeolocationModal from '@/components/ui/GeolocationModal.vue'
 import AudioControls from '@/components/ui/AudioControls.vue'
 import { useGeolocationStore } from '@/stores/geolocation'
-import { useAudioStore } from '@/stores/audio'
-import { useLanguageStore } from '@/stores/language'
+import { useMapGeolocation } from '@/composables/useMapGeolocation'
+import { useMapPlaces } from '@/composables/useMapPlaces'
 import type { Position } from '@/types'
 import data from '@/data/data.json'
 
-// Stores
+// Store
 const geolocationStore = useGeolocationStore()
-const audioStore = useAudioStore()
-const languageStore = useLanguageStore()
 
-// État local
+// État local de la carte
 const mapCenter = ref<Position>({
   latitude: data.config.map.center.latitude,
   longitude: data.config.map.center.longitude,
@@ -69,169 +67,40 @@ const mapCenter = ref<Position>({
 const mapZoom = ref(data.config.map.zoom)
 const mapInstance = ref<any>(null)
 const leafletMapRef = ref<any>(null)
-const showGeolocationModal = ref(false)
-const hasRequestedGeolocation = ref(false) // Flag pour éviter de redemander
-const selectedPlace = ref<any>(null) // Place sélectionnée pour le popup modal
-const hasInitialCentering = ref(false) // Flag pour ne centrer qu'au premier lancement
 
-// Computed
-const modalType = computed(() =>
-  geolocationStore.permissionStatus === 'denied' ? 'denied' : 'request',
-)
+// Composables
+const {
+  showGeolocationModal,
+  modalType,
+  requestInitialGeolocation,
+  centerOnUser,
+  handleAllowGeolocation,
+  handleDenyGeolocation,
+  handleRetryGeolocation
+} = useMapGeolocation(leafletMapRef)
+
+const {
+  selectedPlace,
+  startAudioPreloading,
+  onPlaceDetails,
+  closePopup,
+  goToPlace,
+  onMapClick
+} = useMapPlaces(leafletMapRef, data)
 
 // Gestion des événements de carte
 function onMapReady(map: any) {
   mapInstance.value = map
   console.log('Carte prête:', map)
 
-  // Demander automatiquement la géolocalisation au chargement seulement si pas encore demandée
-  if (geolocationStore.permissionStatus === 'unknown' && !hasRequestedGeolocation.value) {
-    hasRequestedGeolocation.value = true
-    setTimeout(() => {
-      showGeolocationModal.value = true
-    }, 1000) // Délai pour laisser la carte se charger
-  }
+  // Demander automatiquement la géolocalisation (délégué au composable)
+  requestInitialGeolocation()
 
-  // Démarrer le prétéléchargement des fichiers audio
+  // Démarrer le prétéléchargement des fichiers audio (délégué au composable)
   startAudioPreloading()
 }
 
-// Fonction pour démarrer le prétéléchargement
-function startAudioPreloading() {
-  const currentLanguage = languageStore.currentLanguage?.code || 'fr'
-
-  // Prétélécharger uniquement la langue sélectionnée
-  audioStore.startPreloadingForLanguage(data.places, currentLanguage)
-}
-
-function onMapClick(event: any) {
-  console.log('Clic sur la carte:', event.latlng)
-}
-
-function onPlaceDetails(place: any) {
-  console.log('Détails du lieu demandés:', place)
-  selectedPlace.value = place
-  // Ne pas déclencher de zoom automatique lors du clic sur marker
-}
-
-function closePopup() {
-  selectedPlace.value = null
-}
-
-// Gestion de la géolocalisation
-async function handleAllowGeolocation() {
-  showGeolocationModal.value = false
-  const success = await geolocationStore.requestPermission()
-
-  if (success) {
-    geolocationStore.startWatching()
-
-    // Centrer seulement si c'est le premier lancement et qu'on a déjà une position
-    if (!hasInitialCentering.value && geolocationStore.userPosition) {
-      hasInitialCentering.value = true
-
-      if (geolocationStore.shouldCenterOnUser) {
-        centerOnUserWithIncreasedZoom()
-      } else if (geolocationStore.moveToUserLocation) {
-        centerOnUser()
-      }
-
-      console.log('Centrage initial effectué après acceptation de la géolocalisation')
-    }
-  } else {
-    // Afficher le modal d'erreur
-    showGeolocationModal.value = true
-  }
-}
-
-function handleDenyGeolocation() {
-  showGeolocationModal.value = false
-  // L'utilisateur a choisi de continuer sans géolocalisation
-}
-
-async function handleRetryGeolocation() {
-  showGeolocationModal.value = false
-  const success = await geolocationStore.requestPermission()
-
-  if (success) {
-    geolocationStore.startWatching()
-
-    // Centrer seulement si c'est le premier lancement et qu'on a déjà une position
-    if (!hasInitialCentering.value && geolocationStore.userPosition) {
-      hasInitialCentering.value = true
-
-      if (geolocationStore.shouldCenterOnUser) {
-        centerOnUserWithIncreasedZoom()
-      } else if (geolocationStore.moveToUserLocation) {
-        centerOnUser()
-      }
-
-      console.log('Centrage initial effectué après retry de la géolocalisation')
-    }
-  } else {
-    // Réafficher le modal si échec
-    setTimeout(() => {
-      showGeolocationModal.value = true
-    }, 500)
-  }
-}
-
-function centerOnUser() {
-  if (geolocationStore.userPosition && leafletMapRef.value) {
-    leafletMapRef.value.centerOnUser()
-  }
-}
-
-function centerOnUserWithIncreasedZoom() {
-  if (geolocationStore.userPosition && leafletMapRef.value) {
-    // Centrer avec le zoom configuré dans goToInitialUserLocation.increaseZoom
-    const increasedZoom = geolocationStore.getIncreasedZoom
-    leafletMapRef.value.setView(geolocationStore.userPosition, increasedZoom)
-  }
-}
-
-function goToPlace(position: Position) {
-  if (leafletMapRef.value) {
-    leafletMapRef.value.setView(position, 18)
-  }
-}
-
-// Watcher pour centrer automatiquement seulement au premier lancement
-watch(
-  () => geolocationStore.userPosition,
-  (newPosition) => {
-    if (newPosition && mapInstance.value) {
-      // Centrer seulement au premier lancement
-      if (!hasInitialCentering.value) {
-        hasInitialCentering.value = true
-
-        // Vérifier si on doit centrer automatiquement selon la configuration
-        if (geolocationStore.shouldCenterOnUser) {
-          centerOnUserWithIncreasedZoom()
-        } else if (geolocationStore.moveToUserLocation) {
-          // Première fois qu'on obtient la position
-          centerOnUser()
-        }
-
-        console.log('Centrage initial effectué sur la position utilisateur')
-      } else {
-        // Les mises à jour suivantes n'entraînent pas de centrage
-        console.log('Position utilisateur mise à jour (pas de centrage automatique)')
-      }
-    }
-  },
-)
-
-// Watcher pour relancer le prétéléchargement lors du changement de langue
-watch(
-  () => languageStore.currentLanguage?.code,
-  (newLanguage) => {
-    if (newLanguage) {
-      console.log('Changement de langue détecté, relance du prétéléchargement:', newLanguage)
-      startAudioPreloading()
-    }
-  },
-)
+// Les watchers de géolocalisation et langue sont gérés dans les composables
 
 // Gestionnaire pour fermer le popup avec Échap
 const handleKeyDown = (event: KeyboardEvent) => {
