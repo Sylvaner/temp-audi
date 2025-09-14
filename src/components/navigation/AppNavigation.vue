@@ -87,22 +87,32 @@ function navigateToMap() {
 
 // Empêcher la fermeture automatique du menu sur la page de la carte
 function handleClick(event: Event) {
-  // Sur les pages de carte, ne fermer le menu que si on clique sur un élément de navigation
-  if (route.path === '/map' || route.path === '/map-intro') {
-    const target = event.target as Element
+  const target = event.target as Element
 
-    // Permettre la fermeture seulement si on clique sur la navbar ou ses éléments
+  // Sur les pages de carte, comportement spécialisé
+  if (route.path === '/map' || route.path === '/map-intro') {
+    // Fermer le menu si on clique sur un élément de navigation
     if (target.closest('.navbar-item') || target.closest('.navbar-burger')) {
       return // Laisser le comportement normal
     }
 
-    // Empêcher la fermeture pour tous les autres clics (carte, etc.)
-    event.stopPropagation()
+    // Permettre les clics sur les markers et popups
+    if (
+      target.closest('.leaflet-marker-icon') ||
+      target.closest('.leaflet-popup') ||
+      target.closest('.leaflet-control')
+    ) {
+      return // Laisser passer ces clics
+    }
+
+    // Fermer le menu seulement si on clique en dehors de la navbar ET de la carte interactive
+    if (!target.closest('.navbar') && !target.closest('.leaflet-container')) {
+      closeMobileMenu()
+    }
     return
   }
 
   // Sur les autres pages, comportement normal de Bulma
-  const target = event.target as Element
   if (!target.closest('.navbar') && isMobileMenuOpen.value) {
     closeMobileMenu()
   }
@@ -155,15 +165,17 @@ onUnmounted(() => {
     z-index: var(--z-navbar);
   }
 
-  /* Empêcher que le menu se ferme automatiquement sur la carte */
+  /* Menu mobile avec taille appropriée */
   .navbar-menu.is-active {
-    position: fixed;
-    top: 52px; /* Hauteur de la navbar */
+    position: absolute;
+    top: 100%;
     left: 0;
     right: 0;
-    bottom: 0;
     background-color: var(--color-deep);
     z-index: calc(var(--z-navbar) - 1);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    border-radius: 0 0 6px 6px;
+    max-height: 80vh;
     overflow-y: auto;
   }
 }
