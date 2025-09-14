@@ -13,10 +13,11 @@ interface Config {
   }
   defaultLanguage: string
   availableLanguages: string[]
-  markers?: {
+  markerStyle: {
     defaultColor: string
-    place: string
-    userLocation: string
+    defaultPlaceIcon: string
+    defaultUserLocationIcon: string
+    defaultUserLocationColor: string
   }
 }
 
@@ -26,16 +27,21 @@ export function useConfig() {
   const languageStore = useLanguageStore()
 
   const siteName = computed(() => {
-    const lang = languageStore.currentLanguage?.code || 'fr'
-    return config.value.siteName[lang] || config.value.siteName['fr'] || 'Audio Guide'
+    const lang = languageStore.currentLanguage?.code || config.value.defaultLanguage || 'en'
+    return (
+      config.value.siteName[lang] ||
+      config.value.siteName[config.value.defaultLanguage] ||
+      'Audio Guide'
+    )
   })
 
-  const markers = computed(() => {
+  const markerStyle = computed(() => {
     return (
-      config.value.markers || {
+      config.value.markerStyle || {
         defaultColor: '#B87333',
-        place: 'fa-monument',
-        userLocation: 'fa-person-walking',
+        defaultPlaceIcon: 'fa-monument',
+        defaultUserLocationIcon: 'fa-person-walking',
+        defaultUserLocationColor: '#007bff',
       }
     )
   })
@@ -43,6 +49,6 @@ export function useConfig() {
   return {
     config: config.value,
     siteName,
-    markers,
+    markerStyle,
   }
 }

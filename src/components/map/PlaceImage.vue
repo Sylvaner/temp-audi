@@ -1,6 +1,11 @@
 <template>
   <figure v-if="imageFile" class="image" @click="$emit('click')">
-    <img :src="`/images/${imageFile}`" :alt="title" @error="onImageError" class="is-clickable" />
+    <img
+      :src="`/images/${imageFile}`"
+      :alt="title"
+      @error="onImageError"
+      class="has-cursor-pointer"
+    />
   </figure>
 </template>
 
@@ -38,9 +43,5 @@ function onImageError(event: Event) {
 
 .image:hover img {
   transform: scale(1.02);
-}
-
-.is-clickable {
-  cursor: pointer;
 }
 </style>

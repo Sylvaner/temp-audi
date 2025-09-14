@@ -11,7 +11,6 @@
       @place-details="onPlaceDetails"
     />
 
-    <!-- Contrôles de géolocalisation -->
     <div class="map-controls">
       <GeolocationButton
         size="normal"
@@ -22,7 +21,6 @@
       <PlacesList @go-to-place="goToPlace" />
     </div>
 
-    <!-- Modal de géolocalisation -->
     <GeolocationModal
       :is-visible="showGeolocationModal"
       :type="modalType"
@@ -33,7 +31,6 @@
     />
   </div>
 
-  <!-- Affichage plein écran pour le lieu sélectionné - Téléporté au niveau body -->
   <Teleport to="body">
     <div v-show="selectedPlace" class="place-fullscreen-view">
       <PlacePopup v-if="selectedPlace" :place="selectedPlace" @close="closePopup" />
@@ -56,10 +53,7 @@ import { useMapPlaces } from '@/composables/useMapPlaces'
 import type { Position } from '@/types'
 import data from '@/data/data.json'
 
-// Store
 const geolocationStore = useGeolocationStore()
-
-// État local de la carte
 const mapCenter = ref<Position>({
   latitude: data.config.map.center.latitude,
   longitude: data.config.map.center.longitude,
@@ -68,7 +62,6 @@ const mapZoom = ref(data.config.map.zoom)
 const mapInstance = ref<any>(null)
 const leafletMapRef = ref<any>(null)
 
-// Composables
 const {
   showGeolocationModal,
   modalType,
@@ -82,19 +75,11 @@ const {
 const { selectedPlace, startAudioPreloading, onPlaceDetails, closePopup, goToPlace, onMapClick } =
   useMapPlaces(leafletMapRef, data)
 
-// Gestion des événements de carte
 function onMapReady(map: any) {
   mapInstance.value = map
-  console.log('Carte prête:', map)
-
-  // Demander automatiquement la géolocalisation (délégué au composable)
   requestInitialGeolocation()
-
-  // Démarrer le prétéléchargement des fichiers audio (délégué au composable)
   startAudioPreloading()
 }
-
-// Les watchers de géolocalisation et langue sont gérés dans les composables
 
 // Gestionnaire pour fermer le popup avec Échap
 const handleKeyDown = (event: KeyboardEvent) => {
@@ -104,19 +89,12 @@ const handleKeyDown = (event: KeyboardEvent) => {
 }
 
 onMounted(() => {
-  console.log('Vue carte montée')
-  // Initialiser la géolocalisation si on a déjà la permission
   geolocationStore.initializeGeolocation()
-
   document.addEventListener('keydown', handleKeyDown)
 })
 
 onUnmounted(() => {
-  // Nettoyer l'événement lors du démontage
   document.removeEventListener('keydown', handleKeyDown)
-
-  // Note: On ne stopWatching() pas ici pour que la géolocalisation
-  // continue en arrière-plan même si on quitte la vue carte
 })
 </script>
 
@@ -127,7 +105,6 @@ onUnmounted(() => {
   position: relative;
 }
 
-/* Contrôles de carte positionnés en overlay */
 .map-controls {
   position: absolute;
   top: 1rem;
@@ -139,20 +116,18 @@ onUnmounted(() => {
   align-items: flex-end;
 }
 
-/* Assure que la carte prend toute la hauteur disponible */
 :deep(.leaflet-map) {
-  height: calc(100vh - 3.25rem); /* Hauteur - navbar */
+  height: calc(100vh - 3.25rem);
 }
 
-/* Ajustement pour mobile avec navbar fixe */
 @media screen and (max-width: 1023px) {
   .map-view {
     position: fixed;
-    top: 52px; /* Sous la navbar */
+    top: 52px;
     left: 0;
     right: 0;
     bottom: 0;
-    height: auto; /* Laisse la position gérer la hauteur */
+    height: auto;
   }
 
   :deep(.leaflet-map) {
@@ -166,7 +141,6 @@ onUnmounted(() => {
   }
 }
 
-/* Styles de l'affichage plein écran */
 .place-fullscreen-view {
   position: fixed;
   top: 0;
@@ -174,8 +148,5 @@ onUnmounted(() => {
   right: 0;
   bottom: 0;
   z-index: var(--z-modal);
-  /* Pas de background ici car PlacePopup le gère */
 }
-
-/* Plus besoin des styles du modal */
 </style>

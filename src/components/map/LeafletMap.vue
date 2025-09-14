@@ -53,7 +53,7 @@ const props = withDefaults(defineProps<Props>(), {
 
 // Composables
 const languageStore = useLanguageStore()
-const { markers } = useConfig()
+const { markerStyle } = useConfig()
 
 // État local
 const mapInstance = ref<any>(null)
@@ -75,10 +75,10 @@ const emit = defineEmits<{
 // Fonction pour créer l'icône des lieux
 const createPlaceIcon = (place: Place, isActive = false) => {
   // Couleur : utiliser la couleur personnalisée ou les couleurs par défaut
-  const color = isActive ? 'var(--color-warm)' : place.markerColor || markers.value.defaultColor
+  const color = isActive ? 'var(--color-warm)' : place.markerColor || markerStyle.value.defaultColor
 
   // Icône : utiliser l'icône personnalisée ou l'icône par défaut configurée
-  const iconClass = place.markerIcon || markers.value.place
+  const iconClass = place.markerIcon || markerStyle.value.defaultPlaceIcon
 
   return L.divIcon({
     className: 'place-marker',
@@ -141,13 +141,14 @@ const createPlaceMarkers = () => {
 
 // Fonction pour créer l'icône de l'utilisateur
 const createUserIcon = () => {
-  const userColor = getCSSVariable('--color-user')
+  const userColor =
+    markerStyle.value.defaultUserLocationColor || getCSSVariable('--color-user') || '#007bff'
   return L.divIcon({
     className: 'user-location-marker',
     html: `
       <div class="user-location-icon">
         <div class="user-location-circle" style="background-color: ${userColor};">
-          <i class="fas ${markers.value.userLocation}"></i>
+          <i class="fas ${markerStyle.value.defaultUserLocationIcon}"></i>
         </div>
       </div>
     `,

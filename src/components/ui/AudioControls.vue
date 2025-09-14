@@ -1,5 +1,5 @@
 <template>
-  <div v-if="hasAudio" class="audio-controls">
+  <div v-if="hasAudio" class="is-flex is-justify-content-center">
     <button
       class="button is-rounded is-normal is-autumn-warning"
       @click="stopAudio"
@@ -31,11 +31,6 @@ function stopAudio() {
 </script>
 
 <style scoped>
-.audio-controls {
-  display: flex;
-  justify-content: center;
-}
-
 /* Classe personnalisée pour le bouton d'arrêt */
 .button.is-autumn-warning {
   background-color: var(--color-warm);

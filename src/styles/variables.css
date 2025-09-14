@@ -87,17 +87,10 @@
   --color-deep-light: #8b4a52;
 
   /* Utilisateur sur la carte */
-  --color-user: #4682b4; /* Bleu acier */
+  --color-user: #4d8cc0; /* Bleu acier */
 
-  /* Couleurs fonctionnelles basées sur la palette */
-  --color-info: var(--color-primary);
+  /* Couleurs fonctionnelles */
   --color-success: #228b22; /* Vert forestier pour harmoniser */
-  --color-warning: var(--color-warm);
-  --color-danger: var(--color-deep);
-
-  /* Variantes de couleurs d'erreur */
-  --color-danger-light: color-mix(in srgb, var(--color-danger) 20%, var(--color-background));
-  --color-danger-dark: var(--color-deep-dark);
 
   /* Couleurs de texte */
   --color-text: #2f1b14; /* Brun très foncé pour le texte principal */
@@ -114,20 +107,11 @@
   /* Couleurs de surface */
   --color-surface: #ffffff;
   --color-surface-hover: #fbf5eb;
-  --color-surface-secondary: #f8f0e6;
-
-  /* Couleurs de texte */
-  --color-white: #ffffff;
 
   /* Couleurs de bordure */
   --color-border: #e6d5b7; /* Bordure dorée claire */
   --color-border-light: #f0e6d2; /* Bordure très claire */
   --color-border-hover: #d4b877; /* Bordure au survol */
-
-  /* Couleurs de scrollbar */
-  --color-scrollbar-track: var(--color-background-light);
-  --color-scrollbar-thumb: var(--color-border);
-  --color-scrollbar-thumb-hover: var(--color-border-hover);
 
   /* === BORDER RADIUS === */
   --border-radius: 8px;
@@ -143,60 +127,35 @@
   --transition-normal: 0.3s ease;
   --transition-slow: 0.5s ease;
 
-  /* === BREAKPOINTS BULMA === */
-  --mobile: 768px; /* Bulma $mobile breakpoint */
-  --tablet: 769px; /* Bulma $tablet breakpoint */
-  --desktop: 1024px; /* Bulma $desktop breakpoint */
-  --widescreen: 1216px; /* Bulma $widescreen breakpoint */
-  --fullhd: 1408px; /* Bulma $fullhd breakpoint */
-
   /* === SHADOWS === */
   --shadow-light: 0 2px 4px rgba(47, 27, 20, 0.1);
   --shadow-medium: 0 4px 8px rgba(47, 27, 20, 0.15);
-  --shadow-heavy: 0 8px 16px rgba(47, 27, 20, 0.2);
-  --shadow-small: 0 1px 3px rgba(47, 27, 20, 0.12);
-  --shadow-large: 0 6px 20px rgba(47, 27, 20, 0.15);
+  --shadow-large: 0 8px 16px rgba(47, 27, 20, 0.2);
 }
 
 /* === CLASSES UTILITAIRES === */
 
-/* Classes utilitaires z-index */
-.z-base {
-  z-index: var(--z-base) !important;
-}
-.z-ui {
-  z-index: var(--z-ui) !important;
-}
-.z-overlay {
-  z-index: var(--z-overlay) !important;
-}
-.z-modal {
-  z-index: var(--z-modal) !important;
-}
-
-/* Scrollbar personnalisée thème automne */
-.has-custom-scrollbar {
+/* Scrollbar personnalisée globale */
+html {
   scrollbar-width: thin;
-  scrollbar-color: var(--color-scrollbar-thumb) var(--color-scrollbar-track);
+  scrollbar-color: var(--color-border) var(--color-background-light);
 }
 
-.has-custom-scrollbar::-webkit-scrollbar {
+html::-webkit-scrollbar {
   width: 8px;
 }
 
-.has-custom-scrollbar::-webkit-scrollbar-track {
-  background: var(--color-scrollbar-track);
+html::-webkit-scrollbar-track {
+  background: var(--color-background-light);
+}
+
+html::-webkit-scrollbar-thumb {
+  background: var(--color-border);
   border-radius: var(--border-radius-small);
 }
 
-.has-custom-scrollbar::-webkit-scrollbar-thumb {
-  background: var(--color-scrollbar-thumb);
-  border-radius: var(--border-radius-small);
-  border: 1px solid var(--color-border-light);
-}
-
-.has-custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: var(--color-scrollbar-thumb-hover);
+html::-webkit-scrollbar-thumb:hover {
+  background: var(--color-border-hover);
 }
 
 /* Animation pulse réutilisable */
@@ -237,28 +196,14 @@
 
 /* Layout mobile avec navbar fixe */
 .has-fixed-navbar {
-  margin-top: 52px; /* Hauteur de la navbar fixe */
+  margin-top: 52px;
   min-height: calc(100vh - 52px);
 }
 
-/* Conteneur pleine hauteur */
+/* Conteneur pleine hauteur avec fallback dvh */
 .is-fullheight-viewport {
   height: 100vh;
-  height: 100dvh; /* Utilise la hauteur dynamique du viewport */
+  height: 100dvh;
   min-height: 100vh;
   min-height: 100dvh;
-}
-
-/* Media queries avec variables Bulma */
-@media screen and (max-width: 768px) {
-  .is-mobile-fullheight {
-    height: 100vh;
-    height: 100dvh;
-    min-height: 100vh;
-    min-height: 100dvh;
-  }
-
-  .has-mobile-padding {
-    padding-bottom: 4rem;
-  }
 }

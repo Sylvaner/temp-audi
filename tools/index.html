@@ -682,16 +682,19 @@
 
                   <div class="column is-half">
                     <div class="field">
-                      <label class="label">Place Icon</label>
+                      <label class="label">Default Place Icon</label>
                       <div class="control has-icons-left">
                         <input
-                          v-model="data.config.markers.place"
+                          v-model="data.config.markers.defaultPlaceIcon"
                           class="input"
                           type="text"
                           placeholder="fa-monument"
                         />
                         <div class="icon is-small is-left">
-                          <i class="fas" :class="data.config.markers?.place || 'fa-monument'"></i>
+                          <i
+                            class="fas"
+                            :class="data.config.markers?.defaultPlaceIcon || 'fa-monument'"
+                          ></i>
                         </div>
                       </div>
                       <p class="help">Icon for place markers (FontAwesome class)</p>
@@ -703,7 +706,7 @@
                       <label class="label">User Location Icon</label>
                       <div class="control has-icons-left">
                         <input
-                          v-model="data.config.markers.userLocation"
+                          v-model="data.config.markers.defaultUserLocationIcon"
                           class="input"
                           type="text"
                           placeholder="fa-person-walking"
@@ -711,11 +714,25 @@
                         <div class="icon is-small is-left">
                           <i
                             class="fas"
-                            :class="data.config.markers?.userLocation || 'fa-person-walking'"
+                            :class="data.config.markers?.defaultUserLocationIcon || 'fa-person-walking'"
                           ></i>
                         </div>
                       </div>
                       <p class="help">Icon for user location marker (FontAwesome class)</p>
+                    </div>
+                  </div>
+
+                  <div class="column is-half">
+                    <div class="field">
+                      <label class="label">User Location Color</label>
+                      <div class="control">
+                        <input
+                          v-model="data.config.markers.defaultUserLocationColor"
+                          class="input"
+                          type="color"
+                        />
+                      </div>
+                      <p class="help">Color for user location marker</p>
                     </div>
                   </div>
 

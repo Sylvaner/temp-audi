@@ -14,7 +14,6 @@ import AppNavigation from '@/components/navigation/AppNavigation.vue'
 import { useLanguageStore } from '@/stores/language'
 import { useConfig } from '@/composables/useConfig'
 
-// Initialisation de la langue
 const languageStore = useLanguageStore()
 const { siteName } = useConfig()
 const route = useRoute()
@@ -24,7 +23,7 @@ const isScrollableRoute = computed(() => {
   return ['about', 'map-intro'].includes(route.name as string)
 })
 
-// Mettre à jour le titre de la page
+// Traduction du titre de la page
 watch(
   siteName,
   (newSiteName) => {
@@ -44,9 +43,7 @@ onMounted(() => {
 @import 'bulma/css/bulma.min.css';
 @import '@fortawesome/fontawesome-free/css/all.min.css';
 
-/* Les variables Bulma sont maintenant centralisées dans variables.css */
-
-/* Améliorations générales du thème automne */
+/* Améliorations générales du thème */
 .hero.is-primary {
   background: linear-gradient(135deg, var(--color-primary), var(--color-secondary)) !important;
 }
@@ -97,40 +94,11 @@ body {
   overflow-x: hidden;
 }
 
-/* Scrollbar globale utilise maintenant la classe utilitaire */
-html {
-  scrollbar-width: thin;
-  scrollbar-color: var(--color-scrollbar-thumb) var(--color-scrollbar-track);
-}
-
-html::-webkit-scrollbar {
-  width: 8px;
-}
-
-html::-webkit-scrollbar-track {
-  background: var(--color-scrollbar-track);
-}
-
-html::-webkit-scrollbar-thumb {
-  background: var(--color-scrollbar-thumb);
-  border-radius: var(--border-radius-small);
-}
-
-html::-webkit-scrollbar-thumb:hover {
-  background: var(--color-scrollbar-thumb-hover);
-}
-
-/* Responsive utilise maintenant les classes utilitaires */
+/* Responsive */
 @media screen and (max-width: 1023px) {
   .main-content {
     margin-top: 52px;
     min-height: calc(100vh - 52px);
-  }
-}
-
-@media screen and (max-width: 768px) {
-  .main-content {
-    padding-bottom: 4rem;
   }
 }
 </style>

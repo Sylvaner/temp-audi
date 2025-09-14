@@ -125,7 +125,6 @@
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
-/* Images avec style */
 .custom-image {
   border-radius: var(--border-radius);
   overflow: hidden;
@@ -133,7 +132,6 @@
   border: 2px solid var(--color-border-light);
 }
 
-/* Boutons personnalisés */
 .custom-button-primary {
   color: var(--color-primary) !important;
   border-color: var(--color-primary) !important;
@@ -153,7 +151,6 @@
   box-shadow: var(--shadow-large);
 }
 
-/* Responsive mobile */
 @media (max-width: 768px) {
   .columns {
     flex-direction: column-reverse;

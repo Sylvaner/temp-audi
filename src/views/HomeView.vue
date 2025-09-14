@@ -1,6 +1,5 @@
 <template>
   <div>
-    <!-- Hero Section utilisant les classes Bulma natives -->
     <section class="hero is-fullheight has-background has-autumn-overlay">
       <div class="hero-body">
         <div class="container has-text-centered">
@@ -28,7 +27,6 @@
       </div>
     </section>
 
-    <!-- Section d'information utilisant Bulma -->
     <section class="section has-background-primary has-text-white">
       <div class="container has-text-centered">
         <div class="icon-text is-flex-direction-column is-align-items-center mb-5">
@@ -39,21 +37,6 @@
 
         <h3 class="title is-2 has-text-white">{{ $t('home.freeExploration') }}</h3>
         <p class="subtitle is-4 has-text-white-bis">{{ $t('home.freeExplorationDescription') }}</p>
-
-        <!--
-        DEBUG MODE LANGUE :
-        Pour activer le mode debug de la langue, décommentez les lignes ci-dessous.
-        Le composant LanguageDebug affiche :
-        - Les langues détectées du navigateur
-        - La langue actuellement sélectionnée
-        - Les langues disponibles dans l'app
-        - La langue par défaut configurée
-
-        LanguageTester permet de tester les traductions en changeant de langue.
-        Ces composants sont utiles pour débugger les problèmes de localisation.
-        -->
-        <!-- <LanguageDebug :show-debug="true" /> -->
-        <!-- <LanguageTester /> -->
       </div>
     </section>
   </div>
@@ -63,16 +46,10 @@
 import { useRouter } from 'vue-router'
 import { useConfig } from '@/composables/useConfig'
 
-// Imports pour le debug (décommentez si besoin)
-// import LanguageDebug from '@/components/ui/LanguageDebug.vue'
-// import LanguageTester from '@/components/ui/LanguageTester.vue'
-
 const router = useRouter()
 const { siteName } = useConfig()
 
 function navigateToMap() {
-  // Vérifier si l'introduction a déjà été vue
-  //  localStorage.setItem('mapIntroSeen', 'false')
   const introSeen = localStorage.getItem('mapIntroSeen')
   if (introSeen !== 'true') {
     router.push('/map-intro')
@@ -83,7 +60,6 @@ function navigateToMap() {
 </script>
 
 <style scoped>
-/* Hero avec image de fond et overlay coloré */
 .hero.has-background {
   position: relative;
   overflow: hidden;
@@ -93,21 +69,13 @@ function navigateToMap() {
   background-repeat: no-repeat;
 }
 
-/* L'overlay automne est maintenant géré par la classe utilitaire .has-autumn-overlay */
-
 .hero-body {
   position: relative;
   z-index: calc(var(--z-base) + 1);
 }
 
-/* Ombre portée pour améliorer la lisibilité */
 .hero .title,
 .hero .subtitle {
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
-}
-
-/* Icône circulaire dans la section info */
-.icon.is-rounded {
-  border-radius: 50%;
 }
 </style>

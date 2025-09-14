@@ -327,10 +327,11 @@
     },
     "defaultLanguage": "en",
     "availableLanguages": ["fr", "en"],
-    "markers": {
+    "markerStyle": {
       "defaultColor": "#B87333",
-      "place": "fa-monument",
-      "userLocation": "fa-person-walking"
+      "defaultPlaceIcon": "fa-monument",
+      "defaultUserLocationIcon": "fa-person-walking",
+      "defaultUserLocationColor": "#4d8cc0"
     }
   }
 }

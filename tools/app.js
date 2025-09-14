@@ -311,11 +311,32 @@ createApp({
               if (!jsonData.config.markers.defaultColor) {
                 jsonData.config.markers.defaultColor = '#B87333'
               }
-              if (!jsonData.config.markers.place) {
-                jsonData.config.markers.place = 'fa-monument'
+              if (!jsonData.config.markers.defaultPlaceIcon && !jsonData.config.markers.place) {
+                jsonData.config.markers.defaultPlaceIcon =
+                  jsonData.config.markers.place || 'fa-monument'
               }
-              if (!jsonData.config.markers.userLocation) {
-                jsonData.config.markers.userLocation = 'fa-person-walking'
+              if (
+                !jsonData.config.markers.defaultUserLocationIcon &&
+                !jsonData.config.markers.userLocation
+              ) {
+                jsonData.config.markers.defaultUserLocationIcon =
+                  jsonData.config.markers.userLocation || 'fa-person-walking'
+              }
+              if (!jsonData.config.markers.defaultUserLocationColor) {
+                jsonData.config.markers.defaultUserLocationColor = '#007bff'
+              }
+              // Migration: handle old property names
+              if (jsonData.config.markers.place && !jsonData.config.markers.defaultPlaceIcon) {
+                jsonData.config.markers.defaultPlaceIcon = jsonData.config.markers.place
+                delete jsonData.config.markers.place
+              }
+              if (
+                jsonData.config.markers.userLocation &&
+                !jsonData.config.markers.defaultUserLocationIcon
+              ) {
+                jsonData.config.markers.defaultUserLocationIcon =
+                  jsonData.config.markers.userLocation
+                delete jsonData.config.markers.userLocation
               }
             }
           }

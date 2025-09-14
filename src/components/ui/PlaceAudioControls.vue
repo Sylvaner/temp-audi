@@ -1,6 +1,6 @@
 <template>
   <div v-if="audioFile" class="audio-controls">
-    <div class="media">
+    <div class="media is-align-items-center">
       <div class="media-left">
         <button
           class="button is-rounded is-primary"
@@ -13,8 +13,8 @@
           </span>
         </button>
       </div>
-      <div class="media-content">
-        <p class="has-text-weight-medium">
+      <div class="media-content is-flex is-align-items-center">
+        <p class="has-text-weight-medium m-0">
           {{ audioButtonText }}
         </p>
       </div>
@@ -50,27 +50,10 @@ const { isLoading, error, audioButtonClasses, audioButtonText, audioButtonIcon, 
   border-top: 1px solid var(--color-border-light);
 }
 
-.audio-controls .media {
-  align-items: center; /* Centrer verticalement tous les éléments */
-}
-
-.audio-controls .media-content {
-  display: flex;
-  align-items: center; /* Centrer verticalement le texte */
-}
-
-.audio-controls .media-content p {
-  margin: 0; /* Supprimer les marges par défaut */
-}
-
 /* Mobile */
 @media screen and (max-width: 768px) {
   .audio-controls {
     padding: 1rem 1.5rem;
-  }
-
-  .audio-controls .media {
-    align-items: center; /* Assurer l'alignement même sur mobile */
   }
 }
 </style>
