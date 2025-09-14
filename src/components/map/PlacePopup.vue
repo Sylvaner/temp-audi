@@ -139,10 +139,14 @@ async function playAudio() {
   right: 0;
   bottom: 0;
   background: white;
-  z-index: 1000;
+  z-index: var(--z-modal);
   display: flex;
   flex-direction: column;
   height: 100vh;
+  height: 100dvh; /* Utilise la hauteur dynamique du viewport */
+  width: 100vw;
+  max-height: 100vh;
+  max-height: 100dvh;
   overflow: hidden; /* Empêche le scroll sur le conteneur principal */
 }
 
@@ -150,7 +154,7 @@ async function playAudio() {
   position: absolute;
   top: 1rem;
   right: 1rem;
-  z-index: 1001;
+  z-index: calc(var(--z-modal) + 1);
 }
 
 .image-section {
@@ -246,13 +250,18 @@ async function playAudio() {
 @media screen and (max-width: 768px) {
   .place-popup {
     flex-direction: column;
+    /* Assure que le popup prend tout l'espace disponible */
     height: 100vh;
+    height: 100dvh;
+    min-height: 100vh;
+    min-height: 100dvh;
     overflow: hidden;
   }
 
   .image-section {
     flex: 0 0 40vh;
     min-height: 200px;
+    max-height: 50vh; /* Évite que l'image prenne trop de place */
   }
 
   .content-section {

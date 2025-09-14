@@ -1,9 +1,9 @@
 <template>
   <div v-if="hasAudio" class="audio-controls">
-    <button 
-      class="button is-rounded is-normal is-autumn-warning" 
-      @click="stopAudio" 
-      :disabled="isLoading" 
+    <button
+      class="button is-rounded is-normal is-autumn-warning"
+      @click="stopAudio"
+      :disabled="isLoading"
       :title="t('audio.stop')"
     >
       <span class="icon">

@@ -109,6 +109,7 @@ function onMapClick(event: any) {
 function onPlaceDetails(place: any) {
   console.log('Détails du lieu demandés:', place)
   selectedPlace.value = place
+  // Ne pas déclencher de zoom automatique lors du clic sur marker
 }
 
 function closePopup() {
@@ -297,9 +298,8 @@ onUnmounted(() => {
   left: 0;
   right: 0;
   bottom: 0;
-  background: var(--color-white);
   z-index: var(--z-modal);
-  overflow: hidden;
+  /* Pas de background ici car PlacePopup le gère */
 }
 
 /* Plus besoin des styles du modal */
