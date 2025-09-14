@@ -97,24 +97,20 @@ export const useAudioStore = defineStore('audio', () => {
       error.value = null
       currentPlace.value = placeId
 
-      // Utiliser l'audio prétéléchargé si disponible
-      let audio = preloadManager.getPreloadedAudio(audioFile)
+      // Toujours créer un nouvel élément audio pour éviter les conflits
+      const audio = new Audio(`/audio/${audioFile}`)
 
-      if (audio) {
-        // Si prétéléchargé, réutiliser directement sans cloner
-        audio.currentTime = 0
-        audio.pause() // S'assurer qu'il est en pause
-        currentAudio.value = audio
-      } else {
-        // Créer un nouvel élément audio
-        audio = new Audio(`/audio/${audioFile}`)
-        currentAudio.value = audio
-      }
+      // Configurer les propriétés audio importantes
+      audio.preload = 'auto'
+      audio.crossOrigin = 'anonymous' // Pour éviter les problèmes CORS si nécessaire
+
+      currentAudio.value = audio
 
       // Ajouter les event listeners via le composable
       attachAudioEventHandlers(currentAudio.value, {
         ...eventHandlers,
         onCanPlay: () => {
+          console.log('Audio can play:', audioFile)
           eventHandlers.onCanPlay()
           updateAudioDuration()
         },
@@ -122,10 +118,56 @@ export const useAudioStore = defineStore('audio', () => {
           eventHandlers.onTimeUpdate()
           updateAudioCurrentTime()
         },
+        onPause: () => {
+          console.log('Audio paused:', audioFile, 'at', currentAudio.value?.currentTime)
+          eventHandlers.onPause()
+        },
+        onEnded: () => {
+          console.log('Audio ended:', audioFile)
+          eventHandlers.onEnded()
+        },
       })
 
-      // Lancer la lecture
-      await currentAudio.value.play()
+      // Événements supplémentaires pour diagnostic
+      currentAudio.value.addEventListener('stalled', () => {
+        console.warn('Audio stalled:', audioFile)
+      })
+
+      currentAudio.value.addEventListener('suspend', () => {
+        console.warn('Audio suspended:', audioFile)
+      })
+
+      currentAudio.value.addEventListener('abort', () => {
+        console.warn('Audio aborted:', audioFile)
+      })
+
+      // Attendre que l'audio soit prêt avant de jouer
+      if (currentAudio.value.readyState >= 2) {
+        // L'audio a assez de données pour commencer
+        await currentAudio.value.play()
+      } else {
+        // Attendre l'événement canplay
+        await new Promise<void>((resolve, reject) => {
+          const onCanPlay = () => {
+            currentAudio.value?.removeEventListener('canplay', onCanPlay)
+            currentAudio.value?.removeEventListener('error', onError)
+            resolve()
+          }
+
+          const onError = (e: Event) => {
+            currentAudio.value?.removeEventListener('canplay', onCanPlay)
+            currentAudio.value?.removeEventListener('error', onError)
+            reject(e)
+          }
+
+          currentAudio.value?.addEventListener('canplay', onCanPlay, { once: true })
+          currentAudio.value?.addEventListener('error', onError, { once: true })
+        })
+
+        await currentAudio.value.play()
+      }
+
+      console.log('Audio started playing:', audioFile)
       return true
     } catch (err) {
       console.error('Erreur lors du chargement audio:', err)
@@ -145,10 +187,24 @@ export const useAudioStore = defineStore('audio', () => {
   const resumeAudio = async () => {
     if (currentAudio.value && !isPlaying.value) {
       try {
+        // Vérifier que l'audio n'est pas corrompu
+        if (currentAudio.value.readyState === 0) {
+          console.warn('Audio needs to reload')
+          currentAudio.value.load()
+        }
+
         await currentAudio.value.play()
+        console.log('Audio resumed at:', currentAudio.value.currentTime)
       } catch (err) {
         console.error('Erreur lors de la reprise audio:', err)
         error.value = 'Impossible de reprendre la lecture'
+
+        // Tentative de récupération
+        if (currentPlace.value) {
+          const audioFile = currentAudio.value?.src?.split('/').pop() || ''
+          console.log('Tentative de rechargement:', audioFile)
+          // Optionnel: relancer la lecture depuis le début
+        }
       }
     }
   }

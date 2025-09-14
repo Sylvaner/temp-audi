@@ -62,8 +62,27 @@ export function useAudioEventHandlers(options: AudioEventHandlersOptions): Audio
     },
 
     onError: (e: Event) => {
-      console.error('Erreur lors de la lecture audio:', e)
-      error.value = 'Erreur lors de la lecture du fichier audio'
+      const target = e.target as HTMLAudioElement
+      const errorCode = target.error?.code
+      let errorMessage = 'Erreur lors de la lecture du fichier audio'
+
+      switch (errorCode) {
+        case MediaError.MEDIA_ERR_ABORTED:
+          errorMessage = "Lecture interrompue par l'utilisateur"
+          break
+        case MediaError.MEDIA_ERR_NETWORK:
+          errorMessage = 'Erreur réseau lors du chargement'
+          break
+        case MediaError.MEDIA_ERR_DECODE:
+          errorMessage = 'Erreur de décodage du fichier audio'
+          break
+        case MediaError.MEDIA_ERR_SRC_NOT_SUPPORTED:
+          errorMessage = 'Format audio non supporté'
+          break
+      }
+
+      console.error('Erreur audio:', { errorCode, errorMessage, target })
+      error.value = errorMessage
       isLoading.value = false
       isPlaying.value = false
     },
