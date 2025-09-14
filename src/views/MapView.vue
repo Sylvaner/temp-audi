@@ -279,10 +279,15 @@ onUnmounted(() => {
   height: calc(100vh - 3.25rem); /* Hauteur - navbar */
 }
 
-/* Ajustement pour mobile */
-@media screen and (max-width: 768px) {
+/* Ajustement pour mobile avec navbar fixe */
+@media screen and (max-width: 1023px) {
+  .map-view {
+    margin-top: 52px; /* Hauteur de la navbar fixe */
+    height: calc(100vh - 52px);
+  }
+
   :deep(.leaflet-map) {
-    height: calc(100vh - 3.25rem); /* Hauteur - navbar seulement */
+    height: 100%;
   }
 
   .map-controls {

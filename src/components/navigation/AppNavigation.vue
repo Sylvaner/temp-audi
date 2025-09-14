@@ -51,14 +51,15 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
-import { useRouter } from 'vue-router'
+import { ref, onMounted, onUnmounted } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
 import LanguageSelector from '@/components/ui/LanguageSelector.vue'
 import { useConfig } from '@/composables/useConfig'
 
 // Configuration
 const { siteName } = useConfig()
 const router = useRouter()
+const route = useRoute()
 
 // État du menu mobile
 const isMobileMenuOpen = ref(false)
@@ -83,6 +84,37 @@ function navigateToMap() {
     router.push('/map')
   }
 }
+
+// Empêcher la fermeture automatique du menu sur la page de la carte
+function handleClick(event: Event) {
+  // Sur les pages de carte, ne fermer le menu que si on clique sur un élément de navigation
+  if (route.path === '/map' || route.path === '/map-intro') {
+    const target = event.target as Element
+
+    // Permettre la fermeture seulement si on clique sur la navbar ou ses éléments
+    if (target.closest('.navbar-item') || target.closest('.navbar-burger')) {
+      return // Laisser le comportement normal
+    }
+
+    // Empêcher la fermeture pour tous les autres clics (carte, etc.)
+    event.stopPropagation()
+    return
+  }
+
+  // Sur les autres pages, comportement normal de Bulma
+  const target = event.target as Element
+  if (!target.closest('.navbar') && isMobileMenuOpen.value) {
+    closeMobileMenu()
+  }
+}
+
+onMounted(() => {
+  document.addEventListener('click', handleClick, true)
+})
+
+onUnmounted(() => {
+  document.removeEventListener('click', handleClick, true)
+})
 </script>
 
 <style scoped>
@@ -111,5 +143,28 @@ function navigateToMap() {
 .navbar {
   z-index: var(--z-navbar);
   position: relative;
+}
+
+/* Assurer que la navbar reste visible sur mobile */
+@media screen and (max-width: 1023px) {
+  .navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: var(--z-navbar);
+  }
+
+  /* Empêcher que le menu se ferme automatiquement sur la carte */
+  .navbar-menu.is-active {
+    position: fixed;
+    top: 52px; /* Hauteur de la navbar */
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--color-deep);
+    z-index: calc(var(--z-navbar) - 1);
+    overflow-y: auto;
+  }
 }
 </style>
