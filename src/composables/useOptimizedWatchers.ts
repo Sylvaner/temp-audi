@@ -11,7 +11,7 @@ import { ref, watch, type Ref, type WatchSource, type WatchCallback } from 'vue'
 export function useDebouncedWatch<T>(
   source: WatchSource<T>,
   callback: WatchCallback<T>,
-  delay = 300
+  delay = 300,
 ): void {
   let timeoutId: number | null = null
 
@@ -38,7 +38,7 @@ export function useDebouncedWatch<T>(
 export function useThrottledWatch<T>(
   source: WatchSource<T>,
   callback: WatchCallback<T>,
-  delay = 100
+  delay = 100,
 ): void {
   let lastExecution = 0
   let timeoutId: number | null = null
@@ -81,7 +81,7 @@ export function useOptimizedRef<T>(initialValue: T): Ref<T> {
         return Reflect.set(target, property, value)
       }
       return true
-    }
+    },
   }) as Ref<T>
 }
 
@@ -94,13 +94,13 @@ export function useBatchedUpdates() {
 
   const flushUpdates = () => {
     const updates = pendingUpdates.value.splice(0)
-    updates.forEach(update => update())
+    updates.forEach((update) => update())
     isScheduled.value = false
   }
 
   const batchUpdate = (update: () => void) => {
     pendingUpdates.value.push(update)
-    
+
     if (!isScheduled.value) {
       isScheduled.value = true
       requestAnimationFrame(flushUpdates)
@@ -109,6 +109,6 @@ export function useBatchedUpdates() {
 
   return {
     batchUpdate,
-    pendingCount: () => pendingUpdates.value.length
+    pendingCount: () => pendingUpdates.value.length,
   }
 }

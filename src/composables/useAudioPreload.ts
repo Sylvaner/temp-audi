@@ -137,7 +137,7 @@ export function useAudioPreload(maxConcurrentDownloads = 5): AudioPreloadManager
     // Trier par ordre et extraire les fichiers audio pour la langue donnée
     places
       .slice()
-      .sort((a, b) => a.order - b.order)
+      .sort((a, b) => (a.order ?? 999) - (b.order ?? 999))
       .forEach((place) => {
         if (place.content[language]?.audioFile) {
           audioFiles.push(place.content[language].audioFile)

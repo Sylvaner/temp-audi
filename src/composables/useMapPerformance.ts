@@ -23,7 +23,7 @@ export interface MapPerformanceManager {
  */
 function createDebouncer(delay: number) {
   let timeoutId: number | null = null
-  
+
   return (fn: () => void) => {
     if (timeoutId) {
       clearTimeout(timeoutId)
@@ -38,11 +38,11 @@ function createDebouncer(delay: number) {
 function createThrottler(delay: number) {
   let lastExecution = 0
   let timeoutId: number | null = null
-  
+
   return (fn: () => void) => {
     const now = Date.now()
     const timeSinceLastExecution = now - lastExecution
-    
+
     if (timeSinceLastExecution >= delay) {
       lastExecution = now
       fn()
@@ -60,11 +60,7 @@ function createThrottler(delay: number) {
  * Crée un gestionnaire de performance pour la carte
  */
 export function useMapPerformance(options: MapPerformanceOptions = {}): MapPerformanceManager {
-  const {
-    debounceDelay = 300,
-    throttleDelay = 100,
-    maxMarkersPerBatch = 10,
-  } = options
+  const { debounceDelay = 300, throttleDelay = 100, maxMarkersPerBatch = 10 } = options
 
   const isProcessing = ref(false)
   const debouncedUpdate = createDebouncer(debounceDelay)
@@ -75,7 +71,7 @@ export function useMapPerformance(options: MapPerformanceOptions = {}): MapPerfo
    */
   const batchProcessMarkers = async <T>(
     items: T[],
-    processor: (item: T) => void
+    processor: (item: T) => void,
   ): Promise<void> => {
     if (isProcessing.value) return
 
@@ -84,13 +80,13 @@ export function useMapPerformance(options: MapPerformanceOptions = {}): MapPerfo
     try {
       for (let i = 0; i < items.length; i += maxMarkersPerBatch) {
         const batch = items.slice(i, i + maxMarkersPerBatch)
-        
+
         // Traiter le lot
         batch.forEach(processor)
-        
+
         // Yielder le contrôle au navigateur entre les lots
         if (i + maxMarkersPerBatch < items.length) {
-          await new Promise(resolve => requestAnimationFrame(() => resolve(void 0)))
+          await new Promise((resolve) => requestAnimationFrame(() => resolve(void 0)))
         }
       }
     } finally {

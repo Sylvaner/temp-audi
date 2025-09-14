@@ -12,7 +12,7 @@ interface Props {
 
 defineProps<Props>()
 
-const emit = defineEmits<{
+defineEmits<{
   click: []
 }>()
 

@@ -76,24 +76,8 @@ import { useI18n } from 'vue-i18n'
 import { useLanguageStore } from '@/stores/language'
 import { useGeolocationStore } from '@/stores/geolocation'
 import { useAudioStore } from '@/stores/audio'
+import type { Place } from '@/types'
 import data from '@/data/data.json'
-
-// Types locaux
-interface Place {
-  id: string
-  order?: number // Ordre d'affichage des lieux
-  latitude: number
-  longitude: number
-  content: Record<
-    string,
-    {
-      title: string
-      description: string
-      text: string
-      audioFile: string
-    }
-  >
-}
 
 // Composables
 const { t } = useI18n()

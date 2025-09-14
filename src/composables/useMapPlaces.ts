@@ -1,18 +1,35 @@
 import { ref } from 'vue'
 import { useAudioStore } from '@/stores/audio'
 import { useLanguageStore } from '@/stores/language'
-import type { Place } from '@/types'
+import type { Place, Position } from '@/types'
+
+// Interface pour la référence Leaflet Map
+interface LeafletMapRef {
+  value: {
+    setView(position: Position, zoom: number): void
+  } | null
+}
+
+// Interface pour les données de lieux
+interface PlacesData {
+  places: Place[]
+}
+
+// Interface pour les événements de clic Leaflet
+interface MapClickEvent {
+  latlng: Position
+}
 
 /**
  * Composable pour la gestion des lieux dans la vue carte
  * Centralise la logique de sélection, popup et navigation vers les lieux
  */
-export function useMapPlaces(leafletMapRef: any, data: any) {
+export function useMapPlaces(leafletMapRef: LeafletMapRef, data: PlacesData) {
   const audioStore = useAudioStore()
   const languageStore = useLanguageStore()
 
   // État local
-  const selectedPlace = ref<any>(null)
+  const selectedPlace = ref<Place | null>(null)
 
   /**
    * Démarre le prétéléchargement des fichiers audio
@@ -25,7 +42,7 @@ export function useMapPlaces(leafletMapRef: any, data: any) {
   /**
    * Gère le clic sur un lieu (marqueur)
    */
-  const onPlaceDetails = (place: any) => {
+  const onPlaceDetails = (place: Place) => {
     console.log('Détails du lieu demandés:', place)
     selectedPlace.value = place
     // Ne pas déclencher de zoom automatique lors du clic sur marker
@@ -51,7 +68,7 @@ export function useMapPlaces(leafletMapRef: any, data: any) {
   /**
    * Gère le clic général sur la carte
    */
-  const onMapClick = (event: any) => {
+  const onMapClick = (event: MapClickEvent) => {
     console.log('Clic sur la carte:', event.latlng)
     // Fermer le popup si ouvert lors du clic sur la carte
     if (selectedPlace.value) {

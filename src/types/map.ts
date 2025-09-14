@@ -19,7 +19,7 @@ export interface PlaceContent {
  */
 export interface Place {
   id: string
-  order: number // Ordre d'affichage des lieux
+  order?: number // Ordre d'affichage des lieux (optionnel)
   latitude: number
   longitude: number
   content: Record<string, PlaceContent> // clé = code langue (fr, en, es, etc.)

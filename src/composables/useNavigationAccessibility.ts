@@ -15,18 +15,18 @@ export interface NavigationAccessibilityState {
   currentFocusId: Ref<string | null>
   focusElement: (id: string) => void
   focusMain: () => void
-  
+
   // Skip links
   skipToContent: () => void
   skipToNavigation: () => void
-  
+
   // Annonces pour lecteurs d'écran
   announceRouteChange: (routeName: string) => void
   liveRegionMessage: Ref<string>
-  
+
   // Navigation clavier
   onGlobalKeydown: (event: KeyboardEvent) => void
-  
+
   // Gestion des landmarks
   setLandmarkLabel: (landmark: string, label: string) => void
 }
@@ -35,13 +35,13 @@ export interface NavigationAccessibilityState {
  * Composable pour l'accessibilité de la navigation
  */
 export function useNavigationAccessibility(
-  options: NavigationAccessibilityOptions = {}
+  options: NavigationAccessibilityOptions = {},
 ): NavigationAccessibilityState {
   const { skipLinks = [], landmarkLabels = {} } = options
-  
+
   const currentFocusId = ref<string | null>(null)
   const liveRegionMessage = ref<string>('')
-  
+
   // Gestion du focus
   const focusElement = async (id: string) => {
     await nextTick()
@@ -51,22 +51,22 @@ export function useNavigationAccessibility(
       currentFocusId.value = id
     }
   }
-  
+
   const focusMain = () => {
     focusElement('main-content')
   }
-  
+
   // Skip links
   const skipToContent = () => {
     focusElement('main-content')
     announceMessage('Contenu principal')
   }
-  
+
   const skipToNavigation = () => {
     focusElement('main-navigation')
     announceMessage('Navigation principale')
   }
-  
+
   // Annonces pour lecteurs d'écran
   const announceMessage = (message: string) => {
     liveRegionMessage.value = message
@@ -75,19 +75,19 @@ export function useNavigationAccessibility(
       liveRegionMessage.value = ''
     }, 1000)
   }
-  
+
   const announceRouteChange = (routeName: string) => {
     const routeLabels: Record<string, string> = {
-      'home': 'Page d\'accueil',
-      'map': 'Carte interactive',
-      'about': 'À propos',
-      'map-intro': 'Introduction à la carte'
+      home: "Page d'accueil",
+      map: 'Carte interactive',
+      about: 'À propos',
+      'map-intro': 'Introduction à la carte',
     }
-    
+
     const label = routeLabels[routeName] || routeName
     announceMessage(`Navigation vers ${label}`)
   }
-  
+
   // Navigation clavier globale
   const onGlobalKeydown = (event: KeyboardEvent) => {
     // Alt + 1 = Aller au contenu principal
@@ -96,14 +96,14 @@ export function useNavigationAccessibility(
       skipToContent()
       return
     }
-    
+
     // Alt + 2 = Aller à la navigation
     if (event.altKey && event.key === '2') {
       event.preventDefault()
       skipToNavigation()
       return
     }
-    
+
     // Échap = Fermer les menus ouverts
     if (event.key === 'Escape') {
       const activeDropdown = document.querySelector('.dropdown.is-active')
@@ -114,57 +114,54 @@ export function useNavigationAccessibility(
         trigger?.focus()
       }
     }
-    
+
     // F6 = Navigation entre les landmarks
     if (event.key === 'F6') {
       event.preventDefault()
       navigateLandmarks()
     }
   }
-  
+
   // Navigation entre les landmarks avec F6
   let currentLandmarkIndex = 0
   const navigateLandmarks = () => {
-    const landmarks = [
-      'main-navigation',
-      'main-content', 
-      'complementary-content',
-      'footer-content'
-    ]
-    
-    const availableLandmarks = landmarks.filter(id => 
-      document.getElementById(id)
-    )
-    
+    const landmarks = ['main-navigation', 'main-content', 'complementary-content', 'footer-content']
+
+    const availableLandmarks = landmarks.filter((id) => document.getElementById(id))
+
     if (availableLandmarks.length === 0) return
-    
+
     currentLandmarkIndex = (currentLandmarkIndex + 1) % availableLandmarks.length
     const landmarkId = availableLandmarks[currentLandmarkIndex]
-    
+
     focusElement(landmarkId)
-    
+
     // Annoncer le landmark
     const landmarkLabel = landmarkLabels[landmarkId] || landmarkId
     announceMessage(`Zone de navigation: ${landmarkLabel}`)
   }
-  
+
   // Configuration des landmarks
   const setLandmarkLabel = (landmark: string, label: string) => {
     landmarkLabels[landmark] = label
   }
-  
+
   // Setup des skip links
   const setupSkipLinks = () => {
     const skipLinksContainer = document.getElementById('skip-links')
     if (!skipLinksContainer || skipLinks.length === 0) return
-    
-    skipLinksContainer.innerHTML = skipLinks.map(link => `
+
+    skipLinksContainer.innerHTML = skipLinks
+      .map(
+        (link) => `
       <a href="#${link.id}" class="skip-link" onclick="document.getElementById('${link.id}').focus(); return false;">
         ${link.label}
       </a>
-    `).join('')
+    `,
+      )
+      .join('')
   }
-  
+
   // Gestionnaire d'événements globaux
   const setupGlobalListeners = () => {
     document.addEventListener('keydown', onGlobalKeydown)
@@ -172,33 +169,33 @@ export function useNavigationAccessibility(
       document.removeEventListener('keydown', onGlobalKeydown)
     }
   }
-  
+
   onMounted(() => {
     setupSkipLinks()
     const cleanup = setupGlobalListeners()
-    
+
     onUnmounted(() => {
       cleanup()
     })
   })
-  
+
   return {
     // Gestion du focus
     currentFocusId,
     focusElement,
     focusMain,
-    
+
     // Skip links
     skipToContent,
     skipToNavigation,
-    
+
     // Annonces
     announceRouteChange,
     liveRegionMessage,
-    
+
     // Navigation clavier
     onGlobalKeydown,
-    
+
     // Landmarks
     setLandmarkLabel,
   }

@@ -1,11 +1,20 @@
 import { ref, computed } from 'vue'
 import { useGeolocationStore } from '@/stores/geolocation'
+import type { Position } from '@/types'
+
+// Interface pour la référence Leaflet Map
+interface LeafletMapRef {
+  value: {
+    centerOnUser(): void
+    setView(position: Position, zoom: number): void
+  } | null
+}
 
 /**
  * Composable pour la gestion de la géolocalisation dans la vue carte
  * Centralise toute la logique de permissions, modal et centrage utilisateur
  */
-export function useMapGeolocation(leafletMapRef: any) {
+export function useMapGeolocation(leafletMapRef: LeafletMapRef) {
   const geolocationStore = useGeolocationStore()
 
   // État local de la géolocalisation
