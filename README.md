@@ -180,9 +180,9 @@ audioStore.playAudio('fichier.mp3')
 
 Les composants utilisent les classes Bulma avec des variations personnalisées :
 
-- `is-autumn-primary` - Couleur principale
-- `is-autumn-success` - Couleur de succès
-- `is-autumn-light` - Couleur claire
+- `is-theme-primary` - Couleur principale
+- `is-theme-success` - Couleur de succès
+- `is-theme-light` - Couleur claire
 
 ## 📱 PWA et performance
 

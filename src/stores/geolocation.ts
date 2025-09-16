@@ -9,7 +9,8 @@ import dataJson from '@/data/data.json'
 import { useGeolocationManager } from '@/composables/useGeolocationManager'
 import { useGeolocationCalculator } from '@/composables/useGeolocationCalculator'
 
-interface Config {
+// Types pour la configuration géolocalisation
+interface GeolocationStoreConfig {
   siteName: Record<string, string>
   map: {
     center: {
@@ -17,11 +18,11 @@ interface Config {
       longitude: number
     }
     zoom: number
-  }
-  goToInitialUserLocation?: {
-    enable: boolean
-    threshold: number
-    increaseZoom: number
+    goToInitialUserLocation?: {
+      enable: boolean
+      threshold: number
+      increaseZoom: number
+    }
   }
   defaultLanguage: string
   availableLanguages: string[]
@@ -29,7 +30,7 @@ interface Config {
 
 export const useGeolocationStore = defineStore('geolocation', () => {
   // Configuration depuis data.json
-  const config = dataJson.config as Config
+  const config = dataJson.config as GeolocationStoreConfig
 
   // Initialiser depuis localStorage
   const getStoredPermissionStatus = (): 'unknown' | 'granted' | 'denied' | 'requesting' => {
@@ -76,8 +77,8 @@ export const useGeolocationStore = defineStore('geolocation', () => {
   const geoCalculator = useGeolocationCalculator({
     userPosition,
     mapCenter: config.map.center,
-    threshold: config.goToInitialUserLocation?.threshold || 0.08,
-    increaseZoom: config.goToInitialUserLocation?.increaseZoom || 1,
+    threshold: config.map.goToInitialUserLocation?.threshold || 0.08,
+    increaseZoom: config.map.goToInitialUserLocation?.increaseZoom || 1,
     baseZoom: config.map.zoom,
   })
 
@@ -88,12 +89,12 @@ export const useGeolocationStore = defineStore('geolocation', () => {
 
   // Getters géographiques (délégués au calculateur)
   const isUserInInitialArea = computed(() => {
-    return config.goToInitialUserLocation?.enable && geoCalculator.isUserInArea.value
+    return config.map.goToInitialUserLocation?.enable && geoCalculator.isUserInArea.value
   })
 
   const shouldCenterOnUser = computed(() => {
     return (
-      config.goToInitialUserLocation?.enable &&
+      config.map.goToInitialUserLocation?.enable &&
       geoCalculator.shouldCenterOnUser.value &&
       !hasTriggeredInitialCentering.value
     )

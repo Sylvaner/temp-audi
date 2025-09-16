@@ -44,21 +44,21 @@ export function useGeolocationButton(size: string = 'normal'): ComputedRef<Geolo
     } else {
       switch (permissionStatus) {
         case 'granted':
-          buttonClass.push('is-autumn-success')
+          buttonClass.push('is-theme-success')
           iconClass = 'fa-location-crosshairs'
           buttonText = t('map.centerOnUser')
           buttonTitle = 'Centrer la carte sur votre position'
           break
 
         case 'denied':
-          buttonClass.push('is-autumn-warning')
+          buttonClass.push('is-theme-warning')
           iconClass = 'fa-location-slash'
           buttonText = t('geolocation.denied.retry')
           buttonTitle = 'Réessayer la géolocalisation'
           break
 
         case 'requesting':
-          buttonClass.push('is-loading', 'is-autumn-info')
+          buttonClass.push('is-loading', 'is-theme-info')
           iconClass = 'fa-spinner fa-spin'
           buttonText = t('common.loading')
           buttonTitle = 'Demande de permission en cours...'
@@ -66,7 +66,7 @@ export function useGeolocationButton(size: string = 'normal'): ComputedRef<Geolo
           break
 
         default: // 'unknown'
-          buttonClass.push('is-autumn-primary')
+          buttonClass.push('is-theme-primary')
           iconClass = 'fa-location-crosshairs'
           buttonText = t('map.centerOnUser')
           buttonTitle = 'Demander la permission de géolocalisation'

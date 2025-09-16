@@ -8,7 +8,7 @@
 export enum AudioState {
   PLAYING = 'PLAYING',
   PAUSED = 'PAUSED',
-  STOPPED = 'STOPPED'
+  STOPPED = 'STOPPED',
 }
 
 /**
@@ -16,9 +16,19 @@ export enum AudioState {
  */
 export interface AudioPlayerState {
   /** État actuel */
-  state: AudioState;
+  state: AudioState
   /** Position en secondes */
-  currentTime: number;
+  currentTime: number
   /** Volume (0-1) */
-  volume: number;
+  volume: number
+}
+
+/**
+ * État de lecture audio étendu
+ */
+export interface AudioPlaybackState {
+  isPlaying: boolean
+  currentTime: number
+  duration: number
+  volume: number
 }

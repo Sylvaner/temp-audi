@@ -35,19 +35,19 @@ export function usePlaceAudioState(placeId: string): ComputedRef<PlaceAudioState
 
     // Logique unifiée pour les classes et icônes
     if (isLoading) {
-      buttonClasses.push('is-loading', 'is-autumn-info')
+      buttonClasses.push('is-loading', 'is-theme-info')
       iconClass = 'fa-spinner fa-spin'
     } else if (error && audioStore.currentPlace === placeId) {
-      buttonClasses.push('is-autumn-danger')
+      buttonClasses.push('is-theme-danger')
       iconClass = 'fa-exclamation-triangle'
     } else if (isPlaying) {
-      buttonClasses.push('is-autumn-success', 'has-pulse-animation')
+      buttonClasses.push('is-theme-success', 'has-pulse-animation')
       iconClass = 'fa-pause'
     } else if (hasBeenPlayed) {
-      buttonClasses.push('is-autumn-secondary')
+      buttonClasses.push('is-theme-secondary')
       iconClass = 'fa-play'
     } else {
-      buttonClasses.push('is-autumn-primary')
+      buttonClasses.push('is-theme-primary')
       iconClass = 'fa-play'
     }
 

@@ -46,16 +46,16 @@ const buttonClass = computed(() => {
 
   switch (geolocationStore.permissionStatus) {
     case 'granted':
-      classes.push('is-autumn-success')
+      classes.push('is-theme-success')
       break
     case 'denied':
-      classes.push('is-autumn-warning')
+      classes.push('is-theme-warning')
       break
     case 'requesting':
-      classes.push('is-loading', 'is-autumn-info')
+      classes.push('is-loading', 'is-theme-info')
       break
     default:
-      classes.push('is-autumn-primary')
+      classes.push('is-theme-primary')
   }
 
   return classes
@@ -137,39 +137,39 @@ function handleLocationClick() {
 }
 
 /* Classes automne personnalisées */
-.button.is-autumn-primary {
+.button.is-theme-primary {
   background-color: var(--color-primary);
   color: var(--color-white);
 }
 
-.button.is-autumn-primary:hover:not(:disabled) {
+.button.is-theme-primary:hover:not(:disabled) {
   background-color: var(--color-primary-dark);
 }
 
-.button.is-autumn-success {
+.button.is-theme-success {
   background-color: var(--color-accent);
   color: var(--color-white);
 }
 
-.button.is-autumn-success:hover:not(:disabled) {
+.button.is-theme-success:hover:not(:disabled) {
   background-color: var(--color-deep);
 }
 
-.button.is-autumn-warning {
+.button.is-theme-warning {
   background-color: var(--color-warm);
   color: var(--color-white);
 }
 
-.button.is-autumn-warning:hover:not(:disabled) {
+.button.is-theme-warning:hover:not(:disabled) {
   background-color: var(--color-secondary);
 }
 
-.button.is-autumn-info {
+.button.is-theme-info {
   background-color: var(--color-secondary);
   color: var(--color-white);
 }
 
-.button.is-autumn-info:hover:not(:disabled) {
+.button.is-theme-info:hover:not(:disabled) {
   background-color: var(--color-accent);
 }
 </style>

@@ -1,24 +1,10 @@
 import { ref } from 'vue'
 import { useAudioStore } from '@/stores/audio'
 import { useLanguageStore } from '@/stores/language'
-import type { Place, Position } from '@/types'
+import type { Place } from '@/types'
 
-// Interface pour la référence Leaflet Map
-interface LeafletMapRef {
-  value: {
-    setView(position: Position, zoom: number): void
-  } | null
-}
-
-// Interface pour les données de lieux
-interface PlacesData {
-  places: Place[]
-}
-
-// Interface pour les événements de clic Leaflet
-interface MapClickEvent {
-  latlng: Position
-}
+// Types
+import type { LeafletMapRef, PlacesData, MapClickEvent } from '@/types/map'
 
 /**
  * Composable pour la gestion des lieux dans la vue carte

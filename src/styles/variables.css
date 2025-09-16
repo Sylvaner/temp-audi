@@ -93,6 +93,7 @@
   --color-success: #228b22; /* Vert forestier pour harmoniser */
 
   /* Couleurs de texte */
+  --color-white: #ffffff; /* Texte sur fond sombre */
   --color-text: #2f1b14; /* Brun très foncé pour le texte principal */
   --color-text-secondary: #6b4423; /* Brun moyen pour le texte secondaire */
   --color-text-light: #8b6f47; /* Brun clair pour le texte atténué */
@@ -160,10 +161,10 @@ html::-webkit-scrollbar-thumb:hover {
 
 /* Animation pulse réutilisable */
 .has-pulse-animation {
-  animation: pulse-autumn 2s ease-out infinite;
+  animation: pulse-theme 2s ease-out infinite;
 }
 
-@keyframes pulse-autumn {
+@keyframes pulse-theme {
   0% {
     box-shadow: 0 0 0 0 var(--color-primary);
   }
@@ -175,8 +176,8 @@ html::-webkit-scrollbar-thumb:hover {
   }
 }
 
-/* Overlay avec dégradé automne */
-.has-autumn-overlay::before {
+/* Overlay avec dégradé */
+.has-theme-overlay::before {
   content: '';
   position: absolute;
   top: 0;

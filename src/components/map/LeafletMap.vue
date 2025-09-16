@@ -7,29 +7,12 @@
 import { onMounted, onUnmounted, ref, watch } from 'vue'
 import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
-import type { Position } from '@/types'
 import { useLanguageStore } from '@/stores/language'
 import { useConfig } from '@/composables/useConfig'
 import data from '@/data/data.json'
 
-// Types locaux
-interface Place {
-  id: string
-  latitude: number
-  longitude: number
-  imageFile?: string
-  markerColor?: string
-  markerIcon?: string
-  content: Record<
-    string,
-    {
-      title: string
-      description: string
-      text: string
-      audioFile: string
-    }
-  >
-}
+// Types
+import type { Place, Position } from '@/types'
 
 // Extension du type Marker de Leaflet pour inclure placeId
 interface ExtendedMarker extends L.Marker {
@@ -45,7 +28,7 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  center: () => ({ latitude: 48.79804431250326, longitude: 2.120114373979427 }),
+  center: () => ({ latitude: 48.866667, longitude: 2.333333 }),
   zoom: 16,
   userPosition: null,
   showUserPosition: true,

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <section class="hero is-fullheight has-background has-autumn-overlay">
+    <section class="hero is-fullheight has-background has-theme-overlay">
       <div class="hero-body">
         <div class="container has-text-centered">
           <h1 class="title is-1 has-text-white has-text-weight-bold">

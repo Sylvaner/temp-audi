@@ -2,7 +2,7 @@
   <div class="places-list" :class="{ 'is-open': isOpen }">
     <!-- Bouton pour ouvrir/fermer la liste -->
     <button
-      class="button is-rounded is-normal is-autumn-primary"
+      class="button is-rounded is-normal is-theme-primary"
       @click="toggleList"
       :title="isOpen ? 'Fermer la liste' : 'Voir les lieux'"
     >
@@ -19,8 +19,8 @@
           <button
             class="button is-small"
             :class="{
-              'is-autumn-success': geolocationStore.moveToUserLocation,
-              'is-autumn-light': !geolocationStore.moveToUserLocation,
+              'is-theme-success': geolocationStore.moveToUserLocation,
+              'is-theme-light': !geolocationStore.moveToUserLocation,
             }"
             @click="toggleAutoCenter"
             :title="
@@ -256,33 +256,33 @@ function getDownloadState(place: Place) {
 }
 
 /* Classes automne personnalisées */
-.button.is-autumn-primary {
+.button.is-theme-primary {
   background-color: var(--color-primary);
   color: var(--color-white);
   border: none;
 }
 
-.button.is-autumn-primary:hover:not(:disabled) {
+.button.is-theme-primary:hover:not(:disabled) {
   background-color: var(--color-primary-dark);
 }
 
-.button.is-autumn-success {
+.button.is-theme-success {
   background-color: var(--color-accent);
   color: var(--color-white);
   border: none;
 }
 
-.button.is-autumn-success:hover:not(:disabled) {
+.button.is-theme-success:hover:not(:disabled) {
   background-color: var(--color-deep);
 }
 
-.button.is-autumn-light {
+.button.is-theme-light {
   background-color: var(--color-background-light);
   color: var(--color-text);
   border: 1px solid var(--color-border);
 }
 
-.button.is-autumn-light:hover:not(:disabled) {
+.button.is-theme-light:hover:not(:disabled) {
   background-color: var(--color-background);
   border-color: var(--color-primary);
 }

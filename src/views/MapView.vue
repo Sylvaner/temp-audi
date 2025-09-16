@@ -17,7 +17,7 @@
         @request-permission="showGeolocationModal = true"
         @click="centerOnUser"
       />
-      <AudioControls />
+      <StopButton />
       <PlacesList @go-to-place="goToPlace" />
     </div>
 
@@ -46,7 +46,7 @@ import PlacesList from '@/components/map/PlacesList.vue'
 import PlacePopup from '@/components/map/PlacePopup.vue'
 import GeolocationButton from '@/components/ui/GeolocationButton.vue'
 import GeolocationModal from '@/components/ui/GeolocationModal.vue'
-import AudioControls from '@/components/ui/AudioControls.vue'
+import StopButton from '@/components/ui/StopButton.vue'
 import { useGeolocationStore } from '@/stores/geolocation'
 import { useMapGeolocation } from '@/composables/useMapGeolocation'
 import { useMapPlaces } from '@/composables/useMapPlaces'

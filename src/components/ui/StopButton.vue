@@ -1,7 +1,7 @@
 <template>
   <div v-if="hasAudio" class="is-flex is-justify-content-center">
     <button
-      class="button is-rounded is-normal is-autumn-warning"
+      class="button is-rounded is-normal is-theme-warning"
       @click="stopAudio"
       :disabled="isLoading"
       :title="t('audio.stop')"
@@ -31,22 +31,21 @@ function stopAudio() {
 </script>
 
 <style scoped>
-/* Classe personnalisée pour le bouton d'arrêt */
-.button.is-autumn-warning {
+.button.is-theme-warning {
   background-color: var(--color-warm);
   border-color: var(--color-warm);
   color: var(--color-white);
   box-shadow: var(--shadow-light);
 }
 
-.button.is-autumn-warning:hover:not(:disabled) {
+.button.is-theme-warning:hover:not(:disabled) {
   background-color: var(--color-warm-dark);
   border-color: var(--color-warm-dark);
   transform: scale(1.05);
   box-shadow: var(--shadow-medium);
 }
 
-.button.is-autumn-warning:active {
+.button.is-theme-warning:active {
   transform: scale(1.02);
 }
 </style>

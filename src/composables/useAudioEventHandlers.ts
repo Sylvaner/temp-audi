@@ -1,6 +1,5 @@
 /**
  * Composable pour la gestion centralisée des event handlers audio
- * Permet de réutiliser la logique d'événements audio et simplifie le cleanup
  */
 
 import { type Ref } from 'vue'

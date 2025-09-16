@@ -60,23 +60,8 @@ import { useLanguageStore } from '@/stores/language'
 import { useAudioStore } from '@/stores/audio'
 
 // Types
-interface Place {
-  id: string
-  latitude: number
-  longitude: number
-  imageFile?: string
-  content: Record<
-    string,
-    {
-      title: string
-      description: string
-      text: string
-      audioFile: string
-    }
-  >
-}
+import type { Place } from '@/types'
 
-// Props
 interface Props {
   place: Place
 }

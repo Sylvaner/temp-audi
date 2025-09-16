@@ -37,8 +37,6 @@ interface Props {
 }
 
 const props = defineProps<Props>()
-
-// Utilise le composable pour toute la logique audio
 const { isLoading, error, audioButtonClasses, audioButtonText, audioButtonIcon, toggleAudio } =
   usePlaceAudio(props.placeId, props.audioFile)
 </script>
@@ -50,7 +48,6 @@ const { isLoading, error, audioButtonClasses, audioButtonText, audioButtonIcon, 
   border-top: 1px solid var(--color-border-light);
 }
 
-/* Mobile */
 @media screen and (max-width: 768px) {
   .audio-controls {
     padding: 1rem 1.5rem;

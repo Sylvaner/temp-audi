@@ -2,6 +2,8 @@ import { ref, computed } from 'vue'
 import { useLanguageStore } from '@/stores/language'
 import dataJson from '@/data/data.json'
 
+import type { MarkersStyleConfig } from '@/types/common'
+
 interface Config {
   siteName: Record<string, string>
   map: {
@@ -10,15 +12,16 @@ interface Config {
       longitude: number
     }
     zoom: number
+    goToInitialUserLocation?: {
+      enable: boolean
+      threshold: number
+      increaseZoom: number
+    }
   }
   defaultLanguage: string
   availableLanguages: string[]
-  markerStyle: {
-    defaultColor: string
-    defaultPlaceIcon: string
-    defaultUserLocationIcon: string
-    defaultUserLocationColor: string
-  }
+  markers?: MarkersStyleConfig
+  markerStyle?: MarkersStyleConfig
 }
 
 const config = ref<Config>(dataJson.config as Config)

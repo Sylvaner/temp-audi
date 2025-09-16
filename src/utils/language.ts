@@ -5,10 +5,7 @@
 import type { Place, PlaceContent } from '@/types'
 import dataJson from '@/data/data.json'
 
-interface LanguageConfig {
-  defaultLanguage: string
-  availableLanguages: string[]
-}
+import type { LanguageConfig } from '@/types/common'
 
 const config = dataJson.config as LanguageConfig
 
