@@ -5,7 +5,9 @@
         <img src="/logo.png" alt="Logo" class="navbar-logo" />
         <span class="ml-2 is-hidden-mobile">{{ siteName }}</span>
       </router-link>
-
+      <div class="navbar-item is-hidden-desktop">
+        <LanguageSelector />
+      </div>
       <a
         role="button"
         class="navbar-burger"
@@ -39,7 +41,7 @@
       </div>
 
       <div class="navbar-end">
-        <div class="navbar-item">
+        <div class="navbar-item is-hidden-touch">
           <LanguageSelector />
         </div>
       </div>
