@@ -3,21 +3,16 @@
 </template>
 
 <script setup lang="ts">
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { onMounted, onUnmounted, ref, watch } from 'vue'
+import { computed, onMounted, onUnmounted, watch } from 'vue'
 import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
 import { useLanguageStore } from '@/stores/language'
+import { useAudioStore } from '@/stores/audio'
 import { useConfig } from '@/composables/useConfig'
+import { useLeafletMap } from '@/composables/useLeafletMap'
+import { useMapMarkers } from '@/composables/useMapMarkers'
 import data from '@/data/data.json'
-
-// Types
 import type { Place, Position } from '@/types'
-
-// Extension du type Marker de Leaflet pour inclure placeId
-interface ExtendedMarker extends L.Marker {
-  placeId?: string
-}
 
 // Props
 interface Props {
@@ -34,151 +29,52 @@ const props = withDefaults(defineProps<Props>(), {
   showUserPosition: true,
 })
 
+// Événements émis
+interface LeafletMapEmits {
+  (e: 'mapClick', event: { latlng: { latitude: number; longitude: number } }): void
+  (e: 'mapReady', map: L.Map): void
+  (e: 'placeDetails', place: Place): void
+}
+
+const emit = defineEmits<LeafletMapEmits>()
+
 // Composables
 const languageStore = useLanguageStore()
+const audioStore = useAudioStore()
 const { markerStyle } = useConfig()
-
-// État local
-const mapInstance = ref<any>(null)
-const userMarker = ref<any>(null)
-const userAccuracyCircle = ref<any>(null)
-const placeMarkers = ref<any[]>([]) // Garder any[] pour la compatibilité Leaflet
-const activeMarkerId = ref<string | null>(null) // Pour tracker le marqueur actif
+const currentLanguage = computed(() => languageStore.currentLocale)
 
 // Données
 const places = data.places as Place[]
 
-// Émissions
-const emit = defineEmits<{
-  mapReady: [map: any]
-  mapClick: [event: any]
-  placeDetails: [place: Place]
-}>()
+// Utilisation des composables
+const { mapInstance, initializeMap, cleanupMap, setView, centerOnUser } = useLeafletMap(props, emit)
+const { createPlaceMarkers, updateUserPosition, cleanupMarkers } = useMapMarkers(
+  mapInstance,
+  places,
+  currentLanguage.value,
+  markerStyle.value,
+  (event: 'placeDetails', place: Place) => emit(event, place),
+)
 
-// Fonction pour créer l'icône des lieux
-const createPlaceIcon = (place: Place, isActive = false) => {
-  // Couleur : utiliser la couleur personnalisée ou les couleurs par défaut
-  const color = isActive ? 'var(--color-warm)' : place.markerColor || markerStyle.value.defaultColor
+// Watchers
+watch(
+  () => props.userPosition,
+  (newPosition) => {
+    updateUserPosition(newPosition)
+  },
+  { deep: true },
+)
 
-  // Icône : utiliser l'icône personnalisée ou l'icône par défaut configurée
-  const iconClass = place.markerIcon || markerStyle.value.defaultPlaceIcon
+watch(currentLanguage, (newLanguage) => {
+  // Recréer les marqueurs avec la nouvelle langue
+  createPlaceMarkers()
 
-  return L.divIcon({
-    className: 'place-marker',
-    html: `
-      <div class="place-marker-icon">
-        <div class="place-marker-circle" style="background-color: ${color};">
-          <i class="fas ${iconClass}"></i>
-        </div>
-      </div>
-    `,
-    iconSize: [40, 40],
-    iconAnchor: [20, 20],
-  })
-}
+  // Précharger les audios pour la nouvelle langue
+  audioStore.startPreloadingForLanguage(places, newLanguage)
+})
 
-// Fonction pour créer les marqueurs des lieux
-const createPlaceMarkers = () => {
-  if (!mapInstance.value) return
-
-  // Supprimer les marqueurs existants
-  placeMarkers.value.forEach((marker) => {
-    mapInstance.value.removeLayer(marker)
-  })
-  placeMarkers.value = []
-
-  // Créer les nouveaux marqueurs
-  places.forEach((place) => {
-    const isActive = activeMarkerId.value === place.id
-
-    const marker = L.marker([place.latitude, place.longitude], {
-      icon: createPlaceIcon(place, isActive),
-      zIndexOffset: 500, // Au-dessus de la carte mais sous le marqueur utilisateur
-    }) as ExtendedMarker
-
-    // Stocker l'ID du lieu sur le marqueur pour référence
-    marker.placeId = place.id
-
-    // Événement de clic pour ouvrir le modal
-    marker.on('click', () => {
-      emit('placeDetails', place)
-      // Mettre à jour l'icône pour montrer l'état actif
-      if (activeMarkerId.value !== place.id) {
-        // Réinitialiser l'ancien marqueur actif
-        if (activeMarkerId.value) {
-          const oldPlace = places.find((p) => p.id === activeMarkerId.value)
-          const oldMarker = placeMarkers.value.find((m) => m.placeId === activeMarkerId.value)
-          if (oldMarker && oldPlace) {
-            oldMarker.setIcon(createPlaceIcon(oldPlace, false))
-          }
-        }
-        activeMarkerId.value = place.id
-        marker.setIcon(createPlaceIcon(place, true))
-      }
-    })
-
-    marker.addTo(mapInstance.value)
-    placeMarkers.value.push(marker)
-  })
-}
-
-// Fonction pour créer l'icône de l'utilisateur
-const createUserIcon = () => {
-  const userColor =
-    markerStyle.value.defaultUserLocationColor || getCSSVariable('--color-user') || '#007bff'
-  return L.divIcon({
-    className: 'user-location-marker',
-    html: `
-      <div class="user-location-icon">
-        <div class="user-location-circle" style="background-color: ${userColor};">
-          <i class="fas ${markerStyle.value.defaultUserLocationIcon}"></i>
-        </div>
-      </div>
-    `,
-    iconSize: [40, 40],
-    iconAnchor: [20, 20],
-  })
-}
-
-// Fonction pour mettre à jour la position de l'utilisateur
-// Obtenir les couleurs depuis les variables CSS
-function getCSSVariable(variableName: string): string {
-  return getComputedStyle(document.documentElement).getPropertyValue(variableName).trim()
-}
-
-function updateUserPosition(position: Position) {
-  if (!mapInstance.value) return
-
-  const latLng = L.latLng(position.latitude, position.longitude)
-
-  // Supprimer les anciens marqueurs/cercles utilisateur
-  if (userMarker.value) {
-    mapInstance.value.removeLayer(userMarker.value)
-  }
-  if (userAccuracyCircle.value) {
-    mapInstance.value.removeLayer(userAccuracyCircle.value)
-  }
-
-  const primaryColor = getCSSVariable('--color-primary')
-
-  // Ajouter le cercle de précision (rayon approximatif de 10m)
-  userAccuracyCircle.value = L.circle(latLng, {
-    radius: 10,
-    fillColor: primaryColor,
-    fillOpacity: 0.1,
-    color: primaryColor,
-    weight: 1,
-    opacity: 0.3,
-  }).addTo(mapInstance.value)
-
-  // Ajouter le marqueur de l'utilisateur
-  userMarker.value = L.marker(latLng, {
-    icon: createUserIcon(),
-    zIndexOffset: 1000, // Assurer que le marqueur utilisateur est au-dessus
-  }).addTo(mapInstance.value)
-}
-
-// Watcher pour surveiller les changements de position utilisateur
+// Watchers
 watch(
   () => props.userPosition,
   (newPosition) => {
@@ -186,81 +82,35 @@ watch(
       updateUserPosition(newPosition)
     }
   },
-  { immediate: true },
+  { deep: true },
 )
 
-// Watcher pour mettre à jour les marqueurs quand la langue change
-watch(
-  () => languageStore.currentLanguage?.code,
-  () => {
-    if (mapInstance.value && placeMarkers.value.length > 0) {
-      // Recréer les marqueurs pour mettre à jour le contenu dans la nouvelle langue
-      createPlaceMarkers()
-    }
-  },
-)
-
+// Lifecycle hooks
 onMounted(() => {
-  // Création de la carte
-  mapInstance.value = L.map('map').setView(
-    [props.center.latitude, props.center.longitude],
-    props.zoom,
-  )
-
-  // Ajout des tuiles OpenStreetMap
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '© OpenStreetMap contributors',
-  }).addTo(mapInstance.value)
+  initializeMap()
 
   // Créer les marqueurs des lieux avec un petit délai pour s'assurer que tout est prêt
   setTimeout(() => {
     createPlaceMarkers()
+    if (props.userPosition) {
+      updateUserPosition(props.userPosition)
+    }
+
+    // Démarrer le préchargement des audios pour la langue actuelle
+    audioStore.startPreloadingForLanguage(places, currentLanguage.value)
   }, 100)
-
-  // Événements
-  mapInstance.value.on('click', (e: any) => {
-    emit('mapClick', e)
-  })
-
-  // Émission map ready
-  emit('mapReady', mapInstance.value)
 })
 
 onUnmounted(() => {
-  // Nettoyer les marqueurs utilisateur
-  if (userMarker.value && mapInstance.value) {
-    mapInstance.value.removeLayer(userMarker.value)
-  }
-  if (userAccuracyCircle.value && mapInstance.value) {
-    mapInstance.value.removeLayer(userAccuracyCircle.value)
-  }
-
-  // Nettoyer les marqueurs de lieux
-  placeMarkers.value.forEach((marker: any) => {
-    if (mapInstance.value) {
-      mapInstance.value.removeLayer(marker)
-    }
-  })
-
-  // Supprimer la carte
-  if (mapInstance.value) {
-    mapInstance.value.remove()
-  }
+  cleanupMarkers()
+  cleanupMap()
 })
 
 // Exposition des méthodes
 defineExpose({
   getMap: () => mapInstance.value,
-  setView: (center: Position, zoom?: number) => {
-    if (mapInstance.value) {
-      mapInstance.value.setView([center.latitude, center.longitude], zoom)
-    }
-  },
-  centerOnUser: () => {
-    if (mapInstance.value && props.userPosition) {
-      mapInstance.value.setView([props.userPosition.latitude, props.userPosition.longitude], 18)
-    }
-  },
+  setView,
+  centerOnUser: () => centerOnUser(props.userPosition),
 })
 </script>
 
