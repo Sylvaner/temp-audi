@@ -8,6 +8,7 @@ import { getDefaultLanguage } from '@/utils/language'
 // Import des messages de traduction
 import fr from '@/locales/fr.json'
 import en from '@/locales/en.json'
+import de from '@/locales/de.json'
 
 /**
  * Messages de traduction par langue
@@ -15,6 +16,7 @@ import en from '@/locales/en.json'
 const messages = {
   fr,
   en,
+  de,
 }
 
 /**
@@ -23,6 +25,7 @@ const messages = {
 export const availableLocales = [
   { code: 'fr', name: 'Français', flag: '🇫🇷' },
   { code: 'en', name: 'English', flag: '🇬🇧' },
+  { code: 'de', name: 'Deutsch', flag: '🇩🇪' },
 ]
 
 /**

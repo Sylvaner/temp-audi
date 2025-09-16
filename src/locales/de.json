@@ -1,0 +1,148 @@
+{
+  "app": {
+    "title": "Audioguide Königlicher Küchengarten"
+  },
+  "common": {
+    "loading": "Lädt...",
+    "error": "Fehler",
+    "retry": "Erneut versuchen",
+    "close": "Schließen",
+    "back": "Zurück",
+    "next": "Weiter",
+    "previous": "Zurück",
+    "search": "Suchen",
+    "settings": "Einstellungen"
+  },
+  "audio": {
+    "play": "{place} abspielen",
+    "pause": "{place} pausieren",
+    "stop": "Stopp",
+    "listen": "Anhören",
+    "loading": "Audio wird geladen für {place}",
+    "error": "Audiofehler bei {place}",
+    "volume": "Lautstärke",
+    "position": "Position",
+    "duration": "Dauer",
+    "description": {
+      "control": "Audiosteuerung für {place}",
+      "progress": "Fortschritt: {percent}%",
+      "keyboard": "Leertaste für Wiedergabe/Pause, Escape zum Stoppen, Pfeile zum Navigieren"
+    },
+    "status": {
+      "playing": "Wiedergabe: {place}",
+      "paused": "Audio pausiert: {place}",
+      "loading": "Audio wird geladen: {place}",
+      "error": "Fehler beim Laden des Audios: {place}"
+    }
+  },
+  "map": {
+    "zoomIn": "Vergrößern",
+    "zoomOut": "Verkleinern",
+    "centerOnUser": "Auf mich zentrieren",
+    "fullscreen": "Vollbild",
+    "legend": "Legende",
+    "places": {
+      "title": "Sehenswürdigkeiten",
+      "empty": "Keine Orte verfügbar"
+    },
+    "settings": {
+      "autoCenterEnabled": "Automatisches Zentrieren aktiviert",
+      "autoCenterDisabled": "Automatisches Zentrieren deaktiviert"
+    }
+  },
+  "navigation": {
+    "home": "Startseite",
+    "map": "Karte",
+    "about": "Über uns"
+  },
+  "home": {
+    "title": "Audioguide des Königlichen Küchengartens<br />Entdecken Sie 350 Jahre Geschichte<br />mit Audiokommentaren",
+    "visitButton": "Besuchen",
+    "aboutButton": "Über uns",
+    "freeExploration": "Freie Erkundung",
+    "freeExplorationDescription": "Erkunden Sie den Garten in Ihrem eigenen Tempo"
+  },
+  "about": {
+    "title": "Der Königliche Küchengarten",
+    "subtitle": "Ein außergewöhnliches Kulturerbe im Herzen von Versailles",
+    "introduction": {
+      "title": "Ein außergewöhnlicher Garten",
+      "description1": "Der Königliche Küchengarten von Versailles ist ein einzigartiger historischer Ort, der zwischen 1678 und 1683 von Jean-Baptiste de La Quintinie geschaffen wurde, um die königliche Tafel von Ludwig XIV. zu versorgen. Dieses Meisterwerk der französischen Gartenkunst erstreckt sich über 9 Hektar im Herzen von Versailles.",
+      "description2": "Mit seinen 29 ummauerten Gärten und Terrassen stellt der Königliche Küchengarten den Höhepunkt der französischen Gartenkunst des Grand Siècle dar. Er zeugt vom Genie seines Schöpfers, der sumpfiges Land in einen produktiven und außergewöhnlich schönen Garten verwandelte.",
+      "imageAlt": "Blick auf das Große Becken des Königlichen Küchengartens"
+    },
+    "history": {
+      "title": "350 Jahre Geschichte",
+      "description1": "Auf Befehl von Ludwig XIV. und entworfen von Jean-Baptiste de La Quintinie, sollte der Königliche Küchengarten Früchte und Gemüse für die königliche Tafel liefern. La Quintinie entwickelte hier revolutionäre Techniken, um Frühgemüse anzubauen und die Erntesaisons zu verlängern.",
+      "description2": "Im 19. Jahrhundert gründete Auguste Hardy hier die erste Nationale Gartenbauschule und verwandelte den Ort in ein Zentrum für Ausbildung und Innovation. Heute wird diese Tradition mit der Nationalen Hochschule für Landschaftsarchitektur fortgeführt, die weiterhin die Landschaftsarchitekten von morgen ausbildet.",
+      "imageAlt": "Das Königstor, historischer Eingang zum Küchengarten"
+    },
+    "today": {
+      "title": "Ein lebendiges Labor",
+      "description1": "Heute bleibt der Königliche Küchengarten ein Ort der Produktion, Lehre und Forschung. Die Studenten der Nationalen Hochschule für Landschaftsarchitektur lernen hier traditionelle Techniken und experimentieren gleichzeitig mit nachhaltigen Praktiken von morgen.",
+      "description2": "Für die Öffentlichkeit zugänglich, bietet er Führungen, pädagogische Workshops und kulturelle Veranstaltungen. Seine Früchte und Gemüse werden vor Ort verkauft und setzen die nährende Tradition des Ortes fort, während sie gleichzeitig seine Erhaltung finanzieren.",
+      "imageAlt": "Lerngärten des Königlichen Küchengartens"
+    },
+    "visit": {
+      "title": "Entdecken Sie den Königlichen Küchengarten",
+      "description": "Erkunden Sie dieses außergewöhnliche Kulturerbe und tauchen Sie ein in drei Jahrhunderte französischer Gartenbaugeschichte",
+      "exploreButton": "Erkunden",
+      "officialSiteButton": "Offizielle Website"
+    }
+  },
+  "mapIntro": {
+    "title": "Entdecken Sie Ihren Audioguide",
+    "subtitle": "Befolgen Sie diese 3 einfachen Schritte, um das Beste aus Ihrem Besuch zu machen",
+    "start": "Start",
+    "end": "Fertig!",
+    "step1": {
+      "title": "1. Lokalisieren Sie sich auf der Karte",
+      "description": "Erlauben Sie die Geolokalisierung, um Ihre Position in Echtzeit zu sehen und sich im Königlichen Küchengarten zu orientieren.",
+      "tip": "Ihre Position wird mit einem blauen Symbol auf der Karte angezeigt"
+    },
+    "step2": {
+      "title": "2. Erkunden Sie die Sehenswürdigkeiten",
+      "description": "Entdecken Sie die bemerkenswerten Orte des Gartens, indem Sie auf die farbigen Markierungen tippen.",
+      "tip": "Jeder Ort hat seine eigene Farbe und eine einzigartige Geschichte"
+    },
+    "step3": {
+      "title": "3. Hören Sie die Informationen",
+      "description": "Drücken Sie die Wiedergabetaste, um die Audiokommentare für jeden Ort, den Sie besuchen, zu hören.",
+      "tip": "Sie können in Ihrem eigenen Tempo zuhören und beliebig oft wiederholen"
+    },
+    "startButton": "Besuch starten",
+    "skipButton": "Einführung überspringen",
+    "dontShowAgain": "Diese Einführung nicht mehr anzeigen",
+    "nextButton": "Weiter",
+    "previousButton": "Zurück",
+    "visitButton": "Besuchen"
+  },
+  "settings": {
+    "language": "Sprache",
+    "volume": "Standardlautstärke",
+    "theme": "Thema",
+    "accessibility": "Barrierefreiheit"
+  },
+  "geolocation": {
+    "permission": {
+      "title": "Geolokalisierung erlauben",
+      "message": "Diese Anwendung funktioniert besser mit Ihrem Standort:",
+      "benefit1": "Anzeige Ihrer Position auf der Karte",
+      "benefit2": "Audiokommentare angepasst an Ihre Nähe",
+      "benefit3": "Optimierte Navigation im Garten",
+      "privacy": "Ihr Standort wird niemals an externe Server übermittelt.",
+      "allow": "Erlauben",
+      "deny": "Ohne fortfahren"
+    },
+    "denied": {
+      "title": "Geolokalisierung deaktiviert",
+      "message": "Die Anwendung funktioniert besser, wenn Sie die Geolokalisierung aktivieren.",
+      "alternative": "Sie können die Karte trotzdem manuell navigieren.",
+      "howToEnable": "So aktivieren Sie die Geolokalisierung:",
+      "step1": "Klicken Sie auf das Schloss- oder Informationssymbol in der Adressleiste",
+      "step2": "Erlauben Sie den Zugriff auf Ihren Standort",
+      "step3": "Laden Sie die Seite neu",
+      "retry": "Erneut versuchen"
+    }
+  }
+}

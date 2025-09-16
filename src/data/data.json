@@ -19,6 +19,12 @@
           "description": "Siège administratif de l’ENSP et du Potager du Roi",
           "text": "Le bâtiment Saint-Louis, construit au XIXᵉ siècle, a longtemps accueilli des salles de cours et des ateliers pour les étudiants de l’École nationale d’horticulture. Il doit son nom au quartier voisin, l’un des plus anciens de Versailles.\n\nOn raconte qu’à l’époque, les élèves y apportaient parfois leurs récoltes pour en discuter avec leurs professeurs, transformant les couloirs en véritables salles d’expérimentation improvisées.\n\nAujourd’hui, le bâtiment a changé de fonction : il abrite principalement les bureaux administratifs de l’École nationale supérieure de paysage et du Potager du Roi. Un lieu de gestion et de coordination, qui permet de faire vivre ce patrimoine unique et d’assurer la continuité de ses missions de formation, de recherche et d’expérimentation.",
           "audioFile": "saint-louis-fr.mp3"
+        },
+        "de": {
+          "title": "Das Saint-Louis-Gebäude",
+          "description": "Verwaltungssitz der ENSP und des Königlichen Küchengartens",
+          "text": "Das Saint-Louis-Gebäude, erbaut im 19. Jahrhundert, beherbergte einst Klassenräume und Werkstätten für die Studenten der Nationalen Gartenbauschule. Seinen Namen verdankt es dem nahegelegenen Viertel, einem der ältesten von Versailles.\n\nEs heißt, dass die Studenten damals manchmal ihre Ernten mitbrachten, um sie mit ihren Lehrern zu besprechen, sodass die Korridore zu improvisierten Laboren wurden.\n\nHeute hat das Gebäude eine neue Rolle: Es beherbergt hauptsächlich die Verwaltungsbüros der École nationale supérieure de paysage und des Königlichen Küchengartens. Als Ort der Verwaltung und Koordination trägt es dazu bei, dass dieses einzigartige Kulturerbe durch Lehre, Forschung und Experimentieren lebendig bleibt.",
+          "audioFile": "saint-louis-de.mp3"
         }
       },
       "order": 1
@@ -40,6 +46,12 @@
           "description": "Creator of the King's Kitchen Garden",
           "text": "Jean-Baptiste de La Quintinie, born in 1626, was originally trained as a lawyer. But a journey to Italy awakened in him a passion for the art of gardens. His reputation grew so quickly that Louis XIV entrusted him with a remarkable mission: to create the King’s Kitchen Garden, right behind the Palace of Versailles.\n\nOn marshy land, La Quintinie deployed all his expertise. He designed the great geometric plots, improved the soil, and invented techniques to grow produce in every season. The court was astonished: asparagus in the middle of January, strawberries picked as early as March… It seemed as though the seasons themselves obeyed the royal will.\n\nThe King’s Kitchen Garden was more than a source of food. It was a true laboratory of agricultural innovation, whose influence spread far beyond Versailles — and which still serves today as a site of experimentation for students and researchers.",
           "audioFile": "statue-la-quintinie-en.mp3"
+        },
+        "de": {
+          "title": "Statue von Jean-Baptiste de La Quintinie",
+          "description": "Schöpfer des Königlichen Küchengartens",
+          "text": "Jean-Baptiste de La Quintinie, geboren 1626, war ursprünglich Jurist. Doch eine Reise nach Italien weckte in ihm eine Leidenschaft für die Gartenkunst. Sein Ruf wuchs so schnell, dass Ludwig XIV. ihm eine außergewöhnliche Aufgabe übertrug: den Königlichen Küchengarten direkt hinter dem Schloss von Versailles zu schaffen.\n\nAuf sumpfigem Gelände setzte La Quintinie all sein Können ein. Er entwarf die großen geometrischen Parzellen, verbesserte den Boden und erfand Techniken, um zu jeder Jahreszeit ernten zu können. Der Hof war erstaunt: Spargel mitten im Januar, Erdbeeren schon im März… als ob die Jahreszeiten selbst dem königlichen Willen gehorchten.\n\nDer Königliche Küchengarten war nicht nur ein Nutzgarten. Er war ein wahres Laboratorium landwirtschaftlicher Innovation, dessen Einfluss weit über Versailles hinausreichte und der bis heute ein Ort des Experimentierens für Studenten und Forscher ist.",
+          "audioFile": "statue-la-quintinie-de.mp3"
         }
       },
       "imageFile": "statue-la-quintinie.jpg"
@@ -63,6 +75,12 @@
           "description": "Director of the Kitchen Garden and founder of the horticultural school",
           "text": "In the 19th century, the King’s Kitchen Garden entered a new era under its director Auguste Hardy. In 1874, he founded here the first National School of Horticulture, turning the garden into a unique training center. Students learned as much in the classrooms as in the plots of the Potager.\n\nIt is said that Hardy inspected the plantations every morning, and would not hesitate to correct a student if he spotted a poorly made cut. For him, excellence depended as much on the gesture as on theory. This demanding spirit shaped generations of gardeners and gave the school its prestige.\n\nToday, Hardy’s legacy endures in the way horticultural knowledge continues to be taught here: combining academic expertise with hands-on practice.",
           "audioFile": "statue-hardy-en.mp3"
+        },
+        "de": {
+          "title": "Statue von Auguste Hardy",
+          "description": "Direktor des Küchengartens und Gründer der Schule",
+          "text": "Im 19. Jahrhundert begann für den Königlichen Küchengarten eine neue Ära unter seinem Direktor Auguste Hardy. 1874 gründete er hier die erste Nationale Gartenbauschule und machte den Garten zu einem einzigartigen Ausbildungszentrum. Die Studenten lernten ebenso viel in den Klassenzimmern wie in den Beeten des Potagers.\n\nEs heißt, Hardy inspizierte jeden Morgen die Pflanzungen und zögerte nicht, einen Studenten zu korrigieren, wenn er einen schlecht ausgeführten Schnitt bemerkte. Für ihn war Exzellenz ebenso sehr eine Frage der Praxis wie der Theorie. Dieser Anspruch prägte Generationen von Gärtnern und verlieh der Schule ihr Prestige.\n\nNoch heute lebt Hardys Geist im Unterricht fort, der akademisches Wissen mit praktischer Erfahrung verbindet.",
+          "audioFile": "statue-hardy-de.mp3"
         }
       },
       "imageFile": "statue-hardy.jpg"
@@ -86,6 +104,12 @@
           "description": "Louis Lelieur, Intendant of Louis XIV",
           "text": "The Lelieur Garden pays tribute to Louis Lelieur, superintendent of Louis XIV’s gardens. A passionate botanist, he helped organize the King’s Kitchen Garden and introduced plants previously unknown in France, including species from the East.\n\nIt is said that he once brought back a pomegranate tree whose brilliant blossoms amazed visitors long before anyone thought of tasting its fruit. Today, this garden still serves as a place of experimentation: students and researchers observe, plant, and test new approaches to landscape design. Both a study space and a memorial site, it shows how Versailles has remained a living laboratory of landscape since the 17th century.",
           "audioFile": "jardin-lelieur-en.mp3"
+        },
+        "de": {
+          "title": "Lelieur-Garten",
+          "description": "Louis Lelieur, Intendant von Ludwig XIV.",
+          "text": "Der Lelieur-Garten ehrt Louis Lelieur, Intendant der Gärten Ludwigs XIV. Als leidenschaftlicher Botaniker beteiligte er sich an der Organisation des Königlichen Küchengartens und brachte in Frankreich unbekannte Pflanzen ein, darunter Arten aus dem Osten.\n\nMan erzählt, dass er einst einen Granatapfelbaum mitbrachte, dessen leuchtende Blüten die Besucher in Erstaunen versetzten, noch bevor man an die Früchte dachte. Auch heute dient der Garten der Experimentation: Studenten und Forscher beobachten, pflanzen und testen neue Ansätze der Gartengestaltung. Als Studien- wie Erinnerungsort zeigt er, dass Versailles seit dem 17. Jahrhundert ein lebendiges Landschaftslabor ist.",
+          "audioFile": "jardin-lelieur-de.mp3"
         }
       },
       "imageFile": "jardin-lelieur.jpg"
@@ -107,6 +131,12 @@
           "description": "Auguste Rivière du Breuil, agronomist",
           "text": "The Du Breuil Garden is named after Auguste Rivière du Breuil, a 19th-century agronomist. A respected teacher, he left a deep mark on the school’s history by insisting that horticulture should be grounded in scientific observation.\n\nIt is said he often asked his students to describe a plant in detail before even touching it, to sharpen their eye. His work helped modernize cultivation practices, introducing more rigorous methods adapted to the needs of the time. This garden recalls a key moment in the evolution of horticultural education, balancing traditional knowledge with the emerging field of agricultural science.",
           "audioFile": "jardin-du-breuil-en.mp3"
+        },
+        "de": {
+          "title": "Du-Breuil-Garten",
+          "description": "Auguste Rivière du Breuil, Agraringenieur",
+          "text": "Der Du-Breuil-Garten trägt den Namen von Auguste Rivière du Breuil, einem Agraringenieur des 19. Jahrhunderts. Als angesehener Lehrer prägte er die Geschichte der Schule, indem er die Bedeutung wissenschaftlicher Beobachtung für den Gartenbau betonte.\n\nEs heißt, er forderte seine Studenten oft auf, eine Pflanze genau zu beschreiben, bevor sie sie berührten, um ihren Blick zu schärfen. Seine Arbeiten halfen, die Kulturen zu modernisieren, indem er strengere und zeitgemäßere Methoden einführte. Dieser Garten erinnert an einen entscheidenden Schritt in der Entwicklung der gartenbaulichen Ausbildung, zwischen Tradition und moderner Agrarforschung.",
+          "audioFile": "jardin-du-breuil-de.mp3"
         }
       },
       "imageFile": "",
@@ -130,6 +160,12 @@
           "description": "Between the Grand Square and the Eleven Plots",
           "text": "The north terrace of the King’s Kitchen Garden offers a unique view over the entire site. Built at the end of the 17th century, it served as much for strolling as for observing, allowing one sweeping glance over the rigorous organization of the garden designed by La Quintinie.\n\nIt is said that visitors of Louis XIV would stop here to marvel at the spectacle of perfectly aligned crops, like a living painting. This belvedere illustrates the importance of geometry and staging in the art of classical gardens. From this terrace, one understands that the Potager was conceived not only as a place of production but also as a spectacle meant to dazzle the King’s guests.",
           "audioFile": "terrasse-nord-en.mp3"
+        },
+        "de": {
+          "title": "Nordterrasse",
+          "description": "Zwischen dem großen Karree und den Elf Beeten",
+          "text": "Die Nordterrasse des Königlichen Küchengartens bietet einen einzigartigen Blick über die gesamte Anlage. Ende des 17. Jahrhunderts angelegt, diente sie ebenso dem Spaziergang wie der Beobachtung und erlaubte es, mit einem Blick die strenge Ordnung des von La Quintinie entworfenen Gartens zu erfassen.\n\nEs heißt, Besucher Ludwigs XIV. blieben hier stehen, um das Schauspiel perfekt ausgerichteter Kulturen zu bewundern – wie ein lebendes Gemälde. Dieses Belvedere veranschaulicht die Bedeutung von Geometrie und Inszenierung in der klassischen Gartenkunst. Von hier aus versteht man, dass der Potager nicht nur ein Produktionsort, sondern auch eine Bühne zur Erbauung der Gäste des Königs war.",
+          "audioFile": "terrasse-nord-de.mp3"
         }
       },
       "markerIcon": ""
@@ -152,6 +188,12 @@
           "description": "Professor of horticulture",
           "text": "The Legendre Garden pays tribute to Pierre-Charles François Legendre, a 19th-century professor of horticulture. A passionate teacher, he played an important role in transmitting horticultural knowledge and training generations of gardeners.\n\nIt is said that he often gathered his students right among the crops, to show that learning was above all rooted in direct experience. This garden evokes the time when the school asserted its scientific and pedagogical vocation, integrating the latest botanical and agronomic discoveries.",
           "audioFile": "jardin-legendre-en.mp3"
+        },
+        "de": {
+          "title": "Legendre-Garten",
+          "description": "Professor für Gartenbau",
+          "text": "Der Legendre-Garten ehrt Pierre-Charles François Legendre, Professor für Gartenbau im 19. Jahrhundert. Ein leidenschaftlicher Lehrer, spielte er eine wichtige Rolle bei der Weitergabe gartenbaulichen Wissens und bei der Ausbildung von Generationen von Gärtnern.\n\nMan sagt, er traf sich oft direkt zwischen den Kulturen mit seinen Schülern, um zu zeigen, dass Lernen vor allem durch direkte Erfahrung geschieht. Dieser Garten erinnert an die Zeit, als die Schule ihre wissenschaftliche und pädagogische Berufung bekräftigte und botanische wie agronomische Entdeckungen integrierte.",
+          "audioFile": "jardin-legendre-de.mp3"
         }
       },
       "markerIcon": "fa-seedling"
@@ -174,6 +216,12 @@
           "description": "Solemn entrance to the Kitchen Garden",
           "text": "The King’s Gate marked the main entrance to the King’s Kitchen Garden. It separated this royal service garden from the rest of Versailles. Passing through this gate meant entering a space that was both practical and prestigious.\n\nIt is said that Louis XIV sometimes paused here to exchange a few words with La Quintinie, showing how important the garden was to him. Today, the gate symbolizes the link between historical heritage and public access, reminding us that the Kitchen Garden remains a living, shared space.",
           "audioFile": "grille-du-roi-en.mp3"
+        },
+        "de": {
+          "title": "Das Königstor",
+          "description": "Feierlicher Eingang zum Küchengarten",
+          "text": "Das Königstor markierte den Haupteingang des Königlichen Küchengartens. Es trennte diesen königlichen Nutzgarten von den übrigen Gärten von Versailles. Wer dieses Tor passierte, trat in einen Raum ein, der zugleich praktisch und prestigeträchtig war.\n\nEs heißt, dass Ludwig XIV. hier manchmal verweilte, um ein paar Worte mit La Quintinie zu wechseln – ein Zeichen der Bedeutung, die er diesem Garten beimaß. Heute symbolisiert das Tor die Verbindung zwischen historischem Erbe und öffentlicher Zugänglichkeit und erinnert daran, dass der Küchengarten ein lebendiger, geteilter Ort ist.",
+          "audioFile": "grille-du-roi-de.mp3"
         }
       }
     },
@@ -195,6 +243,12 @@
           "description": "Water reservoir and decorative element",
           "text": "The Grand Basin, located at the center of the Kitchen Garden, had a vital purpose: storing the water needed for irrigation. But it also served an aesthetic role, reflecting the sky and emphasizing the symmetry of the design.\n\nIt is said that students of the horticultural school once liked to gather here during their breaks to enjoy its coolness. Even today, it reminds us that water lies at the heart of garden art — an essential yet fragile resource.",
           "audioFile": "grand-bassin-en.mp3"
+        },
+        "de": {
+          "title": "Das Große Becken",
+          "description": "Wasserreservoir und dekoratives Element",
+          "text": "Das Große Becken im Zentrum des Küchengartens hatte eine wesentliche Funktion: das Speichern des für die Bewässerung benötigten Wassers. Zugleich war es ein ästhetisches Element, das den Himmel spiegelte und die Symmetrie des Gartens betonte.\n\nEs heißt, dass die Studenten der Schule hier gerne in den Pausen verweilten, um die Kühle zu genießen. Noch heute erinnert es daran, dass Wasser im Zentrum der Gartenkunst steht – unverzichtbar und zugleich kostbar.",
+          "audioFile": "grand-bassin-de.mp3"
         }
       }
     },
@@ -216,6 +270,12 @@
           "description": "Perspective on the garden’s organization",
           "text": "From this viewpoint, you can admire the Grand Square of the King’s Kitchen Garden, composed of sixteen perfectly drawn plots. This layout reflects the 17th-century taste for geometry and the mastery of nature.\n\nIt is said that some visitors thought they were looking at a work of art rather than a kitchen garden, so perfect was the arrangement. Today, this viewpoint illustrates the continuity of the Potager: a place designed to amaze, to produce, and to experiment.",
           "audioFile": "point-de-vue-en.mp3"
+        },
+        "de": {
+          "title": "Aussicht auf das große Karree",
+          "description": "Blick auf die Organisation des Küchengartens",
+          "text": "Von diesem Aussichtspunkt aus kann man das große Karree des Königlichen Küchengartens bewundern, das aus sechzehn perfekt angelegten Parzellen besteht. Diese Anordnung spiegelt den Geschmack des 17. Jahrhunderts für Geometrie und Naturbeherrschung wider.\n\nMan erzählt, dass manche Besucher dachten, sie sähen eher ein Kunstwerk als einen Nutzgarten, so vollkommen war die Anordnung. Heute zeigt dieser Punkt die Kontinuität des Potagers: ein Ort zum Staunen, Produzieren und Experimentieren.",
+          "audioFile": "point-de-vue-de.mp3"
         }
       }
     },
@@ -238,6 +298,12 @@
           "description": "La Quintinie’s experimental building for fig trees",
           "text": "The Figuerie takes its name from the fig trees cultivated here by Jean-Baptiste de La Quintinie for Louis XIV, who was especially fond of this fruit. The building served as shelter and protection for these delicate trees, sensitive to the harsh climate of the Paris region.\nIt is said that La Quintinie devised a clever system of boxes and shutters, allowing the fig trees to be moved or shielded according to the season, so that the king could enjoy an almost uninterrupted supply.\n\nToday, the Figuerie still embodies this spirit of experimentation: it continues to house plantings and serves as a study site for adapting crops to local conditions. It stands as a bridge between 17th-century agronomic ingenuity and the research carried out at the King’s Kitchen Garden in the 21st century.",
           "audioFile": "figuerie-en.mp3"
+        },
+        "de": {
+          "title": "Die Figuerie",
+          "description": "La Quintinies Versuchsbau für Feigenbäume",
+          "text": "Die Figuerie verdankt ihren Namen den Feigenbäumen, die Jean-Baptiste de La Quintinie hier für Ludwig XIV. kultivierte, der dieses Obst besonders schätzte. Das Gebäude diente als Schutz für diese empfindlichen Bäume, die dem Klima der Île-de-France ausgesetzt waren.\n\nEs heißt, La Quintinie habe ein ausgeklügeltes System von Kisten und Läden entwickelt, um die Feigenbäume je nach Saison zu versetzen oder zu schützen und so dem König eine nahezu ununterbrochene Ernte zu sichern.\n\nHeute bewahrt die Figuerie diesen experimentellen Geist: Sie beherbergt weiterhin Pflanzungen und bleibt ein Studienort, um Kulturen an lokale Bedingungen anzupassen – eine Brücke zwischen der Agronomie des 17. Jahrhunderts und der Forschung des 21. Jahrhunderts im Potager du Roi.",
+          "audioFile": "figuerie-de.mp3"
         }
       }
     },
@@ -259,6 +325,12 @@
           "description": "Secondary entrance to the experimental gardens",
           "text": "The Anjou Gate, set into the surrounding wall of the Kitchen Garden, provided access to the plots on the eastern side. Less ceremonial than the King’s Gate, it was mainly used by gardeners and students heading to the experimental plots.\nIt is said that in the 19th century, students would pass through this entrance at dawn to begin their practical work, sometimes still by the light of lanterns.\n\nToday, the Anjou Gate still serves as a passage towards study and research areas. It reminds us that the King’s Kitchen Garden was never only a place of spectacle: it has always been a working ground for learning and horticultural innovation.",
           "audioFile": "grille-anjou-en.mp3"
+        },
+        "de": {
+          "title": "Das Anjou-Tor",
+          "description": "Nebeneingang zu den Versuchsgärten",
+          "text": "Das Anjou-Tor, in die Umfassungsmauer des Küchengartens eingelassen, ermöglichte den Zugang zu den östlichen Parzellen. Weniger feierlich als das Königstor, wurde es vor allem von Gärtnern und Studenten genutzt, die in den Versuchsflächen arbeiteten.\n\nEs heißt, dass Studenten im 19. Jahrhundert bei Tagesanbruch durch dieses Tor gingen, um ihre praktischen Arbeiten zu beginnen – manchmal noch im Lampenschein.\n\nHeute erfüllt das Anjou-Tor weiterhin diese Funktion als Zugang zu Studien- und Forschungsflächen. Es erinnert daran, dass der Königliche Küchengarten nie nur ein Schaugarten war, sondern stets ein Ort des Lernens und der Innovation.",
+          "audioFile": "grille-anjou-de.mp3"
         }
       }
     },
@@ -280,6 +352,12 @@
           "title": "Boutique du potager",
           "description": "Des produits de qualité",
           "text": "La boutique du Potager du Roi propose une sélection de produits issus du savoir-faire horticole et artisanal. On y trouve des fruits et légumes de saison, des confitures, du miel et d’autres spécialités préparées avec soin.\nChaque produit reflète la qualité et l’exigence qui font la réputation du Potager : allier tradition, respect de la nature et plaisir du goût.",
+          "audioFile": ""
+        },
+        "de": {
+          "title": "Der Gartenladen",
+          "description": "Regionale und hochwertige Produkte",
+          "text": "Der Laden des Königlichen Küchengartens bietet eine Auswahl an Produkten, die aus gärtnerischem und handwerklichem Können hervorgehen. Saisonales Obst und Gemüse, Konfitüren, Honig und andere Spezialitäten werden mit Sorgfalt zubereitet.\nJedes Produkt spiegelt die Qualität und den Anspruch wider, die den Potager auszeichnen: die Verbindung von Tradition, Respekt vor der Natur und Genuss.",
           "audioFile": ""
         }
       },
@@ -304,6 +382,12 @@
           "description": "Hommage à un pionnier de l’agronomie",
           "text": "Le jardin Duhamel du Monceau rappelle la mémoire d’Henri-Louis Duhamel du Monceau, grand agronome du XVIIIᵉ siècle. Ses recherches sur la croissance des arbres, la taille, la greffe et les maladies des plantes ont marqué durablement l’histoire de l’horticulture et de la foresterie en France.\n\nOn raconte qu’il avait pour habitude d’observer les arbres pendant des heures, carnet en main, notant avec précision la moindre variation de leurs branches. Sa rigueur scientifique a ouvert la voie à une approche moderne de l’agriculture et du paysage.\n\nAujourd’hui, ce jardin prolonge cet esprit d’expérimentation : il est utilisé pour tester des méthodes de culture, comparer des essences et former les étudiants à l’observation attentive du végétal, dans la continuité des enseignements de Duhamel du Monceau.",
           "audioFile": "duhamel-fr.mp3"
+        },
+        "de": {
+          "title": "Duhamel-du-Monceau-Garten",
+          "description": "Ehrung für einen Agronomie-Pionier",
+          "text": "Der Duhamel-du-Monceau-Garten ehrt Henri-Louis Duhamel du Monceau, einen bedeutenden Agronomen des 18. Jahrhunderts. Seine Studien zu Baumwachstum, Schnitt, Veredelung und Pflanzenkrankheiten haben die Geschichte des Gartenbaus und der Forstwirtschaft in Frankreich nachhaltig geprägt.\n\nEs heißt, er verbrachte Stunden damit, Bäume mit einem Notizbuch in der Hand zu beobachten und jede Veränderung ihrer Äste genau festzuhalten. Seine wissenschaftliche Strenge bereitete den Weg für eine moderne Landwirtschafts- und Landschaftsauffassung.\n\nHeute setzt dieser Garten diesen Geist des Experimentierens fort: Hier werden Anbaumethoden getestet, Arten verglichen und Studenten in genauer Pflanzenbeobachtung geschult – ganz im Sinne Duhamel du Monceaus.",
+          "audioFile": "duhamel-de.mp3"
         }
       }
     }
@@ -326,7 +410,7 @@
       "increaseZoom": 2
     },
     "defaultLanguage": "en",
-    "availableLanguages": ["fr", "en"],
+    "availableLanguages": ["fr", "en", "de"],
     "markerStyle": {
       "defaultColor": "#B87333",
       "defaultPlaceIcon": "fa-monument",
