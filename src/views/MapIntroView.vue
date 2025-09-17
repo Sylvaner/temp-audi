@@ -16,8 +16,19 @@
       <!-- Contenu des étapes -->
       <section class="modal-card-body">
         <div class="container has-text-centered">
-          <!-- Étape 1 -->
+          <!-- Étape 1 : Sélection de langue -->
           <div v-show="currentStep === 1" class="content">
+            <div class="language-selector-main mb-5">
+              <LanguageSelector />
+            </div>
+            <h2 class="title is-4">{{ $t('mapIntro.language.title') }}</h2>
+            <p class="subtitle is-6 has-text-grey mb-5">
+              {{ $t('mapIntro.language.description') }}
+            </p>
+          </div>
+
+          <!-- Étape 2 : Position utilisateur -->
+          <div v-show="currentStep === 2" class="content">
             <div class="has-text-primary mb-5">
               <span class="icon is-large user-location-icon">
                 <i :class="`fas ${markerStyle.defaultUserLocationIcon} fa-3x`"></i>
@@ -27,8 +38,8 @@
             <p class="subtitle is-6 has-text-grey">{{ $t('mapIntro.step1.description') }}</p>
           </div>
 
-          <!-- Étape 2 -->
-          <div v-show="currentStep === 2" class="content">
+          <!-- Étape 3 : Marqueurs de lieux -->
+          <div v-show="currentStep === 3" class="content">
             <div class="has-text-primary mb-5">
               <span class="icon is-large place-location-icon">
                 <i :class="`fas ${markerStyle.defaultPlaceIcon} fa-3x`"></i>
@@ -38,8 +49,8 @@
             <p class="subtitle is-6 has-text-grey">{{ $t('mapIntro.step2.description') }}</p>
           </div>
 
-          <!-- Étape 3 -->
-          <div v-show="currentStep === 3" class="content">
+          <!-- Étape 4 : Audio -->
+          <div v-show="currentStep === 4" class="content">
             <div class="has-text-primary mb-5">
               <div class="audio-button-container">
                 <span class="icon is-large play-button has-pulse-animation">
@@ -68,14 +79,14 @@
             <span>{{ $t('mapIntro.previousButton') }}</span>
           </button>
 
-          <button v-if="currentStep < 3" class="button is-primary" @click="nextStep">
+          <button v-if="currentStep < 4" class="button is-primary" @click="nextStep">
             <span>{{ $t('mapIntro.nextButton') }}</span>
             <span class="icon">
               <i class="fas fa-chevron-right"></i>
             </span>
           </button>
 
-          <button v-if="currentStep === 3" class="button is-primary" @click="startExploring">
+          <button v-if="currentStep === 4" class="button is-primary" @click="startExploring">
             <span class="icon">
               <i class="fas fa-map"></i>
             </span>
@@ -91,6 +102,7 @@
 import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useConfig } from '@/composables/useConfig'
+import LanguageSelector from '@/components/ui/LanguageSelector.vue'
 
 // Composables
 const router = useRouter()
@@ -101,12 +113,12 @@ const currentStep = ref(1)
 
 // Computed
 const progressPercentage = computed(() => {
-  return ((currentStep.value - 1) / 2) * 100
+  return ((currentStep.value - 1) / 3) * 100
 })
 
 // Méthodes
 const nextStep = () => {
-  if (currentStep.value < 3) {
+  if (currentStep.value < 4) {
     currentStep.value++
   }
 }
@@ -224,6 +236,69 @@ footer .button.is-primary:hover {
   width: 5rem;
   box-shadow: var(--shadow-medium);
   color: var(--color-white);
+}
+
+/* Style principal pour le sélecteur de langue en position d'icône */
+.language-selector-main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 5rem;
+}
+
+.language-selector-main :deep(.dropdown) {
+  display: flex;
+  justify-content: center;
+}
+
+.language-selector-main :deep(.button) {
+  background: linear-gradient(135deg, var(--color-secondary), var(--color-primary));
+  border: 3px solid white;
+  color: var(--color-white);
+  font-size: 1.25rem;
+  font-weight: 600;
+  padding: 1rem 2rem;
+  min-height: 4rem;
+  border-radius: 2rem;
+  box-shadow: var(--shadow-medium);
+  transition: all 0.3s ease;
+}
+
+.language-selector-main :deep(.button:hover) {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-large);
+  background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+}
+
+.language-selector-main :deep(.button .flag-emoji) {
+  font-size: 1.5rem;
+  margin-right: 0.75rem;
+}
+
+/* S'assurer que le dropdown s'affiche au-dessus de tout */
+.language-selector-main :deep(.dropdown-menu) {
+  z-index: 9999 !important;
+  margin-top: 0.5rem;
+  border-radius: 1rem;
+  box-shadow: var(--shadow-heavy);
+  border: 2px solid var(--color-primary);
+}
+
+.language-selector-main :deep(.dropdown-content) {
+  border-radius: 1rem;
+  overflow: hidden;
+}
+
+.language-selector-main :deep(.dropdown-item) {
+  padding: 0.75rem 1.5rem;
+  font-size: 1.1rem;
+  transition: all 0.2s ease;
+}
+
+.language-selector-main :deep(.dropdown-item:hover) {
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  transform: translateX(4px);
 }
 
 .audio-button-container {

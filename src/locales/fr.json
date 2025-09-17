@@ -92,21 +92,25 @@
   },
   "mapIntro": {
     "title": "Découvrez votre audio-guide",
-    "subtitle": "Suivez ces 3 étapes simples pour profiter pleinement de votre visite",
+    "subtitle": "Suivez ces 4 étapes simples pour profiter pleinement de votre visite",
     "start": "Début",
     "end": "Prêt !",
+    "language": {
+      "title": "1. Choisissez votre langue",
+      "description": "Sélectionnez la langue dans laquelle vous souhaitez découvrir le Potager du Roi."
+    },
     "step1": {
-      "title": "1. Localisez-vous sur la carte",
-      "description": "Autorisez la géolocalisation pour voir votre position en temps réel et vous orienter dans le Potager du Roi.",
+      "title": "2. Localisez-vous sur la carte",
+      "description": "Une fois sur la carte, nous vous demanderons l'autorisation d'accéder à votre position pour vous aider à vous orienter dans le Potager du Roi.",
       "tip": "Votre position apparaîtra avec une icône bleue sur la carte"
     },
     "step2": {
-      "title": "2. Explorez les lieux d'intérêt",
+      "title": "3. Explorez les lieux d'intérêt",
       "description": "Découvrez les différents points remarquables du jardin en touchant les marqueurs colorés.",
       "tip": "Chaque lieu a sa propre couleur et son histoire unique"
     },
     "step3": {
-      "title": "3. Écoutez les informations",
+      "title": "4. Écoutez les informations",
       "description": "Appuyez sur le bouton lecture pour écouter les commentaires audio de chaque lieu que vous visitez.",
       "tip": "Vous pouvez écouter à votre rythme et répéter autant que vous le souhaitez"
     },

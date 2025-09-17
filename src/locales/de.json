@@ -92,21 +92,25 @@
   },
   "mapIntro": {
     "title": "Entdecken Sie Ihren Audioguide",
-    "subtitle": "Befolgen Sie diese 3 einfachen Schritte, um das Beste aus Ihrem Besuch zu machen",
+    "subtitle": "Befolgen Sie diese 4 einfachen Schritte, um das Beste aus Ihrem Besuch zu machen",
     "start": "Start",
     "end": "Fertig!",
+    "language": {
+      "title": "1. Wählen Sie Ihre Sprache",
+      "description": "Wählen Sie die Sprache aus, in der Sie den Königlichen Küchengarten entdecken möchten."
+    },
     "step1": {
-      "title": "1. Lokalisieren Sie sich auf der Karte",
-      "description": "Erlauben Sie die Geolokalisierung, um Ihre Position in Echtzeit zu sehen und sich im Königlichen Küchengarten zu orientieren.",
+      "title": "2. Lokalisieren Sie sich auf der Karte",
+      "description": "Sobald Sie auf der Karte sind, werden wir Sie um Erlaubnis bitten, auf Ihren Standort zuzugreifen, um Ihnen bei der Navigation durch den Königlichen Küchengarten zu helfen.",
       "tip": "Ihre Position wird mit einem blauen Symbol auf der Karte angezeigt"
     },
     "step2": {
-      "title": "2. Erkunden Sie die Sehenswürdigkeiten",
+      "title": "3. Erkunden Sie die Sehenswürdigkeiten",
       "description": "Entdecken Sie die bemerkenswerten Orte des Gartens, indem Sie auf die farbigen Markierungen tippen.",
       "tip": "Jeder Ort hat seine eigene Farbe und eine einzigartige Geschichte"
     },
     "step3": {
-      "title": "3. Hören Sie die Informationen",
+      "title": "4. Hören Sie die Informationen",
       "description": "Drücken Sie die Wiedergabetaste, um die Audiokommentare für jeden Ort, den Sie besuchen, zu hören.",
       "tip": "Sie können in Ihrem eigenen Tempo zuhören und beliebig oft wiederholen"
     },
