@@ -5,9 +5,31 @@
 import type { Place, PlaceContent } from '@/types'
 import dataJson from '@/data/data.json'
 
-import type { LanguageConfig } from '@/types/common'
+const config = dataJson.config
 
-const config = dataJson.config as LanguageConfig
+/**
+ * Récupère les langues réellement disponibles (intersection data.json + fichiers locales)
+ * Cette fonction sera mise à jour par le système i18n
+ */
+let actuallyAvailableLanguages: string[] = []
+
+/**
+ * Met à jour la liste des langues réellement disponibles
+ * @param languages Langues trouvées avec fichiers de traduction
+ */
+export function setActuallyAvailableLanguages(languages: string[]) {
+  actuallyAvailableLanguages = languages
+}
+
+/**
+ * Récupère les langues réellement disponibles (avec fichiers de traduction)
+ * @returns Tableau des codes de langues réellement disponibles
+ */
+export function getActuallyAvailableLanguages(): string[] {
+  return actuallyAvailableLanguages.length > 0
+    ? actuallyAvailableLanguages
+    : config.availableLanguages
+}
 
 /**
  * Récupère le contenu d'un lieu dans la langue demandée
@@ -16,7 +38,7 @@ const config = dataJson.config as LanguageConfig
 export function getPlaceContent(
   place: Place,
   language: string,
-  defaultLanguage: string = 'fr',
+  defaultLanguage: string = config.defaultLanguage,
 ): PlaceContent | null {
   // Essaie la langue demandée
   if (place.content[language]) {
@@ -62,13 +84,13 @@ export function detectBrowserLanguage(): string {
   // Teste chaque langue du navigateur dans l'ordre de préférence
   for (const browserLang of browserLanguages) {
     // Teste d'abord la langue complète (ex: fr-FR)
-    if (config.availableLanguages.includes(browserLang)) {
+    if (getActuallyAvailableLanguages().includes(browserLang)) {
       return browserLang
     }
 
     // Teste ensuite juste le code de langue (ex: fr de fr-FR)
     const langCode = browserLang.split('-')[0]
-    if (config.availableLanguages.includes(langCode)) {
+    if (getActuallyAvailableLanguages().includes(langCode)) {
       return langCode
     }
   }
@@ -83,7 +105,7 @@ export function detectBrowserLanguage(): string {
  * @returns true si la langue est supportée
  */
 export function isLanguageSupported(languageCode: string): boolean {
-  return config.availableLanguages.includes(languageCode)
+  return getActuallyAvailableLanguages().includes(languageCode)
 }
 
 /**
@@ -121,4 +143,46 @@ export function normalizeLanguageCode(languageCode: string): string {
 
   // Retourner la langue par défaut si rien ne correspond
   return getDefaultLanguage()
+}
+
+/**
+ * Interface pour les objets de langue avec métadonnées
+ */
+export interface LanguageInfo {
+  code: string
+  name: string
+  flag: string
+}
+
+/**
+ * Métadonnées des langues supportées - Top 20 des langues les plus répandues
+ */
+const languageMetadata: Record<string, Omit<LanguageInfo, 'code'>> = {
+  // Langues européennes
+  en: { name: 'English', flag: '🇬🇧' },
+  es: { name: 'Español', flag: '🇪🇸' },
+  fr: { name: 'Français', flag: '🇫🇷' },
+  de: { name: 'Deutsch', flag: '🇩🇪' },
+  it: { name: 'Italiano', flag: '🇮🇹' },
+  pt: { name: 'Português', flag: '🇵🇹' },
+  ru: { name: 'Русский', flag: '🇷🇺' },
+  nl: { name: 'Nederlands', flag: '🇳🇱' },
+  pl: { name: 'Polski', flag: '🇵🇱' },
+  zh: { name: '中文', flag: '🇨🇳' },
+  ja: { name: '日本語', flag: '🇯🇵' },
+  ko: { name: '한국어', flag: '🇰🇷' },
+  ar: { name: 'العربية', flag: '🇸🇦' },
+  tr: { name: 'Türkçe', flag: '🇹🇷' },
+}
+
+/**
+ * Récupère les langues disponibles avec leurs métadonnées
+ * @returns Tableau des langues avec code, nom et drapeau
+ */
+export function getAvailableLanguagesWithMetadata(): LanguageInfo[] {
+  return getActuallyAvailableLanguages().map((code) => ({
+    code,
+    name: languageMetadata[code]?.name || code,
+    flag: languageMetadata[code]?.flag || '🌐',
+  }))
 }
