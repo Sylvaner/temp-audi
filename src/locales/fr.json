@@ -109,10 +109,10 @@
       "description": "Découvrez les différents points remarquables du jardin en touchant les marqueurs colorés.",
       "tip": "Chaque lieu a sa propre couleur et son histoire unique"
     },
-    "step3": {
-      "title": "4. Écoutez les informations",
-      "description": "Appuyez sur le bouton lecture pour écouter les commentaires audio de chaque lieu que vous visitez.",
-      "tip": "Vous pouvez écouter à votre rythme et répéter autant que vous le souhaitez"
+    "step4": {
+      "title": "4. Préparez-vous pour l'audio",
+      "description": "Augmentez le volume de votre téléphone et utilisez des oreillettes pour une meilleure expérience. Appuyez ensuite sur les boutons lecture pour écouter les commentaires audio.",
+      "tip": "Un bon niveau sonore et des écouteurs vous permettront de profiter pleinement de la visite"
     },
     "startButton": "Commencer la visite",
     "skipButton": "Passer l'introduction",

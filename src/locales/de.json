@@ -109,10 +109,10 @@
       "description": "Entdecken Sie die bemerkenswerten Orte des Gartens, indem Sie auf die farbigen Markierungen tippen.",
       "tip": "Jeder Ort hat seine eigene Farbe und eine einzigartige Geschichte"
     },
-    "step3": {
-      "title": "4. Hören Sie die Informationen",
-      "description": "Drücken Sie die Wiedergabetaste, um die Audiokommentare für jeden Ort, den Sie besuchen, zu hören.",
-      "tip": "Sie können in Ihrem eigenen Tempo zuhören und beliebig oft wiederholen"
+    "step4": {
+      "title": "4. Bereiten Sie sich auf Audio vor",
+      "description": "Erhöhen Sie die Lautstärke Ihres Telefons und verwenden Sie Kopfhörer für die beste Erfahrung. Drücken Sie dann die Wiedergabetasten, um Audiokommentare zu hören.",
+      "tip": "Eine gute Lautstärke und Kopfhörer helfen Ihnen, den Besuch voll zu genießen"
     },
     "startButton": "Besuch starten",
     "skipButton": "Einführung überspringen",

@@ -49,17 +49,27 @@
             <p class="subtitle is-6 has-text-grey">{{ $t('mapIntro.step2.description') }}</p>
           </div>
 
-          <!-- Étape 4 : Audio -->
+          <!-- Étape 4 : Audio et volume -->
           <div v-show="currentStep === 4" class="content">
             <div class="has-text-primary mb-5">
-              <div class="audio-button-container">
-                <span class="icon is-large play-button has-pulse-animation">
-                  <i class="fas fa-play fa-3x"></i>
-                </span>
+              <div class="audio-volume-container">
+                <div class="audio-button-container">
+                  <span class="icon is-large play-button has-pulse-animation">
+                    <i class="fas fa-play fa-3x"></i>
+                  </span>
+                </div>
+                <div class="volume-icons-container">
+                  <span class="icon is-medium volume-icon">
+                    <i class="fas fa-volume-up fa-lg"></i>
+                  </span>
+                  <span class="icon is-medium headphones-icon">
+                    <i class="fas fa-headphones fa-lg"></i>
+                  </span>
+                </div>
               </div>
             </div>
-            <h2 class="title is-4">{{ $t('mapIntro.step3.title') }}</h2>
-            <p class="subtitle is-6 has-text-grey">{{ $t('mapIntro.step3.description') }}</p>
+            <h2 class="title is-4">{{ $t('mapIntro.step4.title') }}</h2>
+            <p class="subtitle is-6 has-text-grey">{{ $t('mapIntro.step4.description') }}</p>
           </div>
         </div>
       </section>
@@ -354,5 +364,30 @@ footer .button.is-primary:hover {
     transform: translate(-50%, -50%) scale(2);
     opacity: 0;
   }
+}
+
+.audio-volume-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.volume-icons-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.volume-icon,
+.headphones-icon {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  border: 2px solid white;
+  box-shadow: var(--shadow-medium);
+  color: var(--color-white);
+  background: var(--color-secondary);
 }
 </style>
