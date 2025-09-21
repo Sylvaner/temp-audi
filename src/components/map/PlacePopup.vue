@@ -1,14 +1,11 @@
 <template>
   <div class="place-popup is-fullheight-viewport">
-    <!-- Bouton de fermeture -->
     <button class="delete is-large" @click="closePopup"></button>
 
-    <!-- Image -->
     <div v-if="place.imageFile" class="image-section" @click="closePopup">
       <img :src="`/images/${place.imageFile}`" :alt="placeContent.title" @error="onImageError" />
     </div>
 
-    <!-- Contenu -->
     <div class="content-section">
       <div class="content-area has-custom-scrollbar" @click="closePopup">
         <h1 class="title is-3">{{ placeContent.title }}</h1>
@@ -19,7 +16,6 @@
         </div>
       </div>
 
-      <!-- Contrôles audio -->
       <div v-if="placeContent.audioFile" class="audio-controls">
         <div class="media">
           <div class="media-left">
@@ -58,8 +54,6 @@ import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useLanguageStore } from '@/stores/language'
 import { useAudioStore } from '@/stores/audio'
-
-// Types
 import type { Place } from '@/types'
 
 interface Props {
@@ -67,24 +61,19 @@ interface Props {
 }
 
 const props = defineProps<Props>()
-
-// Events
 const emit = defineEmits<{
   close: []
 }>()
 
-// Composables
 const { t } = useI18n()
 const languageStore = useLanguageStore()
 const audioStore = useAudioStore()
 
-// Computed
 const placeContent = computed(() => {
   const lang = languageStore.currentLanguage?.code || 'fr'
   return props.place.content[lang] || props.place.content['fr']
 })
 
-// Divise le texte en paragraphes
 const textParagraphs = computed(() => {
   if (!placeContent.value?.text) return []
   return placeContent.value.text
@@ -93,13 +82,11 @@ const textParagraphs = computed(() => {
     .filter((p) => p.length > 0)
 })
 
-// Audio computed depuis le store
 const isPlaying = computed(() => audioStore.isPlacePlayingAudio(props.place.id))
 const isLoading = computed(() => audioStore.isPlaceAudioLoading(props.place.id))
 const error = computed(() => audioStore.error)
 const hasBeenPlayed = computed(() => audioStore.hasPlaceBeenPlayed(props.place.id))
 
-// Méthodes
 function closePopup() {
   emit('close')
 }

@@ -2,21 +2,16 @@
   <div class="modal is-active">
     <div class="modal-background"></div>
     <div class="modal-card">
-      <!-- Header -->
       <header class="modal-card-head">
-        <!-- Indicateur de progression -->
         <div class="container">
-          <!-- Progress bar Bulma -->
           <progress class="progress is-primary" :value="progressPercentage" max="100">
             {{ progressPercentage }}%
           </progress>
         </div>
       </header>
 
-      <!-- Contenu des étapes -->
       <section class="modal-card-body">
         <div class="container has-text-centered">
-          <!-- Étape 1 : Sélection de langue -->
           <div v-show="currentStep === 1" class="content">
             <div class="language-selector-main mb-5">
               <LanguageSelector />
@@ -27,7 +22,6 @@
             </p>
           </div>
 
-          <!-- Étape 2 : Position utilisateur -->
           <div v-show="currentStep === 2" class="content">
             <div class="has-text-primary mb-5">
               <span class="icon is-large user-location-icon">
@@ -38,7 +32,6 @@
             <p class="subtitle is-6 has-text-grey">{{ $t('mapIntro.step1.description') }}</p>
           </div>
 
-          <!-- Étape 3 : Marqueurs de lieux -->
           <div v-show="currentStep === 3" class="content">
             <div class="has-text-primary mb-5">
               <span class="icon is-large place-location-icon">
@@ -48,8 +41,6 @@
             <h2 class="title is-4">{{ $t('mapIntro.step2.title') }}</h2>
             <p class="subtitle is-6 has-text-grey">{{ $t('mapIntro.step2.description') }}</p>
           </div>
-
-          <!-- Étape 4 : Audio et volume -->
           <div v-show="currentStep === 4" class="content">
             <div class="has-text-primary mb-5">
               <div class="audio-volume-container">
@@ -74,7 +65,6 @@
         </div>
       </section>
 
-      <!-- Footer avec boutons -->
       <footer class="modal-card-foot">
         <div class="buttons">
           <button
@@ -114,19 +104,15 @@ import { useRouter } from 'vue-router'
 import { useConfig } from '@/composables/useConfig'
 import LanguageSelector from '@/components/ui/LanguageSelector.vue'
 
-// Composables
 const router = useRouter()
 const { markerStyle } = useConfig()
 
-// État local
 const currentStep = ref(1)
 
-// Computed
 const progressPercentage = computed(() => {
   return ((currentStep.value - 1) / 3) * 100
 })
 
-// Méthodes
 const nextStep = () => {
   if (currentStep.value < 4) {
     currentStep.value++
@@ -143,8 +129,6 @@ const startExploring = () => {
   // Marquer l'intro comme vue et ne plus l'afficher
   localStorage.setItem('mapIntroSeen', 'true')
   localStorage.setItem('mapIntroDontShow', 'true')
-
-  // Naviguer vers la carte
   router.push('/map')
 }
 </script>

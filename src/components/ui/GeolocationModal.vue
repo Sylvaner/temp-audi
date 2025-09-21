@@ -79,7 +79,6 @@
 </template>
 
 <script setup lang="ts">
-// Props
 interface Props {
   isVisible: boolean
   type: 'request' | 'denied'
@@ -87,7 +86,6 @@ interface Props {
 
 defineProps<Props>()
 
-// Émissions
 const emit = defineEmits<{
   close: []
   allow: []
@@ -95,7 +93,6 @@ const emit = defineEmits<{
   retry: []
 }>()
 
-// Méthodes
 function close() {
   emit('close')
 }

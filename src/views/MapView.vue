@@ -17,7 +17,20 @@
         @request-permission="showGeolocationModal = true"
         @click="centerOnUser"
       />
-      <StopButton />
+
+      <div v-if="audioStore.hasAudio" class="is-flex is-justify-content-center">
+        <button
+          class="button is-rounded is-normal is-danger"
+          @click="audioStore.stopCurrent()"
+          :disabled="audioStore.isLoading"
+          :title="$t('audio.stop')"
+        >
+          <span class="icon">
+            <i class="fas fa-stop"></i>
+          </span>
+        </button>
+      </div>
+
       <PlacesList @go-to-place="goToPlace" />
     </div>
 
@@ -46,14 +59,15 @@ import PlacesList from '@/components/map/PlacesList.vue'
 import PlacePopup from '@/components/map/PlacePopup.vue'
 import GeolocationButton from '@/components/ui/GeolocationButton.vue'
 import GeolocationModal from '@/components/ui/GeolocationModal.vue'
-import StopButton from '@/components/ui/StopButton.vue'
 import { useGeolocationStore } from '@/stores/geolocation'
+import { useAudioStore } from '@/stores/audio'
 import { useMapGeolocation } from '@/composables/useMapGeolocation'
 import { useMapPlaces } from '@/composables/useMapPlaces'
 import type { Position } from '@/types'
 import data from '@/data/data.json'
 
 const geolocationStore = useGeolocationStore()
+const audioStore = useAudioStore()
 const mapCenter = ref<Position>({
   latitude: data.config.map.center.latitude,
   longitude: data.config.map.center.longitude,
@@ -81,7 +95,6 @@ function onMapReady(map: any) {
   startAudioPreloading()
 }
 
-// Gestionnaire pour fermer le popup avec Échap
 const handleKeyDown = (event: KeyboardEvent) => {
   if (event.key === 'Escape' && selectedPlace.value) {
     closePopup()

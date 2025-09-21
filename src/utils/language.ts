@@ -1,16 +1,7 @@
-/**
- * Utilitaires pour la gestion des langues
- */
-
 import type { Place, PlaceContent } from '@/types'
 import dataJson from '@/data/data.json'
 
 const config = dataJson.config
-
-/**
- * Récupère les langues réellement disponibles (intersection data.json + fichiers locales)
- * Cette fonction sera mise à jour par le système i18n
- */
 let actuallyAvailableLanguages: string[] = []
 
 /**
@@ -31,26 +22,18 @@ export function getActuallyAvailableLanguages(): string[] {
     : config.availableLanguages
 }
 
-/**
- * Récupère le contenu d'un lieu dans la langue demandée
- * avec fallback sur la langue par défaut
- */
 export function getPlaceContent(
   place: Place,
   language: string,
   defaultLanguage: string = config.defaultLanguage,
 ): PlaceContent | null {
-  // Essaie la langue demandée
   if (place.content[language]) {
     return place.content[language]
   }
 
-  // Fallback sur la langue par défaut
   if (place.content[defaultLanguage]) {
     return place.content[defaultLanguage]
   }
-
-  // Fallback sur la première langue disponible
   const firstAvailable = Object.keys(place.content)[0]
   if (firstAvailable) {
     return place.content[firstAvailable]
