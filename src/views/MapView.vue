@@ -20,7 +20,7 @@
 
       <div v-if="audioStore.hasAudio" class="is-flex is-justify-content-center">
         <button
-          class="button is-rounded is-normal is-danger"
+          class="button is-rounded is-normal is-danger stop-button"
           @click="audioStore.stopCurrent()"
           :disabled="audioStore.isLoading"
           :title="$t('audio.stop')"
@@ -161,5 +161,9 @@ onUnmounted(() => {
   right: 0;
   bottom: 0;
   z-index: var(--z-modal);
+}
+
+.stop-button {
+  color: var(--color-white);
 }
 </style>

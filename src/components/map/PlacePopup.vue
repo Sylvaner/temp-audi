@@ -17,7 +17,7 @@
       </div>
 
       <div v-if="placeContent.audioFile" class="audio-controls">
-        <div class="media">
+        <div class="media media-centered">
           <div class="media-left">
             <button
               class="button is-rounded is-primary"
@@ -54,6 +54,7 @@ import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useLanguageStore } from '@/stores/language'
 import { useAudioStore } from '@/stores/audio'
+import { getDefaultLanguage } from '@/utils/language'
 import type { Place } from '@/types'
 
 interface Props {
@@ -70,8 +71,8 @@ const languageStore = useLanguageStore()
 const audioStore = useAudioStore()
 
 const placeContent = computed(() => {
-  const lang = languageStore.currentLanguage?.code || 'fr'
-  return props.place.content[lang] || props.place.content['fr']
+  const lang = languageStore.currentLanguage?.code || getDefaultLanguage()
+  return props.place.content[lang] || props.place.content[getDefaultLanguage()]
 })
 
 const textParagraphs = computed(() => {
@@ -161,18 +162,7 @@ async function playAudio() {
   border-top: 1px solid var(--color-border-light);
 }
 
-.audio-controls .media {
-  align-items: center; /* Centrer verticalement tous les éléments */
-}
-
-.audio-controls .media-content {
-  display: flex;
-  align-items: center; /* Centrer verticalement le texte */
-}
-
-.audio-controls .media-content p {
-  margin: 0; /* Supprimer les marges par défaut */
-}
+/* Alignement centré géré par la classe utilitaire media-centered */
 
 /* Animation pulse utilise maintenant la classe utilitaire has-pulse-animation */
 
@@ -214,10 +204,6 @@ async function playAudio() {
     padding: 1rem 1.5rem;
     background: var(--color-background-light);
     border-top: 1px solid var(--color-border-light);
-  }
-
-  .audio-controls .media {
-    align-items: center; /* Assurer l'alignement même sur mobile */
   }
 }
 

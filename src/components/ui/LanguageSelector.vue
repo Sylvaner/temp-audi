@@ -9,7 +9,7 @@
         </span>
       </button>
     </div>
-    <div class="dropdown-menu" role="menu">
+    <div class="dropdown-menu has-elevation-medium" role="menu">
       <div class="dropdown-content">
         <a
           v-for="language in availableLanguages"
@@ -109,7 +109,6 @@ onUnmounted(() => {
   position: absolute !important;
   z-index: calc(var(--z-overlay) + 1) !important; /* Au-dessus des autres overlays */
   border-radius: var(--border-radius);
-  box-shadow: var(--shadow-medium);
 }
 
 .dropdown-item {

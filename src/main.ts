@@ -6,6 +6,7 @@ import router from './router'
 import { i18n } from '@/i18n'
 import { useLanguageStore, setGlobalI18n } from '@/stores/language'
 import '@/styles/variables.css'
+import '@/styles/global.css'
 
 const app = createApp(App)
 

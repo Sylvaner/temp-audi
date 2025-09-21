@@ -40,6 +40,7 @@ onMounted(() => {
 <style>
 /* Imports doivent être en premier */
 @import '@/styles/variables.css';
+@import '@/styles/global.css';
 @import 'bulma/css/bulma.min.css';
 @import '@fortawesome/fontawesome-free/css/all.min.css';
 

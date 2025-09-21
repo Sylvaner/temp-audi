@@ -1,6 +1,6 @@
 <template>
   <div v-if="audioFile" class="audio-controls">
-    <div class="media is-align-items-center">
+    <div class="media media-centered">
       <div class="media-left">
         <button
           class="button is-rounded is-primary"
@@ -13,8 +13,8 @@
           </span>
         </button>
       </div>
-      <div class="media-content is-flex is-align-items-center">
-        <p class="has-text-weight-medium m-0">
+      <div class="media-content">
+        <p class="has-text-weight-medium">
           {{ isPlaying ? $t('audio.pause') : $t('audio.listen') }}
         </p>
       </div>

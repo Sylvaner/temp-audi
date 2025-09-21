@@ -123,29 +123,19 @@ defineExpose({
   z-index: var(--z-base);
 }
 
-/* Override des z-index Leaflet pour respecter notre hiérarchie */
-:deep(.leaflet-control-container) {
-  z-index: var(--z-ui) !important;
-}
-
-:deep(.leaflet-popup-pane) {
-  z-index: var(--z-ui) !important;
-}
-
-:deep(.leaflet-tooltip-pane) {
-  z-index: var(--z-ui) !important;
-}
-
-/* S'assurer que tous les éléments Leaflet de base restent sous les contrôles */
-:deep(.leaflet-tile-pane),
-:deep(.leaflet-overlay-pane) {
-  z-index: var(--z-base) !important;
-}
-
-/* Les contrôles Leaflet (zoom, etc.) au niveau UI */
+/* Z-index pour éléments UI Leaflet */
+:deep(.leaflet-control-container),
+:deep(.leaflet-popup-pane),
+:deep(.leaflet-tooltip-pane),
 :deep(.leaflet-control),
 :deep(.leaflet-marker-pane) {
   z-index: var(--z-ui) !important;
+}
+
+/* Z-index pour éléments de base Leaflet */
+:deep(.leaflet-tile-pane),
+:deep(.leaflet-overlay-pane) {
+  z-index: var(--z-base) !important;
 }
 
 /* S'assurer que les panes généraux ne dépassent pas */
@@ -153,19 +143,23 @@ defineExpose({
   z-index: auto !important;
 }
 
-/* Styles pour le marqueur de localisation utilisateur */
-:deep(.user-location-marker) {
+/* Styles communs pour tous les marqueurs */
+:deep(.user-location-marker),
+:deep(.place-marker) {
   background: transparent !important;
   border: none !important;
 }
 
-:deep(.user-location-icon) {
+:deep(.user-location-icon),
+:deep(.place-marker-icon) {
   position: relative;
   width: 40px;
   height: 40px;
 }
 
-:deep(.user-location-circle) {
+/* Styles communs pour les cercles de marqueurs */
+:deep(.user-location-circle),
+:deep(.place-marker-circle) {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -182,7 +176,16 @@ defineExpose({
   color: var(--color-white);
   font-size: 16px;
   z-index: var(--z-ui);
+}
+
+/* Spécificités du marqueur utilisateur */
+:deep(.user-location-circle) {
   animation: user-pulse 2s infinite;
+}
+
+/* Spécificités des marqueurs de lieux */
+:deep(.place-marker-circle) {
+  transition: all var(--transition-normal);
 }
 
 @keyframes user-pulse {
@@ -203,38 +206,6 @@ defineExpose({
   }
 }
 
-/* Styles pour les marqueurs de lieux */
-:deep(.place-marker) {
-  background: transparent !important;
-  border: none !important;
-}
-
-:deep(.place-marker-icon) {
-  position: relative;
-  width: 40px;
-  height: 40px;
-}
-
-:deep(.place-marker-circle) {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 36px;
-  height: 36px;
-  background: var(--color-primary);
-  border: 3px solid white;
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-  box-shadow: var(--shadow-medium);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--color-white);
-  font-size: 16px;
-  transition: all var(--transition-normal);
-  z-index: var(--z-ui);
-}
-
 :deep(.place-marker-circle.is-selected) {
   background: var(--color-warm);
   transform: translate(-50%, -50%) scale(1.1);
@@ -247,8 +218,12 @@ defineExpose({
 }
 
 /* Styles pour les popups */
-:deep(.custom-popup .leaflet-popup-content-wrapper) {
+:deep(.custom-popup .leaflet-popup-content-wrapper),
+:deep(.custom-popup .leaflet-popup-tip) {
   background: var(--color-surface);
+}
+
+:deep(.custom-popup .leaflet-popup-content-wrapper) {
   border-radius: var(--border-radius);
   box-shadow: var(--shadow-medium);
   padding: 0;
@@ -257,15 +232,6 @@ defineExpose({
 :deep(.custom-popup .leaflet-popup-content) {
   margin: 0;
   padding: 0;
-}
-
-:deep(.custom-popup .leaflet-popup-tip) {
-  background: var(--color-surface);
-}
-
-/* Contrôles de la carte */
-:deep(.leaflet-control-container) {
-  z-index: var(--z-ui);
 }
 
 .leaflet-attribution-flag {

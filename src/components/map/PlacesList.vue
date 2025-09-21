@@ -12,7 +12,7 @@
     </button>
 
     <!-- Liste des lieux -->
-    <div class="places-panel" v-show="isOpen">
+    <div class="places-panel has-elevation-large" v-show="isOpen">
       <div class="places-header">
         <h3 class="title is-5">{{ t('map.places.title') }}</h3>
         <div class="places-settings">
@@ -132,16 +132,7 @@ function getDownloadState(place: Place) {
   position: relative;
 }
 
-/* Style uniforme pour les boutons de contrôle */
-.button.is-rounded {
-  box-shadow: var(--shadow-light);
-  transition: all var(--transition-normal);
-}
-
-.button.is-rounded:hover {
-  transform: translateY(-1px);
-  box-shadow: var(--shadow-medium);
-}
+/* Styles communs des boutons ronds définis globalement dans variables.css */
 
 .places-panel {
   position: absolute;
@@ -151,7 +142,6 @@ function getDownloadState(place: Place) {
   max-height: 400px;
   background: var(--color-surface);
   border-radius: var(--border-radius);
-  box-shadow: var(--shadow-large);
   overflow: hidden;
   z-index: var(--z-ui);
 }

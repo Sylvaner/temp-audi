@@ -112,29 +112,11 @@ function handleLocationClick() {
   ) {
     emit('requestPermission')
   }
-  // Si déjà autorisé, on peut centrer directement la carte (géré par le composant parent)
 }
 </script>
 
 <style scoped>
-/* Style uniforme pour les boutons de contrôle */
-.button.is-rounded {
-  box-shadow: var(--shadow-light);
-  transition: all var(--transition-normal);
-  position: relative;
-  z-index: var(--z-ui);
-  border: none;
-}
-
-.button.is-rounded:hover {
-  transform: translateY(-1px);
-  box-shadow: var(--shadow-medium);
-}
-
-.button:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-}
+/* Styles communs des boutons ronds définis globalement dans variables.css */
 
 /* Classes automne personnalisées */
 .button.is-theme-primary {

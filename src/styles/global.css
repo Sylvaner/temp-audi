@@ -1,0 +1,157 @@
+/* Classes utilitaires globales */
+
+/* === BOUTONS === */
+
+/* Styles communs pour boutons de contrôle */
+.button.is-rounded {
+  box-shadow: var(--shadow-light);
+  transition: all var(--transition-normal);
+  position: relative;
+  z-index: var(--z-ui);
+  border: none;
+}
+
+.button.is-rounded:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-medium);
+}
+
+.button.is-rounded:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* === ÉLÉVATION === */
+
+/* Classes d'élévation réutilisables */
+.has-elevation-light {
+  box-shadow: var(--shadow-light);
+}
+
+.has-elevation-medium {
+  box-shadow: var(--shadow-medium);
+}
+
+.has-elevation-large {
+  box-shadow: var(--shadow-large);
+}
+
+.has-hover-elevation:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-medium);
+}
+
+/* === SCROLLBAR === */
+
+/* Scrollbar personnalisée globale */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-border) var(--color-background-light);
+}
+
+html::-webkit-scrollbar {
+  width: 8px;
+}
+
+html::-webkit-scrollbar-track {
+  background: var(--color-background-light);
+}
+
+html::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: var(--border-radius-small);
+}
+
+html::-webkit-scrollbar-thumb:hover {
+  background: var(--color-border-hover);
+}
+
+/* Scrollbar personnalisée utilitaire */
+.has-custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-border) var(--color-background-light);
+}
+
+.has-custom-scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.has-custom-scrollbar::-webkit-scrollbar-track {
+  background: var(--color-background-light);
+}
+
+.has-custom-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: var(--border-radius-small);
+}
+
+.has-custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: var(--color-border-hover);
+}
+
+/* === MEDIA OBJECTS === */
+
+/* Media object avec alignement centré */
+.media-centered .media-left,
+.media-centered .media-content {
+  display: flex;
+  align-items: center;
+}
+
+.media-centered .media-content {
+  margin: 0;
+}
+
+/* === ANIMATIONS === */
+
+/* Animation pulse réutilisable */
+.has-pulse-animation {
+  animation: pulse-theme 2s ease-out infinite;
+}
+
+@keyframes pulse-theme {
+  0% {
+    box-shadow: 0 0 0 0 var(--color-primary);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(0, 0, 0, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+  }
+}
+
+/* === OVERLAYS === */
+
+/* Overlay avec dégradé */
+.has-theme-overlay::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(167, 140, 83, 0.6) 0%,
+    rgba(150, 94, 41, 0.5) 50%,
+    rgba(107, 53, 15, 0.6) 100%
+  );
+  z-index: var(--z-base);
+}
+
+/* === LAYOUT === */
+
+/* Layout mobile avec navbar fixe */
+.has-fixed-navbar {
+  margin-top: 52px;
+  min-height: calc(100vh - 52px);
+}
+
+/* Conteneur pleine hauteur avec fallback dvh */
+.is-fullheight-viewport {
+  height: 100vh;
+  height: 100dvh;
+  min-height: 100vh;
+  min-height: 100dvh;
+}
