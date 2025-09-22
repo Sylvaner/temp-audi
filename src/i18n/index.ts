@@ -1,9 +1,4 @@
-/**
- * Configuration i18n pour Vue I18n
- */
-
 import { createI18n } from 'vue-i18n'
-import type { LocaleMessages, VueMessageType } from 'vue-i18n'
 import {
   getDefaultLanguage,
   getAppAvailableLanguages,
@@ -53,11 +48,7 @@ const allMessages = buildAvailableMessages()
  */
 setActuallyAvailableLanguages(Object.keys(allMessages))
 
-/**
- * Messages de traduction filtrés (déjà filtré dans buildAvailableMessages)
- * Cast vers le type attendu par Vue I18n
- */
-const messages = allMessages as Record<string, Record<string, string>>
+// Messages construits dynamiquement
 
 /**
  * Langues disponibles dans l'interface (basées sur data.json)
@@ -65,15 +56,19 @@ const messages = allMessages as Record<string, Record<string, string>>
 export const availableLocales = getAvailableLanguagesWithMetadata()
 
 /**
- * Instance i18n configurée
+ * Fonction pour créer l'instance i18n (pattern Vue 3)
  */
-export const i18n = createI18n({
-  locale: getDefaultLanguage(), // langue par défaut depuis la configuration
-  fallbackLocale: getDefaultLanguage(), // langue de fallback depuis la configuration
-  messages,
-  legacy: false, // utilise Composition API
-  globalInjection: true, // permet d'utiliser $t dans les templates
-})
+export function createAppI18n() {
+  return createI18n({
+    locale: getDefaultLanguage(),
+    fallbackLocale: getDefaultLanguage(),
+    messages: allMessages as Record<string, Record<string, string>>,
+    legacy: false,
+    globalInjection: true,
+    missingWarn: false,
+    fallbackWarn: false,
+  })
+}
 
 /**
  * Type pour l'autocomplétion des clés de traduction

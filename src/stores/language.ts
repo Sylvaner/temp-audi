@@ -1,16 +1,13 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import { availableLocales } from '@/i18n'
-import { detectBrowserLanguage, isLanguageSupported, getDefaultLanguage } from '@/utils/language'
-import type { Place, PlaceContent } from '@/types'
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-let globalI18n: any = null
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function setGlobalI18n(instance: any) {
-  globalI18n = instance
-}
+import {
+  detectBrowserLanguage,
+  isLanguageSupported,
+  getDefaultLanguage,
+  getPlaceContent,
+} from '@/utils/language'
+import type { Place } from '@/types'
 
 export const useLanguageStore = defineStore('language', () => {
   // État
@@ -26,10 +23,6 @@ export const useLanguageStore = defineStore('language', () => {
     if (isLanguageSupported(languageCode)) {
       currentLocale.value = languageCode
       localStorage.setItem('preferred-language', languageCode)
-
-      if (globalI18n) {
-        globalI18n.global.locale.value = languageCode
-      }
     }
   }
 
@@ -46,21 +39,8 @@ export const useLanguageStore = defineStore('language', () => {
     setLanguage(targetLanguage)
   }
 
-  function getLocalizedContent(place: Place): PlaceContent | null {
-    if (place.content[currentLocale.value]) {
-      return place.content[currentLocale.value]
-    }
-
-    if (place.content.fr) {
-      return place.content.fr
-    }
-
-    const firstAvailable = Object.keys(place.content)[0]
-    if (firstAvailable) {
-      return place.content[firstAvailable]
-    }
-
-    return null
+  function getLocalizedContent(place: Place) {
+    return getPlaceContent(place, currentLocale.value)
   }
 
   function hasContentInCurrentLanguage(place: Place): boolean {

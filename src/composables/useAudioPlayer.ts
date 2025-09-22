@@ -1,144 +1,45 @@
-import { ref, onUnmounted } from 'vue'
+import { computed } from 'vue'
+import { useAudioStore } from '@/stores/audio'
 
 export function useAudioPlayer() {
-  const currentAudio = ref<HTMLAudioElement | null>(null)
-  const isPlaying = ref(false)
-  const isLoading = ref(false)
-  const error = ref<string | null>(null)
-  const currentTime = ref(0)
-  const duration = ref(0)
+  const audioStore = useAudioStore()
 
-  // Arrêter et nettoyer l'audio précédent
-  const stopCurrent = () => {
-    if (currentAudio.value) {
-      currentAudio.value.pause()
-      currentAudio.value.currentTime = 0
-      currentAudio.value = null
-    }
-    isPlaying.value = false
-    isLoading.value = false
-    currentTime.value = 0
-    duration.value = 0
-  }
+  const hasAudio = computed(() => audioStore.hasAudio)
+  const isLoading = computed(() => audioStore.isLoading)
+  const error = computed(() => audioStore.error)
 
-  // Jouer un fichier audio
-  const playAudio = async (audioFile: string) => {
-    if (!audioFile) {
-      error.value = 'Aucun fichier audio spécifié'
-      return false
-    }
-
+  async function playAudio(placeId: string, audioFile: string) {
     try {
-      // Arrêter l'audio précédent s'il y en a un
-      stopCurrent()
-
-      error.value = null
-      isLoading.value = true
-
-      // Créer un nouvel élément audio
-      const audio = new Audio(`/audio/${audioFile}`)
-      currentAudio.value = audio
-
-      // Gérer les événements audio
-      audio.addEventListener('loadstart', () => {
-        isLoading.value = true
-      })
-
-      audio.addEventListener('canplay', () => {
-        isLoading.value = false
-        duration.value = audio.duration || 0
-      })
-
-      audio.addEventListener('play', () => {
-        isPlaying.value = true
-      })
-
-      audio.addEventListener('pause', () => {
-        isPlaying.value = false
-      })
-
-      audio.addEventListener('ended', () => {
-        isPlaying.value = false
-        currentTime.value = 0
-      })
-
-      audio.addEventListener('timeupdate', () => {
-        currentTime.value = audio.currentTime || 0
-      })
-
-      audio.addEventListener('error', (e) => {
-        console.error('Erreur lors de la lecture audio:', e)
-        error.value = 'Erreur lors de la lecture du fichier audio'
-        isLoading.value = false
-        isPlaying.value = false
-      })
-
-      // Lancer la lecture
-      await audio.play()
-      return true
+      await audioStore.playAudio(placeId, audioFile)
     } catch (err) {
-      console.error('Erreur lors du chargement audio:', err)
-      error.value = 'Impossible de lire le fichier audio'
-      isLoading.value = false
-      isPlaying.value = false
-      return false
+      console.error('Erreur lecture audio:', err)
     }
   }
 
-  // Mettre en pause
-  const pauseAudio = () => {
-    if (currentAudio.value && isPlaying.value) {
-      currentAudio.value.pause()
-    }
+  function stopCurrent() {
+    audioStore.stopCurrent()
   }
 
-  // Reprendre la lecture
-  const resumeAudio = async () => {
-    if (currentAudio.value && !isPlaying.value) {
-      try {
-        await currentAudio.value.play()
-      } catch (err) {
-        console.error('Erreur lors de la reprise audio:', err)
-        error.value = 'Impossible de reprendre la lecture'
-      }
-    }
+  function isPlacePlayingAudio(placeId: string): boolean {
+    return audioStore.currentPlace === placeId && audioStore.isPlaying
   }
 
-  // Basculer lecture/pause
-  const togglePlayback = async () => {
-    if (isPlaying.value) {
-      pauseAudio()
-    } else {
-      await resumeAudio()
-    }
+  function isPlaceAudioLoading(placeId: string): boolean {
+    return audioStore.currentPlace === placeId && audioStore.isLoading
   }
 
-  // Changer la position de lecture
-  const seekTo = (time: number) => {
-    if (currentAudio.value) {
-      currentAudio.value.currentTime = Math.max(0, Math.min(time, duration.value))
-    }
+  function hasPlaceBeenPlayed(placeId: string): boolean {
+    return audioStore.hasPlayedAnyAudio
   }
-
-  // Nettoyer lors de la destruction du composant
-  onUnmounted(() => {
-    stopCurrent()
-  })
 
   return {
-    // État
-    isPlaying,
+    hasAudio,
     isLoading,
     error,
-    currentTime,
-    duration,
-
-    // Méthodes
     playAudio,
-    pauseAudio,
-    resumeAudio,
-    togglePlayback,
     stopCurrent,
-    seekTo,
+    isPlacePlayingAudio,
+    isPlaceAudioLoading,
+    hasPlaceBeenPlayed,
   }
 }

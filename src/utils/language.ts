@@ -1,4 +1,4 @@
-import type { Place, PlaceContent } from '@/types'
+import type { Place } from '@/types'
 import dataJson from '@/data/data.json'
 
 const config = dataJson.config
@@ -26,7 +26,7 @@ export function getPlaceContent(
   place: Place,
   language: string,
   defaultLanguage: string = config.defaultLanguage,
-): PlaceContent | null {
+) {
   if (place.content[language]) {
     return place.content[language]
   }
