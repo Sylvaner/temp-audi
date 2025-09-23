@@ -1,15 +1,31 @@
 /**
- * Composable pour la gestion des permissions et requêtes de géolocalisation
- * Sépare la logique technique de géolocalisation de l'état du store
+ * Composable fusionné pour la gestion de la géolocalisation
+ * Combine les fonctionnalités de gestion et de calcul géographique
  */
 
-export interface GeolocationManagerOptions {
+import { computed, type Ref } from 'vue'
+
+// Types simplifiés
+export type Position = {
+  latitude: number
+  longitude: number
+}
+
+export type GeolocationOptions = {
   onPositionUpdate: (position: Position) => void
   onPermissionChange: (status: 'granted' | 'denied') => void
   onError: (error: string) => void
 }
 
-export interface GeolocationManager {
+export type GeolocationCalculatorOptions = {
+  userPosition: Ref<Position | null>
+  mapCenter: Position
+  threshold: number
+  increaseZoom: number
+  baseZoom: number
+}
+
+export type GeolocationManager = {
   requestPermission: () => Promise<boolean>
   startWatching: () => boolean
   stopWatching: () => void
@@ -17,11 +33,15 @@ export interface GeolocationManager {
   isAvailable: boolean
 }
 
-interface Position {
-  latitude: number
-  longitude: number
+export type GeolocationCalculator = {
+  distanceToCenter: Ref<number>
+  isUserInArea: Ref<boolean>
+  shouldCenterOnUser: Ref<boolean>
+  increasedZoom: Ref<number>
+  calculateDistance: (lat1: number, lon1: number, lat2: number, lon2: number) => number
 }
 
+// Configuration par défaut
 const DEFAULT_OPTIONS: PositionOptions = {
   enableHighAccuracy: true,
   timeout: 10000,
@@ -35,9 +55,9 @@ const WATCH_OPTIONS: PositionOptions = {
 }
 
 /**
- * Crée un gestionnaire de géolocalisation
+ * Gestionnaire de géolocalisation (permissions et requêtes)
  */
-export function useGeolocationManager(options: GeolocationManagerOptions): GeolocationManager {
+export function useGeolocationManager(options: GeolocationOptions): GeolocationManager {
   const { onPositionUpdate, onPermissionChange, onError } = options
   let watchId: number | null = null
 
@@ -149,5 +169,73 @@ export function useGeolocationManager(options: GeolocationManagerOptions): Geolo
     stopWatching,
     getCurrentPosition,
     isAvailable,
+  }
+}
+
+/**
+ * Calculateur géographique pour les distances et centrage
+ */
+export function useGeolocationCalculator(
+  options: GeolocationCalculatorOptions,
+): GeolocationCalculator {
+  const { userPosition, mapCenter, threshold, increaseZoom, baseZoom } = options
+
+  /**
+   * Calcule la distance entre deux points géographiques (en degrés)
+   */
+  const calculateDistance = (lat1: number, lon1: number, lat2: number, lon2: number): number => {
+    const deltaLat = Math.abs(lat1 - lat2)
+    const deltaLon = Math.abs(lon1 - lon2)
+    return Math.sqrt(deltaLat * deltaLat + deltaLon * deltaLon)
+  }
+
+  /**
+   * Distance actuelle de l'utilisateur au centre de la carte
+   */
+  const distanceToCenter = computed(() => {
+    if (!userPosition.value) return Infinity
+
+    return calculateDistance(
+      userPosition.value.latitude,
+      userPosition.value.longitude,
+      mapCenter.latitude,
+      mapCenter.longitude,
+    )
+  })
+
+  /**
+   * Vérifie si l'utilisateur est dans la zone du centre de la carte
+   */
+  const isUserInArea = computed(() => {
+    if (!userPosition.value) return false
+
+    const distance = distanceToCenter.value
+    console.log('Distance to initial center:', distance)
+    console.log('Threshold:', threshold)
+    console.log('Is user in initial area:', distance <= threshold)
+
+    return distance <= threshold
+  })
+
+  /**
+   * Détermine si on doit centrer automatiquement sur l'utilisateur
+   */
+  const shouldCenterOnUser = computed(() => {
+    return isUserInArea.value
+  })
+
+  /**
+   * Zoom augmenté pour le centrage sur l'utilisateur
+   */
+  const increasedZoom = computed(() => {
+    return baseZoom + increaseZoom
+  })
+
+  return {
+    distanceToCenter,
+    isUserInArea,
+    shouldCenterOnUser,
+    increasedZoom,
+    calculateDistance,
   }
 }

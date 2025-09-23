@@ -2,14 +2,15 @@ import { ref, type Ref } from 'vue'
 import L from 'leaflet'
 import type { Position, Place } from '@/types'
 
-interface Props {
+// Types simplifiés pour LeafletMap
+type Props = {
   center?: Position
   zoom?: number
   userPosition?: Position | null
   showUserPosition?: boolean
 }
 
-interface LeafletMapEmits {
+type LeafletMapEmits = {
   (e: 'mapClick', event: { latlng: { latitude: number; longitude: number } }): void
   (e: 'mapReady', map: L.Map): void
   (e: 'placeDetails', place: Place): void

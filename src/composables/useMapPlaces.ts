@@ -2,13 +2,11 @@ import { ref } from 'vue'
 import { useAudioStore } from '@/stores/audio'
 import { useLanguageStore } from '@/stores/language'
 import type { Place } from '@/types'
-
-// Types
 import type { LeafletMapRef, PlacesData, MapClickEvent } from '@/types/map'
 
 /**
- * Composable pour la gestion des lieux dans la vue carte
- * Centralise la logique de sélection, popup et navigation vers les lieux
+ * Composable simplifié pour la gestion des lieux sur la carte
+ * Gère la sélection, popup et navigation vers les lieux
  */
 export function useMapPlaces(leafletMapRef: LeafletMapRef, data: PlacesData) {
   const audioStore = useAudioStore()

@@ -4,7 +4,8 @@
 
 import { type Ref } from 'vue'
 
-export interface AudioEventHandlers {
+// Interface simplifiée pour les handlers audio
+export type AudioEventHandlers = {
   onLoadStart: () => void
   onCanPlay: () => void
   onPlay: () => void
@@ -14,7 +15,8 @@ export interface AudioEventHandlers {
   onError: (e: Event) => void
 }
 
-export interface AudioEventHandlersOptions {
+// Options simplifiées pour créer les handlers
+export type AudioEventOptions = {
   isLoading: Ref<boolean>
   isPlaying: Ref<boolean>
   currentTime: Ref<number>
@@ -26,7 +28,7 @@ export interface AudioEventHandlersOptions {
 /**
  * Crée un ensemble d'event handlers pour un élément audio
  */
-export function useAudioEventHandlers(options: AudioEventHandlersOptions): AudioEventHandlers {
+export function useAudioEventHandlers(options: AudioEventOptions): AudioEventHandlers {
   const { isLoading, isPlaying, currentTime, error, currentPlace, onPlaceMarkedAsPlayed } = options
 
   const handlers: AudioEventHandlers = {

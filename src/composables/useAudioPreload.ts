@@ -6,14 +6,15 @@
 import { ref } from 'vue'
 import type { Place } from '@/types'
 
-export interface AudioPreloadManager {
-  // États
+// Interface simplifiée pour le gestionnaire de préchargement
+export type AudioPreloadManager = {
+  // États en lecture seule
   readonly downloadQueue: string[]
   readonly downloadingFiles: Set<string>
   readonly downloadedFiles: Set<string>
   readonly preloadedAudios: Map<string, HTMLAudioElement>
 
-  // Méthodes publiques
+  // Méthodes principales
   startPreloading: (audioFiles: string[]) => void
   startPreloadingForLanguage: (places: Place[], language: string) => void
   getPreloadedAudio: (audioFile: string) => HTMLAudioElement | null

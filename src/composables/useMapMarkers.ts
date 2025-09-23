@@ -2,11 +2,12 @@ import { ref, type Ref } from 'vue'
 import L from 'leaflet'
 import type { Place, Position } from '@/types'
 
-interface ExtendedMarker extends L.Marker {
+// Types simplifiés
+type ExtendedMarker = L.Marker & {
   placeId?: string
 }
 
-interface MarkerStyle {
+type MarkerStyle = {
   defaultColor: string
   defaultPlaceIcon: string
   defaultUserLocationColor: string

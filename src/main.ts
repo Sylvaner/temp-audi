@@ -25,7 +25,7 @@ watch(
   (newLocale) => {
     i18n.global.locale.value = newLocale
   },
-  { immediate: true }
+  { immediate: true },
 )
 
 // Initialiser la langue automatiquement

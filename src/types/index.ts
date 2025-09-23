@@ -4,7 +4,6 @@
 
 // Types de base
 export * from './geolocation'
-export * from './audio'
 export * from './map'
 export * from './data'
 export * from './common'

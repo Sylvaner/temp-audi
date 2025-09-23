@@ -6,17 +6,13 @@ import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import type { Position } from '@/types'
 import dataJson from '@/data/data.json'
-import { useGeolocationManager } from '@/composables/useGeolocationManager'
-import { useGeolocationCalculator } from '@/composables/useGeolocationCalculator'
+import { useGeolocationManager, useGeolocationCalculator } from '@/composables/useGeolocation'
 
-// Types pour la configuration géolocalisation
-interface GeolocationStoreConfig {
+// Type simplifié pour la configuration géolocalisation
+type GeolocationConfig = {
   siteName: Record<string, string>
   map: {
-    center: {
-      latitude: number
-      longitude: number
-    }
+    center: Position
     zoom: number
     goToInitialUserLocation?: {
       enable: boolean
@@ -30,7 +26,7 @@ interface GeolocationStoreConfig {
 
 export const useGeolocationStore = defineStore('geolocation', () => {
   // Configuration depuis data.json
-  const config = dataJson.config as GeolocationStoreConfig
+  const config = dataJson.config as GeolocationConfig
 
   // Initialiser depuis localStorage
   const getStoredPermissionStatus = (): 'unknown' | 'granted' | 'denied' | 'requesting' => {
