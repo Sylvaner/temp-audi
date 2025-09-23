@@ -36,7 +36,8 @@ export const useLanguageStore = defineStore('language', () => {
       targetLanguage = detectBrowserLanguage()
     }
 
-    setLanguage(targetLanguage)
+    currentLocale.value = targetLanguage
+    localStorage.setItem('preferred-language', targetLanguage)
   }
 
   function getLocalizedContent(place: Place) {
