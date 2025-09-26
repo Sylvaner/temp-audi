@@ -30,6 +30,14 @@ const router = createRouter({
       component: MapIntroView,
     },
   ],
+  scrollBehavior(to, from, savedPosition) {
+    // Si il y a une position sauvegardée (ex: bouton retour du navigateur), l'utiliser
+    if (savedPosition) {
+      return savedPosition
+    }
+    // Sinon, toujours remonter en haut de la page instantanément
+    return { top: 0 }
+  },
 })
 
 export default router

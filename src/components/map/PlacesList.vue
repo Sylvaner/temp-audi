@@ -16,26 +16,6 @@
       <div class="places-header">
         <h3 class="title is-5">{{ t('map.places.title') }}</h3>
         <div class="places-settings">
-          <button
-            class="button is-small"
-            :class="{
-              'is-theme-success': geolocationStore.moveToUserLocation,
-              'is-theme-light': !geolocationStore.moveToUserLocation,
-            }"
-            @click="toggleAutoCenter"
-            :title="
-              geolocationStore.moveToUserLocation
-                ? t('map.settings.autoCenterEnabled')
-                : t('map.settings.autoCenterDisabled')
-            "
-          >
-            <span class="icon is-small">
-              <i
-                class="fas"
-                :class="geolocationStore.moveToUserLocation ? 'fa-crosshairs' : 'fa-map'"
-              ></i>
-            </span>
-          </button>
         </div>
       </div>
 
@@ -74,7 +54,6 @@
 import { ref, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useLanguageStore } from '@/stores/language'
-import { useGeolocationStore } from '@/stores/geolocation'
 import { useAudioStore } from '@/stores/audio'
 import type { Place } from '@/types'
 import data from '@/data/data.json'
@@ -82,7 +61,6 @@ import data from '@/data/data.json'
 // Composables
 const { t } = useI18n()
 const languageStore = useLanguageStore()
-const geolocationStore = useGeolocationStore()
 const audioStore = useAudioStore()
 
 // État local
@@ -114,10 +92,6 @@ function goToPlace(place: Place) {
   // Émettre l'objet Place complet au lieu d'une simple Position
   emit('goToPlace', place)
   isOpen.value = false // Fermer la liste après sélection
-}
-
-function toggleAutoCenter() {
-  geolocationStore.toggleMoveToUserLocation()
 }
 
 function getDownloadState(place: Place) {

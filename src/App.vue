@@ -32,6 +32,18 @@ watch(
   { immediate: true },
 )
 
+// Forcer le scroll au top lors du changement de route (instantané)
+watch(
+  () => route.path,
+  () => {
+    const mainContent = document.querySelector('.main-content')
+    if (mainContent) {
+      mainContent.scrollTop = 0
+    }
+    window.scrollTo(0, 0)
+  }
+)
+
 onMounted(() => {
   languageStore.initializeLanguage()
 })
