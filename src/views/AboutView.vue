@@ -103,9 +103,22 @@
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { onMounted } from 'vue'
+
+// Assurer que la vue démarre en haut
+onMounted(() => {
+  window.scrollTo(0, 0)
+})
+</script>
 
 <style scoped>
+.about-view {
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: 100%;
+}
+
 /* Hero personnalisé avec image de fond */
 .custom-hero {
   background-image:

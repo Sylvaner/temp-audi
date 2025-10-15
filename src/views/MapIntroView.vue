@@ -99,7 +99,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useConfig } from '@/composables/useConfig'
 import LanguageSelector from '@/components/ui/LanguageSelector.vue'
@@ -108,6 +108,11 @@ const router = useRouter()
 const { markerStyle } = useConfig()
 
 const currentStep = ref(1)
+
+// Assurer que la vue démarre en haut
+onMounted(() => {
+  window.scrollTo(0, 0)
+})
 
 const progressPercentage = computed(() => {
   return ((currentStep.value - 1) / 3) * 100
@@ -134,6 +139,12 @@ const startExploring = () => {
 </script>
 
 <style scoped>
+/* Modal plein écran avec scroll */
+.modal {
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
 /* Modal & animations avec thème automne */
 .modal-card {
   max-width: 600px;

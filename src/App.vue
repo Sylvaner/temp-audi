@@ -1,35 +1,14 @@
 <template>
   <div id="app">
     <AppNavigation />
-    <main class="main-content" :class="{ scrollable: isScrollableRoute }">
+    <main class="main-content">
       <RouterView />
     </main>
   </div>
 </template>
 
 <script setup lang="ts">
-import { watch, computed } from 'vue'
-import { useRoute } from 'vue-router'
 import AppNavigation from '@/components/navigation/AppNavigation.vue'
-
-const route = useRoute()
-
-// Routes qui ont besoin de scroll
-const isScrollableRoute = computed(() => {
-  return ['about', 'map-intro'].includes(route.name as string)
-})
-
-// Forcer le scroll au top lors du changement de route (instantané)
-watch(
-  () => route.path,
-  () => {
-    const mainContent = document.querySelector('.main-content')
-    if (mainContent) {
-      mainContent.scrollTop = 0
-    }
-    window.scrollTo(0, 0)
-  }
-)
 </script>
 
 <style>
@@ -83,11 +62,6 @@ body {
   flex: 1;
   overflow: hidden;
   position: relative;
-}
-
-.main-content.scrollable {
-  overflow-y: auto;
-  overflow-x: hidden;
 }
 
 /* Responsive */
