@@ -8,29 +8,16 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, watch, computed } from 'vue'
+import { watch, computed } from 'vue'
 import { useRoute } from 'vue-router'
 import AppNavigation from '@/components/navigation/AppNavigation.vue'
-import { useLanguageStore } from '@/stores/language'
-import { useConfig } from '@/composables/useConfig'
 
-const languageStore = useLanguageStore()
-const { siteName } = useConfig()
 const route = useRoute()
 
 // Routes qui ont besoin de scroll
 const isScrollableRoute = computed(() => {
   return ['about', 'map-intro'].includes(route.name as string)
 })
-
-// Traduction du titre de la page
-watch(
-  siteName,
-  (newSiteName) => {
-    document.title = `${newSiteName} - Audio Guide`
-  },
-  { immediate: true },
-)
 
 // Forcer le scroll au top lors du changement de route (instantané)
 watch(
@@ -43,10 +30,6 @@ watch(
     window.scrollTo(0, 0)
   }
 )
-
-onMounted(() => {
-  languageStore.initializeLanguage()
-})
 </script>
 
 <style>

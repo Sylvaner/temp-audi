@@ -3,6 +3,7 @@ import { createPinia } from 'pinia'
 import { createAppI18n } from '@/i18n'
 import App from './App.vue'
 import router from './router'
+import { useConfig } from '@/composables/useConfig'
 import { useLanguageStore } from '@/stores/language'
 import { watch } from 'vue'
 import '@/styles/variables.css'
@@ -16,10 +17,10 @@ app.use(pinia)
 app.use(router)
 app.use(i18n)
 
-// Synchroniser le store de langue avec vue-i18n
-const languageStore = useLanguageStore()
+const { siteName } = useConfig()
 
-// Watcher pour synchroniser les changements de langue
+// Synchronisation globale de la langue
+const languageStore = useLanguageStore()
 watch(
   () => languageStore.currentLocale,
   (newLocale) => {
@@ -27,8 +28,15 @@ watch(
   },
   { immediate: true },
 )
+// Traduction du titre de la page
+watch(
+  siteName,
+  (newSiteName) => {
+    document.title = newSiteName
+  },
+  { immediate: true },
+)
 
-// Initialiser la langue automatiquement
 languageStore.initializeLanguage()
 
 app.mount('#app')
