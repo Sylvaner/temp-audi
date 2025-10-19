@@ -214,15 +214,6 @@ footer .button.is-primary:hover {
   .modal-card {
     width: 95vw;
   }
-  .steps {
-    min-width: 150px;
-  }
-  .field.is-grouped {
-    flex-direction: column;
-  }
-  .field.is-grouped .control {
-    width: 100%;
-  }
 }
 
 .user-location-icon {

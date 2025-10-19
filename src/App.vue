@@ -18,30 +18,10 @@ import AppNavigation from '@/components/navigation/AppNavigation.vue'
 @import 'bulma/css/bulma.min.css';
 @import '@fortawesome/fontawesome-free/css/all.min.css';
 
-/* Améliorations générales du thème */
-.hero.is-primary {
-  background: linear-gradient(135deg, var(--color-primary), var(--color-secondary)) !important;
-}
-
-.hero.is-info {
-  background: linear-gradient(135deg, var(--color-secondary), var(--color-warm)) !important;
-}
-
 /* Animations douces */
 .button,
-.card,
 .notification {
   transition: all var(--transition-normal);
-}
-
-/* Amélioration des ombres */
-.card {
-  box-shadow: var(--shadow-medium) !important;
-}
-
-.card:hover {
-  box-shadow: var(--shadow-large) !important;
-  transform: translateY(-2px);
 }
 
 html,

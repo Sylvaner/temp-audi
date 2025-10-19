@@ -113,6 +113,10 @@ onMounted(() => {
 </script>
 
 <style scoped>
+.hero.is-primary {
+  background: linear-gradient(135deg, var(--color-primary), var(--color-secondary)) !important;
+}
+
 .about-view {
   overflow-y: auto;
   overflow-x: hidden;
