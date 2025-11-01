@@ -110,7 +110,6 @@ export const useAudioStore = defineStore('audio', () => {
       attachAudioEventHandlers(currentAudio.value, {
         ...eventHandlers,
         onCanPlay: () => {
-          console.log('Audio can play:', audioFile)
           eventHandlers.onCanPlay()
           updateAudioDuration()
         },
@@ -119,27 +118,14 @@ export const useAudioStore = defineStore('audio', () => {
           updateAudioCurrentTime()
         },
         onPause: () => {
-          console.log('Audio paused:', audioFile, 'at', currentAudio.value?.currentTime)
           eventHandlers.onPause()
         },
         onEnded: () => {
-          console.log('Audio ended:', audioFile)
           eventHandlers.onEnded()
         },
       })
 
-      // Événements supplémentaires pour diagnostic
-      currentAudio.value.addEventListener('stalled', () => {
-        console.warn('Audio stalled:', audioFile)
-      })
-
-      currentAudio.value.addEventListener('suspend', () => {
-        console.warn('Audio suspended:', audioFile)
-      })
-
-      currentAudio.value.addEventListener('abort', () => {
-        console.warn('Audio aborted:', audioFile)
-      })
+      // Événements supplémentaires pour diagnostic retirés (logs non essentiels)
 
       // Attendre que l'audio soit prêt avant de jouer
       if (currentAudio.value.readyState >= 2) {
@@ -167,7 +153,6 @@ export const useAudioStore = defineStore('audio', () => {
         await currentAudio.value.play()
       }
 
-      console.log('Audio started playing:', audioFile)
       return true
     } catch (err) {
       console.error('Erreur lors du chargement audio:', err)
@@ -189,20 +174,16 @@ export const useAudioStore = defineStore('audio', () => {
       try {
         // Vérifier que l'audio n'est pas corrompu
         if (currentAudio.value.readyState === 0) {
-          console.warn('Audio needs to reload')
           currentAudio.value.load()
         }
 
         await currentAudio.value.play()
-        console.log('Audio resumed at:', currentAudio.value.currentTime)
       } catch (err) {
         console.error('Erreur lors de la reprise audio:', err)
         error.value = 'Impossible de reprendre la lecture'
 
         // Tentative de récupération
         if (currentPlace.value) {
-          const audioFile = currentAudio.value?.src?.split('/').pop() || ''
-          console.log('Tentative de rechargement:', audioFile)
           // Optionnel: relancer la lecture depuis le début
         }
       }

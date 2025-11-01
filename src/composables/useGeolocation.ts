@@ -131,11 +131,10 @@ export function useGeolocationManager(options: GeolocationOptions): GeolocationM
       return false
     }
 
-    console.log('Démarrage du suivi de géolocalisation...')
+
 
     watchId = navigator.geolocation.watchPosition(
       (position) => {
-        console.log('Nouvelle position reçue:', position.coords)
         const convertedPosition = convertPosition(position)
         onPositionUpdate(convertedPosition)
       },
@@ -152,7 +151,7 @@ export function useGeolocationManager(options: GeolocationOptions): GeolocationM
       WATCH_OPTIONS,
     )
 
-    console.log('Suivi de géolocalisation démarré')
+
     return true
   }
 
@@ -209,12 +208,8 @@ export function useGeolocationCalculator(
   const isUserInArea = computed(() => {
     if (!userPosition.value) return false
 
-    const distance = distanceToCenter.value
-    console.log('Distance to initial center:', distance)
-    console.log('Threshold:', threshold)
-    console.log('Is user in initial area:', distance <= threshold)
-
-    return distance <= threshold
+  const distance = distanceToCenter.value
+  return distance <= threshold
   })
 
   /**

@@ -6,21 +6,6 @@ import type { Place, MapConfig } from './map'
 import type { MarkersStyleConfig } from './common'
 
 /**
- * Configuration des marqueurs (version legacy - à migrer)
- * @deprecated Utiliser MarkersStyleConfig
- */
-export interface MarkersConfig {
-  /** Couleur par défaut des marqueurs */
-  defaultColor: string
-  /** Icône pour les lieux */
-  defaultPlaceIcon: string
-  /** Icône pour la position de l'utilisateur */
-  defaultUserLocationIcon: string
-  /** Couleur pour la position de l'utilisateur */
-  defaultUserLocationColor: string
-}
-
-/**
  * Configuration de l'application
  */
 export interface AppConfig {
@@ -39,7 +24,7 @@ export interface AppConfig {
   /** Langues disponibles */
   availableLanguages: string[]
   /** Configuration des marqueurs */
-  markers?: MarkersConfig | MarkersStyleConfig
+  markers?: MarkersStyleConfig
 }
 
 /**

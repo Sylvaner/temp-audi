@@ -70,7 +70,6 @@ export function useMapGeolocation(leafletMapRef: LeafletMapRef) {
           centerOnUser()
         }
 
-        console.log('Centrage initial effectué après acceptation de la géolocalisation')
       }
     } else {
       // Afficher le modal d'erreur

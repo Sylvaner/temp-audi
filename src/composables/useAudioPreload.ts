@@ -145,7 +145,6 @@ export function useAudioPreload(maxConcurrentDownloads = 5): AudioPreloadManager
         }
       })
 
-    console.log(`Démarrage du prétéléchargement pour ${language}:`, audioFiles.length, 'fichiers')
     startPreloading(audioFiles)
   }
 

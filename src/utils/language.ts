@@ -43,20 +43,6 @@ export function getPlaceContent(
 }
 
 /**
- * Vérifie si un lieu a du contenu dans une langue donnée
- */
-export function hasLanguage(place: Place, language: string): boolean {
-  return !!place.content[language]
-}
-
-/**
- * Récupère toutes les langues disponibles pour un lieu
- */
-export function getAvailableLanguages(place: Place): string[] {
-  return Object.keys(place.content)
-}
-
-/**
  * Détecte la meilleure langue à utiliser en fonction des préférences du navigateur
  * @returns Le code de langue détecté ou la langue par défaut
  */
@@ -105,27 +91,6 @@ export function getDefaultLanguage(): string {
  */
 export function getAppAvailableLanguages(): string[] {
   return config.availableLanguages
-}
-
-/**
- * Normalise un code de langue (retire les spécificités régionales si nécessaire)
- * @param languageCode Le code de langue à normaliser
- * @returns Le code de langue normalisé
- */
-export function normalizeLanguageCode(languageCode: string): string {
-  // Si la langue complète est supportée, la retourner
-  if (isLanguageSupported(languageCode)) {
-    return languageCode
-  }
-
-  // Sinon, essayer juste le code de base
-  const baseCode = languageCode.split('-')[0]
-  if (isLanguageSupported(baseCode)) {
-    return baseCode
-  }
-
-  // Retourner la langue par défaut si rien ne correspond
-  return getDefaultLanguage()
 }
 
 /**

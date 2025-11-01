@@ -74,17 +74,6 @@ watch(currentLanguage, (newLanguage) => {
   audioStore.startPreloadingForLanguage(places, newLanguage)
 })
 
-// Watchers
-watch(
-  () => props.userPosition,
-  (newPosition) => {
-    if (newPosition) {
-      updateUserPosition(newPosition)
-    }
-  },
-  { deep: true },
-)
-
 // Lifecycle hooks
 onMounted(() => {
   initializeMap()

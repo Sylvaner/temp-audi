@@ -2,7 +2,7 @@ import { ref } from 'vue'
 import { useAudioStore } from '@/stores/audio'
 import { useLanguageStore } from '@/stores/language'
 import type { Place } from '@/types'
-import type { LeafletMapRef, PlacesData, MapClickEvent } from '@/types/map'
+import type { LeafletMapRef, PlacesData } from '@/types/map'
 
 /**
  * Composable simplifié pour la gestion des lieux sur la carte
@@ -27,7 +27,6 @@ export function useMapPlaces(leafletMapRef: LeafletMapRef, data: PlacesData) {
    * Gère le clic sur un lieu (marqueur)
    */
   const onPlaceDetails = (place: Place) => {
-    console.log('Détails du lieu demandés:', place)
     selectedPlace.value = place
     // Ne pas déclencher de zoom automatique lors du clic sur marker
   }
@@ -52,8 +51,7 @@ export function useMapPlaces(leafletMapRef: LeafletMapRef, data: PlacesData) {
   /**
    * Gère le clic général sur la carte
    */
-  const onMapClick = (event: MapClickEvent) => {
-    console.log('Clic sur la carte:', event.latlng)
+  const onMapClick = () => {
     // Fermer le popup si ouvert lors du clic sur la carte
     if (selectedPlace.value) {
       closePopup()
