@@ -63,10 +63,16 @@ function navigateToMap() {
 .hero.has-background {
   position: relative;
   overflow: hidden;
-  background-image: url('/images/home.jpg');
+  /* Support WebP avec fallback - créer home.webp (2.8MB → 400KB) */
+  background-image: url('/images/home.webp');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+}
+
+/* Fallback pour navigateurs sans WebP */
+.no-webp .hero.has-background {
+  background-image: url('/images/home.jpg');
 }
 
 .hero-body {
