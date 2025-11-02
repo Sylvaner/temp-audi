@@ -14,7 +14,7 @@ export type GeolocationOptions = {
   onPositionUpdate: (position: Position) => void
   onPermissionChange: (status: 'granted' | 'denied') => void
   onError: (error: string) => void
-  
+
   // Configuration pour les calculs géographiques
   mapCenter: Position
   threshold: number
@@ -32,7 +32,7 @@ export type Geolocation = {
   stopWatching: () => void
   getCurrentPosition: () => Promise<Position | null>
   isAvailable: boolean
-  
+
   // Calculs géographiques
   distanceToCenter: Ref<number>
   isUserInArea: Ref<boolean>
@@ -57,7 +57,7 @@ const WATCH_OPTIONS: PositionOptions = {
 /**
  * Composable unifié de géolocalisation
  * Gère à la fois les permissions, le suivi de position et les calculs géographiques
- * 
+ *
  * @param userPosition - Référence réactive vers la position de l'utilisateur
  * @param options - Configuration du composable
  * @returns Interface complète de géolocalisation
@@ -66,9 +66,9 @@ export function useGeolocation(
   userPosition: Ref<Position | null>,
   options: GeolocationOptions,
 ): Geolocation {
-  const { 
-    onPositionUpdate, 
-    onPermissionChange, 
+  const {
+    onPositionUpdate,
+    onPermissionChange,
     onError,
     mapCenter,
     threshold,
@@ -79,7 +79,7 @@ export function useGeolocation(
   // ============================================================================
   // PARTIE 1 : GESTION DES PERMISSIONS ET DU SUIVI
   // ============================================================================
-  
+
   let watchId: number | null = null
   const isAvailable = 'geolocation' in navigator
 
@@ -205,7 +205,7 @@ export function useGeolocation(
    * Calcule la distance euclidienne entre deux points géographiques (en degrés)
    * NOTE: Il s'agit d'une approximation simplifiée, pas d'une vraie distance géographique.
    * Pour de petites distances, cela suffit. Pour plus de précision, utiliser la formule de Haversine.
-   * 
+   *
    * @param lat1 - Latitude du premier point
    * @param lon1 - Longitude du premier point
    * @param lat2 - Latitude du second point
@@ -266,7 +266,7 @@ export function useGeolocation(
     stopWatching,
     getCurrentPosition,
     isAvailable,
-    
+
     // Calculs géographiques
     distanceToCenter,
     isUserInArea,

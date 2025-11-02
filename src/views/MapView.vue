@@ -53,7 +53,7 @@
 
 <script setup lang="ts">
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 import LeafletMap from '@/components/map/LeafletMap.vue'
 import PlacesList from '@/components/map/PlacesList.vue'
 import PlacePopup from '@/components/map/PlacePopup.vue'
@@ -61,13 +61,14 @@ import GeolocationButton from '@/components/ui/GeolocationButton.vue'
 import GeolocationModal from '@/components/ui/GeolocationModal.vue'
 import { useGeolocationStore } from '@/stores/geolocation'
 import { useAudioStore } from '@/stores/audio'
-import { useMapGeolocation } from '@/composables/useMapGeolocation'
-import { useMapPlaces } from '@/composables/useMapPlaces'
-import type { Position } from '@/types'
+import { useLanguageStore } from '@/stores/language'
+import type { Position, Place } from '@/types'
 import data from '@/data/data.json'
 
 const geolocationStore = useGeolocationStore()
 const audioStore = useAudioStore()
+const languageStore = useLanguageStore()
+
 const mapCenter = ref<Position>({
   latitude: data.config.map.center.latitude,
   longitude: data.config.map.center.longitude,
@@ -76,19 +77,144 @@ const mapZoom = ref(data.config.map.zoom)
 const mapInstance = ref<any>(null)
 const leafletMapRef = ref<any>(null)
 
-const {
-  showGeolocationModal,
-  modalType,
-  requestInitialGeolocation,
-  centerOnUser,
-  handleAllowGeolocation,
-  handleDenyGeolocation,
-  handleRetryGeolocation,
-} = useMapGeolocation(leafletMapRef)
+// ========================================
+// Geolocation Modal Logic (ex-useMapGeolocation)
+// ========================================
+const showGeolocationModal = ref(false)
+const hasRequestedGeolocation = ref(false)
+const hasInitialCentering = ref(false)
 
-const { selectedPlace, startAudioPreloading, onPlaceDetails, closePopup, goToPlace, onMapClick } =
-  useMapPlaces(leafletMapRef, data)
+const modalType = computed(() =>
+  geolocationStore.permissionStatus === 'denied' ? 'denied' : 'request',
+)
 
+/**
+ * Demande automatiquement la géolocalisation au chargement de la carte
+ */
+const requestInitialGeolocation = () => {
+  if (geolocationStore.permissionStatus === 'unknown' && !hasRequestedGeolocation.value) {
+    hasRequestedGeolocation.value = true
+    setTimeout(() => {
+      showGeolocationModal.value = true
+    }, 1000)
+  }
+}
+
+/**
+ * Centre la carte sur la position utilisateur
+ */
+const centerOnUser = () => {
+  if (leafletMapRef.value && geolocationStore.userPosition) {
+    leafletMapRef.value.centerOnUser()
+  }
+}
+
+/**
+ * Centre sur l'utilisateur avec zoom augmenté
+ */
+const centerOnUserWithIncreasedZoom = () => {
+  if (leafletMapRef.value && geolocationStore.userPosition) {
+    leafletMapRef.value.setView(geolocationStore.userPosition, 18)
+  }
+}
+
+/**
+ * Gère l'autorisation de géolocalisation par l'utilisateur
+ */
+const handleAllowGeolocation = async () => {
+  showGeolocationModal.value = false
+  const success = await geolocationStore.requestPermission()
+
+  if (success) {
+    geolocationStore.startWatching()
+
+    // Centrer seulement si c'est le premier lancement et qu'on a déjà une position
+    if (!hasInitialCentering.value && geolocationStore.userPosition) {
+      hasInitialCentering.value = true
+
+      if (geolocationStore.shouldCenterOnUser) {
+        centerOnUserWithIncreasedZoom()
+      } else if (geolocationStore.moveToUserLocation) {
+        centerOnUser()
+      }
+    }
+  } else {
+    // Afficher le modal d'erreur
+    showGeolocationModal.value = true
+  }
+}
+
+/**
+ * Gère le refus de géolocalisation par l'utilisateur
+ */
+const handleDenyGeolocation = () => {
+  showGeolocationModal.value = false
+  // L'utilisateur a choisi de continuer sans géolocalisation
+}
+
+/**
+ * Gère la tentative de réessai de géolocalisation
+ */
+const handleRetryGeolocation = async () => {
+  const success = await geolocationStore.requestPermission()
+  if (success) {
+    geolocationStore.startWatching()
+    showGeolocationModal.value = false
+  }
+  // Si échec, le modal reste ouvert pour permettre un autre essai
+}
+
+// ========================================
+// Places Logic (ex-useMapPlaces)
+// ========================================
+const selectedPlace = ref<Place | null>(null)
+
+/**
+ * Démarre le prétéléchargement des fichiers audio
+ */
+const startAudioPreloading = () => {
+  const currentLanguage = languageStore.currentLanguage?.code || 'fr'
+  audioStore.startPreloadingForLanguage(data.places, currentLanguage)
+}
+
+/**
+ * Gère le clic sur un lieu (marqueur)
+ */
+const onPlaceDetails = (place: Place) => {
+  selectedPlace.value = place
+  // Ne pas déclencher de zoom automatique lors du clic sur marker
+}
+
+/**
+ * Ferme le popup de lieu
+ */
+const closePopup = () => {
+  selectedPlace.value = null
+}
+
+/**
+ * Navigue vers un lieu spécifique (zoom uniquement, sans ouvrir le popup)
+ */
+const goToPlace = (place: Place) => {
+  if (leafletMapRef.value) {
+    leafletMapRef.value.setView({ latitude: place.latitude, longitude: place.longitude }, 18)
+    // Ne pas ouvrir le popup automatiquement, juste zoomer sur le lieu
+  }
+}
+
+/**
+ * Gère le clic général sur la carte
+ */
+const onMapClick = () => {
+  // Fermer le popup si ouvert lors du clic sur la carte
+  if (selectedPlace.value) {
+    closePopup()
+  }
+}
+
+// ========================================
+// Map Ready & Lifecycle
+// ========================================
 function onMapReady(map: any) {
   mapInstance.value = map
   requestInitialGeolocation()
