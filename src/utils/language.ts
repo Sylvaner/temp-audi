@@ -95,6 +95,7 @@ export function getAppAvailableLanguages(): string[] {
 
 /**
  * Interface pour les objets de langue avec métadonnées
+ * NOTE: Exportée pour utilisation dans i18n/index.ts
  */
 export interface LanguageInfo {
   code: string
@@ -104,6 +105,7 @@ export interface LanguageInfo {
 
 /**
  * Métadonnées des langues supportées - Top 20 des langues les plus répandues
+ * NOTE: Privé à ce module, utilisé par getAvailableLanguagesWithMetadata
  */
 const languageMetadata: Record<string, Omit<LanguageInfo, 'code'>> = {
   // Langues européennes
