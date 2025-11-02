@@ -6,7 +6,7 @@ import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import type { Position } from '@/types'
 import dataJson from '@/data/data.json'
-import { useGeolocationManager, useGeolocationCalculator } from '@/composables/useGeolocation'
+import { useGeolocation } from '@/composables/useGeolocation'
 
 // Type simplifié pour la configuration géolocalisation
 type GeolocationConfig = {
@@ -52,8 +52,8 @@ export const useGeolocationStore = defineStore('geolocation', () => {
   const moveToUserLocation = ref(getStoredMoveToUserLocation()) // Option pour centrer automatiquement sur l'utilisateur
   const hasTriggeredInitialCentering = ref(false) // Pour éviter de centrer plusieurs fois
 
-  // Gestionnaire de géolocalisation (composable)
-  const geolocationManager = useGeolocationManager({
+  // Composable de géolocalisation unifié (remplace geolocationManager + geoCalculator)
+  const geolocation = useGeolocation(userPosition, {
     onPositionUpdate: (position: Position) => {
       userPosition.value = position
       if (!hasTriggeredInitialCentering.value) {
@@ -67,11 +67,6 @@ export const useGeolocationStore = defineStore('geolocation', () => {
     onError: (error: string) => {
       lastError.value = error
     },
-  })
-
-  // Calculateur géographique (composable)
-  const geoCalculator = useGeolocationCalculator({
-    userPosition,
     mapCenter: config.map.center,
     threshold: config.map.goToInitialUserLocation?.threshold || 0.08,
     increaseZoom: config.map.goToInitialUserLocation?.increaseZoom || 1,
@@ -81,26 +76,26 @@ export const useGeolocationStore = defineStore('geolocation', () => {
   // Getters
   const hasPermission = computed(() => permissionStatus.value === 'granted')
   const hasPosition = computed(() => userPosition.value !== null)
-  const isLocationAvailable = computed(() => geolocationManager.isAvailable)
+  const isLocationAvailable = computed(() => geolocation.isAvailable)
 
-  // Getters géographiques (délégués au calculateur)
+  // Getters géographiques (délégués au composable)
   const isUserInInitialArea = computed(() => {
-    return config.map.goToInitialUserLocation?.enable && geoCalculator.isUserInArea.value
+    return config.map.goToInitialUserLocation?.enable && geolocation.isUserInArea.value
   })
 
   const shouldCenterOnUser = computed(() => {
     return (
       config.map.goToInitialUserLocation?.enable &&
-      geoCalculator.shouldCenterOnUser.value &&
+      geolocation.shouldCenterOnUser.value &&
       !hasTriggeredInitialCentering.value
     )
   })
 
-  const getIncreasedZoom = computed(() => geoCalculator.increasedZoom.value)
+  const getIncreasedZoom = computed(() => geolocation.increasedZoom.value)
 
-  // Actions (délégées aux composables)
+  // Actions (délégées au composable)
   async function requestPermission(): Promise<boolean> {
-    if (!geolocationManager.isAvailable) {
+    if (!geolocation.isAvailable) {
       lastError.value = 'Géolocalisation non disponible sur ce navigateur'
       return false
     }
@@ -108,20 +103,20 @@ export const useGeolocationStore = defineStore('geolocation', () => {
     permissionStatus.value = 'requesting'
     lastError.value = null
 
-    return await geolocationManager.requestPermission()
+    return await geolocation.requestPermission()
   }
 
   function startWatching() {
     if ((!hasPermission.value && permissionStatus.value !== 'granted') || isWatching.value) return
 
-    const success = geolocationManager.startWatching()
+    const success = geolocation.startWatching()
     if (success) {
       isWatching.value = true
     }
   }
 
   function stopWatching() {
-    geolocationManager.stopWatching()
+    geolocation.stopWatching()
     isWatching.value = false
   }
 
@@ -141,8 +136,8 @@ export const useGeolocationStore = defineStore('geolocation', () => {
 
   async function initializeGeolocation() {
     // Si on a déjà la permission, essayer de récupérer la position
-    if (permissionStatus.value === 'granted' && geolocationManager.isAvailable) {
-      const position = await geolocationManager.getCurrentPosition()
+    if (permissionStatus.value === 'granted' && geolocation.isAvailable) {
+      const position = await geolocation.getCurrentPosition()
       if (position) {
         userPosition.value = position
         // Démarrer le suivi automatiquement si on a la permission

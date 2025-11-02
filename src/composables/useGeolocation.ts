@@ -1,39 +1,39 @@
 /**
- * Composable fusionné pour la gestion de la géolocalisation
- * Combine les fonctionnalités de gestion et de calcul géographique
+ * Composable unifié pour la gestion complète de la géolocalisation
+ * Combine la gestion des permissions, le suivi de position et les calculs géographiques
  */
 
 import { computed, type Ref } from 'vue'
+import type { Position } from '@/types/geolocation'
 
-// Types simplifiés
-export type Position = {
-  latitude: number
-  longitude: number
-}
-
+/**
+ * Options pour le composable de géolocalisation unifié
+ */
 export type GeolocationOptions = {
+  // Callbacks pour les événements de position
   onPositionUpdate: (position: Position) => void
   onPermissionChange: (status: 'granted' | 'denied') => void
   onError: (error: string) => void
-}
-
-export type GeolocationCalculatorOptions = {
-  userPosition: Ref<Position | null>
+  
+  // Configuration pour les calculs géographiques
   mapCenter: Position
   threshold: number
   increaseZoom: number
   baseZoom: number
 }
 
-export type GeolocationManager = {
+/**
+ * Interface du composable de géolocalisation unifié
+ */
+export type Geolocation = {
+  // Gestion des permissions et du suivi
   requestPermission: () => Promise<boolean>
   startWatching: () => boolean
   stopWatching: () => void
   getCurrentPosition: () => Promise<Position | null>
   isAvailable: boolean
-}
-
-export type GeolocationCalculator = {
+  
+  // Calculs géographiques
   distanceToCenter: Ref<number>
   isUserInArea: Ref<boolean>
   shouldCenterOnUser: Ref<boolean>
@@ -41,7 +41,7 @@ export type GeolocationCalculator = {
   calculateDistance: (lat1: number, lon1: number, lat2: number, lon2: number) => number
 }
 
-// Configuration par défaut
+// Configuration par défaut pour les requêtes de géolocalisation
 const DEFAULT_OPTIONS: PositionOptions = {
   enableHighAccuracy: true,
   timeout: 10000,
@@ -55,14 +55,37 @@ const WATCH_OPTIONS: PositionOptions = {
 }
 
 /**
- * Gestionnaire de géolocalisation (permissions et requêtes)
+ * Composable unifié de géolocalisation
+ * Gère à la fois les permissions, le suivi de position et les calculs géographiques
+ * 
+ * @param userPosition - Référence réactive vers la position de l'utilisateur
+ * @param options - Configuration du composable
+ * @returns Interface complète de géolocalisation
  */
-export function useGeolocationManager(options: GeolocationOptions): GeolocationManager {
-  const { onPositionUpdate, onPermissionChange, onError } = options
-  let watchId: number | null = null
+export function useGeolocation(
+  userPosition: Ref<Position | null>,
+  options: GeolocationOptions,
+): Geolocation {
+  const { 
+    onPositionUpdate, 
+    onPermissionChange, 
+    onError,
+    mapCenter,
+    threshold,
+    increaseZoom,
+    baseZoom,
+  } = options
 
+  // ============================================================================
+  // PARTIE 1 : GESTION DES PERMISSIONS ET DU SUIVI
+  // ============================================================================
+  
+  let watchId: number | null = null
   const isAvailable = 'geolocation' in navigator
 
+  /**
+   * Convertit une erreur de géolocalisation en message lisible
+   */
   const convertGeolocationError = (error: GeolocationPositionError): string => {
     switch (error.code) {
       case error.PERMISSION_DENIED:
@@ -76,11 +99,17 @@ export function useGeolocationManager(options: GeolocationOptions): GeolocationM
     }
   }
 
+  /**
+   * Convertit une position de l'API de géolocalisation en notre format
+   */
   const convertPosition = (geoPosition: GeolocationPosition): Position => ({
     latitude: geoPosition.coords.latitude,
     longitude: geoPosition.coords.longitude,
   })
 
+  /**
+   * Demande la permission de géolocalisation et récupère la position
+   */
   const requestPermission = async (): Promise<boolean> => {
     if (!isAvailable) {
       onError('Géolocalisation non disponible sur ce navigateur')
@@ -105,6 +134,9 @@ export function useGeolocationManager(options: GeolocationOptions): GeolocationM
     })
   }
 
+  /**
+   * Récupère la position actuelle de l'utilisateur
+   */
   const getCurrentPosition = async (): Promise<Position | null> => {
     if (!isAvailable) {
       onError('Géolocalisation non disponible sur ce navigateur')
@@ -126,12 +158,13 @@ export function useGeolocationManager(options: GeolocationOptions): GeolocationM
     })
   }
 
+  /**
+   * Démarre le suivi de la position de l'utilisateur
+   */
   const startWatching = (): boolean => {
     if (!isAvailable || watchId !== null) {
       return false
     }
-
-
 
     watchId = navigator.geolocation.watchPosition(
       (position) => {
@@ -151,10 +184,12 @@ export function useGeolocationManager(options: GeolocationOptions): GeolocationM
       WATCH_OPTIONS,
     )
 
-
     return true
   }
 
+  /**
+   * Arrête le suivi de la position
+   */
   const stopWatching = (): void => {
     if (watchId !== null) {
       navigator.geolocation.clearWatch(watchId)
@@ -162,25 +197,20 @@ export function useGeolocationManager(options: GeolocationOptions): GeolocationM
     }
   }
 
-  return {
-    requestPermission,
-    startWatching,
-    stopWatching,
-    getCurrentPosition,
-    isAvailable,
-  }
-}
-
-/**
- * Calculateur géographique pour les distances et centrage
- */
-export function useGeolocationCalculator(
-  options: GeolocationCalculatorOptions,
-): GeolocationCalculator {
-  const { userPosition, mapCenter, threshold, increaseZoom, baseZoom } = options
+  // ============================================================================
+  // PARTIE 2 : CALCULS GÉOGRAPHIQUES
+  // ============================================================================
 
   /**
-   * Calcule la distance entre deux points géographiques (en degrés)
+   * Calcule la distance euclidienne entre deux points géographiques (en degrés)
+   * NOTE: Il s'agit d'une approximation simplifiée, pas d'une vraie distance géographique.
+   * Pour de petites distances, cela suffit. Pour plus de précision, utiliser la formule de Haversine.
+   * 
+   * @param lat1 - Latitude du premier point
+   * @param lon1 - Longitude du premier point
+   * @param lat2 - Latitude du second point
+   * @param lon2 - Longitude du second point
+   * @returns Distance approximative en degrés
    */
   const calculateDistance = (lat1: number, lon1: number, lat2: number, lon2: number): number => {
     const deltaLat = Math.abs(lat1 - lat2)
@@ -207,9 +237,8 @@ export function useGeolocationCalculator(
    */
   const isUserInArea = computed(() => {
     if (!userPosition.value) return false
-
-  const distance = distanceToCenter.value
-  return distance <= threshold
+    const distance = distanceToCenter.value
+    return distance <= threshold
   })
 
   /**
@@ -226,7 +255,19 @@ export function useGeolocationCalculator(
     return baseZoom + increaseZoom
   })
 
+  // ============================================================================
+  // RETOUR DE L'INTERFACE UNIFIÉE
+  // ============================================================================
+
   return {
+    // Gestion des permissions et du suivi
+    requestPermission,
+    startWatching,
+    stopWatching,
+    getCurrentPosition,
+    isAvailable,
+    
+    // Calculs géographiques
     distanceToCenter,
     isUserInArea,
     shouldCenterOnUser,
