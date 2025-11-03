@@ -155,3 +155,24 @@ html::-webkit-scrollbar-thumb:hover {
   min-height: 100vh;
   min-height: 100dvh;
 }
+
+/* === MARQUEURS LEAFLET === */
+
+/* Styles pour les icônes SVG dans les marqueurs */
+.place-marker-circle svg,
+.user-location-circle svg {
+  width: 20px;
+  height: 20px;
+  fill: white;
+  display: block;
+}
+
+.place-marker-circle,
+.user-location-circle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}

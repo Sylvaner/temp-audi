@@ -9,7 +9,13 @@ import { watch } from 'vue'
 import '@/styles/variables.css'
 import '@/styles/global.css'
 
+// Font Awesome
+import { FontAwesomeIcon } from '@/plugins/fontawesome'
+
 const app = createApp(App)
+
+// Enregistrer le composant FontAwesome globalement
+app.component('FontAwesomeIcon', FontAwesomeIcon)
 const pinia = createPinia()
 const i18n = createAppI18n()
 

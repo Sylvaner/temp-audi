@@ -80,7 +80,7 @@
               class="button is-white is-large is-centered custom-button-primary"
             >
               <span class="icon">
-                <i class="fas fa-map"></i>
+                <font-awesome-icon icon="map" />
               </span>
               <span>{{ $t('about.visit.exploreButton') }}</span>
             </router-link>
@@ -92,7 +92,7 @@
               class="button is-white is-outlined is-large is-centered custom-button-secondary"
             >
               <span class="icon">
-                <i class="fas fa-globe"></i>
+                <font-awesome-icon icon="globe" />
               </span>
               <span>{{ $t('about.visit.officialSiteButton') }}</span>
             </a>

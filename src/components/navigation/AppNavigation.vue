@@ -27,14 +27,14 @@
       <div class="navbar-start">
         <a href="#" class="navbar-item" @click.prevent="navigateToMap">
           <span class="icon">
-            <i class="fas fa-map"></i>
+            <font-awesome-icon icon="map" />
           </span>
           <span>{{ $t('navigation.map') }}</span>
         </a>
 
         <router-link to="/about" class="navbar-item" @click="closeMobileMenu">
           <span class="icon">
-            <i class="fas fa-info-circle"></i>
+            <font-awesome-icon icon="info-circle" />
           </span>
           <span>{{ $t('navigation.about') }}</span>
         </router-link>

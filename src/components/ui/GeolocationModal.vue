@@ -5,7 +5,7 @@
       <header class="modal-card-head">
         <p class="modal-card-title">
           <span class="icon">
-            <i class="fas fa-map-marker-alt"></i>
+            <font-awesome-icon icon="map-marker-alt" />
           </span>
           {{ $t('geolocation.permission.title') }}
         </p>
@@ -29,7 +29,7 @@
           <div class="notification is-warning">
             <p class="title is-5">
               <span class="icon">
-                <i class="fas fa-exclamation-triangle"></i>
+                <font-awesome-icon icon="exclamation-triangle" />
               </span>
               {{ $t('geolocation.denied.title') }}
             </p>
@@ -53,7 +53,7 @@
         <div v-if="type === 'request'" class="buttons">
           <button class="button is-primary" @click="allowGeolocation">
             <span class="icon">
-              <i class="fas fa-check"></i>
+              <font-awesome-icon icon="check" />
             </span>
             <span>{{ $t('geolocation.permission.allow') }}</span>
           </button>
@@ -65,7 +65,7 @@
         <div v-else-if="type === 'denied'" class="buttons">
           <button class="button is-primary" @click="retryGeolocation">
             <span class="icon">
-              <i class="fas fa-redo"></i>
+              <font-awesome-icon icon="redo" />
             </span>
             <span>{{ $t('geolocation.denied.retry') }}</span>
           </button>

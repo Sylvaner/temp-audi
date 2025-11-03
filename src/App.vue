@@ -16,7 +16,6 @@ import AppNavigation from '@/components/navigation/AppNavigation.vue'
 @import '@/styles/variables.css';
 @import '@/styles/global.css';
 @import 'bulma/css/bulma.min.css';
-@import '@fortawesome/fontawesome-free/css/all.min.css';
 
 /* Animations douces */
 .button,

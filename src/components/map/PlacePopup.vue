@@ -30,7 +30,7 @@
               :disabled="isLoading"
             >
               <span class="icon">
-                <i :class="isPlaying ? 'fas fa-pause' : 'fas fa-play'"></i>
+                <font-awesome-icon :icon="isPlaying ? 'pause' : 'play'" />
               </span>
             </button>
           </div>

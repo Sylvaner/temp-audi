@@ -78,6 +78,12 @@ The editor opens at [http://localhost:3001](http://localhost:3001) (or next avai
 - **Latitude/Longitude**: Coordinates (also editable by dragging marker on map)
 - **Color**: Custom marker color (defaults to config color if not set)
 - **Icon**: FontAwesome icon name (e.g., `fa-monument`, `fa-tower-observation`)
+  > **Note**: Only pre-registered icons are available. To add a new icon:
+  > 1. Find the icon name on [Font Awesome](https://fontawesome.com/search?o=r&m=free&s=solid)
+  > 2. Add the import in `src/plugins/fontawesome.ts` (e.g., `faNewIcon`)
+  > 3. Add it to the `library.add(...)` call
+  > 4. For the editor, also add it to `tools/editor.js`
+  > 5. Use the icon name with `fa-` prefix (e.g., `fa-new-icon`)
 - **Image file**: Image filename from `public/images/`
 - **Content per language**:
   - Title
@@ -195,6 +201,64 @@ Visit [http://localhost:5173](http://localhost:5173)
 ---
 
 ## Customization
+
+### Adding Font Awesome Icons
+
+The application uses Font Awesome SVG icons for optimal performance. Only pre-registered icons are loaded to minimize bundle size.
+
+#### Currently Available Icons
+
+The following icons are already registered and ready to use:
+- Navigation: `map`, `info-circle`, `chevron-left/right/up/down`, `angle-down`
+- Audio: `play`, `pause`, `stop`, `volume-up`, `headphones`
+- Actions: `check`, `redo`, `times`, `list`, `trash`, `copy`, `save`, `upload`, `cog`, `edit`, `plus`
+- Geolocation: `location-crosshairs`, `location-arrow`, `map-marker-alt`
+- States: `spinner`, `circle-notch`, `flag`, `globe`, `exclamation-triangle`
+- Markers: `building`, `seedling`, `basket-shopping`, `monument`, `person-walking`
+
+#### Adding a New Icon
+
+1. **Find the icon** on [Font Awesome Free Solid Icons](https://fontawesome.com/search?o=r&m=free&s=solid)
+   - Note the icon name (e.g., "tree" → `faTree`)
+
+2. **Update main app** - Edit `src/plugins/fontawesome.ts`:
+   ```typescript
+   import {
+     // ... existing imports
+     faTree, // Add your new icon
+   } from '@fortawesome/free-solid-svg-icons'
+
+   library.add(
+     // ... existing icons
+     faTree, // Add to library
+   )
+   ```
+
+3. **Update editor** (optional) - Edit `tools/editor.js`:
+   ```javascript
+   import {
+     // ... existing imports
+     faTree, // Add your new icon
+   } from '@fortawesome/free-solid-svg-icons'
+
+   library.add(
+     // ... existing icons
+     faTree, // Add to library
+   )
+   ```
+
+4. **Use the icon** in your data:
+   ```json
+   {
+     "markerIcon": "fa-tree"
+   }
+   ```
+   Or in Vue components:
+   ```vue
+   <font-awesome-icon icon="tree" />
+   ```
+
+> **Important**: The icon must be added to the library before it can be used. Using an unregistered icon will display a fallback marker icon.
 
 ### Modifying Views
 

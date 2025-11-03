@@ -7,7 +7,7 @@
       :title="isOpen ? 'Fermer la liste' : 'Voir les lieux'"
     >
       <span class="icon">
-        <i class="fas" :class="isOpen ? 'fa-times' : 'fa-list'"></i>
+        <font-awesome-icon :icon="isOpen ? 'times' : 'list'" />
       </span>
     </button>
 
@@ -32,12 +32,13 @@
                 getDownloadState(place) === 'downloading' ? 'has-text-warning' : 'has-text-primary'
               "
             >
-              <i
+              <font-awesome-icon
                 v-if="getDownloadState(place) === 'downloading'"
-                class="fas fa-circle-notch fa-spin"
-              ></i>
-              <i v-else-if="getDownloadState(place) === 'downloaded'" class="fas fa-volume-up"></i>
-              <i v-else class="fas fa-map-marker-alt"></i>
+                icon="circle-notch"
+                spin
+              />
+              <font-awesome-icon v-else-if="getDownloadState(place) === 'downloaded'" icon="volume-up" />
+              <font-awesome-icon v-else icon="map-marker-alt" />
             </span>
           </div>
         </div>
@@ -258,9 +259,5 @@ function getDownloadState(place: Place) {
 
 .place-actions .has-text-warning {
   color: #ffc107 !important;
-}
-
-.place-actions .fa-circle-notch {
-  animation: fa-spin 1s infinite linear;
 }
 </style>

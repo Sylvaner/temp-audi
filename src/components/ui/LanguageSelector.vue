@@ -5,7 +5,7 @@
         <span class="flag-emoji">{{ currentLanguage?.flag }}</span>
         <span>{{ currentLanguage?.name }}</span>
         <span class="icon is-small">
-          <i class="fas fa-angle-down" aria-hidden="true"></i>
+          <font-awesome-icon icon="angle-down" aria-hidden="true" />
         </span>
       </button>
     </div>

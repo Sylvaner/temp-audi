@@ -11,14 +11,14 @@
           <div class="buttons is-centered mt-6">
             <button class="button is-large is-primary is-rounded" @click="navigateToMap">
               <span class="icon">
-                <i class="fas fa-map"></i>
+                <font-awesome-icon icon="map" />
               </span>
               <span>{{ $t('home.visitButton') }}</span>
             </button>
 
             <router-link to="/about" class="button is-large is-light is-rounded">
               <span class="icon">
-                <i class="fas fa-info-circle"></i>
+                <font-awesome-icon icon="info-circle" />
               </span>
               <span>{{ $t('home.aboutButton') }}</span>
             </router-link>
@@ -31,7 +31,7 @@
       <div class="container has-text-centered">
         <div class="icon-text is-flex-direction-column is-align-items-center mb-5">
           <span class="icon is-large has-background-white-ter is-rounded p-4 mb-4">
-            <i class="fas fa-flag fa-2x has-text-primary"></i>
+            <font-awesome-icon icon="flag" size="2x" class="has-text-primary" />
           </span>
         </div>
 

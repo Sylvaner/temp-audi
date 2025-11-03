@@ -26,7 +26,7 @@
           :title="$t('audio.stop')"
         >
           <span class="icon">
-            <i class="fas fa-stop"></i>
+            <font-awesome-icon icon="stop" />
           </span>
         </button>
       </div>

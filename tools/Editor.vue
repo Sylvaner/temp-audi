@@ -7,11 +7,11 @@
     <div class="floating-panel places-panel" :class="{ 'is-collapsed': !showPlaces }">
       <div v-if="showPlaces" class="panel-header">
         <div class="panel-title">
-          <i class="fas fa-map-marked-alt mr-2"></i>
+          <font-awesome-icon icon="map-marked-alt" class="mr-2" />
           Places ({{ data.places.length }})
         </div>
         <button @click="showPlaces = false" class="toggle-btn">
-          <i class="fas fa-chevron-left"></i>
+          <font-awesome-icon icon="chevron-left" />
         </button>
       </div>
 
@@ -19,13 +19,13 @@
         <!-- Controls -->
         <div class="controls">
           <button type="button" @click.stop="loadData" class="button is-primary is-small" :disabled="loadDataDisabled">
-            <i class="fas fa-upload"></i> Load
+            <font-awesome-icon icon="upload" /> Load
           </button>
           <button type="button" @click.stop.prevent="saveData($event)" class="button is-success is-small" :disabled="!data.places.length">
-            <i class="fas fa-save"></i> Save
+            <font-awesome-icon icon="save" /> Save
           </button>
           <button type="button" @click.stop="openConfig" class="button is-info is-small">
-            <i class="fas fa-cog"></i> Config
+            <font-awesome-icon icon="cog" /> Config
           </button>
         </div>
 
@@ -37,7 +37,7 @@
             </option>
           </select>
           <button @click="showAddLanguage = !showAddLanguage" class="button is-small">
-            <i class="fas fa-plus"></i>
+            <font-awesome-icon icon="plus" />
           </button>
         </div>
 
@@ -45,7 +45,7 @@
         <div v-if="showAddLanguage" class="add-language">
           <input v-model="newLanguage" class="input is-small" placeholder="Language code (ex: es, it)">
           <button @click="addLanguage" class="button is-success is-small">
-            <i class="fas fa-check"></i>
+            <font-awesome-icon icon="check" />
           </button>
         </div>
 
@@ -63,10 +63,10 @@
                 <span class="order-number">{{ index + 1 }}</span>
                 <div class="order-controls">
                   <button @click.stop="moveUp(index)" class="button is-small" :disabled="index === 0">
-                    <i class="fas fa-chevron-up"></i>
+                    <font-awesome-icon icon="chevron-up" />
                   </button>
                   <button @click.stop="moveDown(index)" class="button is-small" :disabled="index === data.places.length - 1">
-                    <i class="fas fa-chevron-down"></i>
+                    <font-awesome-icon icon="chevron-down" />
                   </button>
                 </div>
               </div>
@@ -75,13 +75,13 @@
               </div>
               <div class="place-actions">
                 <button @click.stop="centerOnPlace(place)" class="button is-small is-info">
-                  <i class="fas fa-crosshairs"></i>
+                  <font-awesome-icon icon="crosshairs" />
                 </button>
                 <button @click.stop="duplicatePlace(index)" class="button is-small is-warning">
-                  <i class="fas fa-copy"></i>
+                  <font-awesome-icon icon="copy" />
                 </button>
                 <button @click.stop="removePlace(index)" class="button is-small is-danger">
-                  <i class="fas fa-trash"></i>
+                  <font-awesome-icon icon="trash" />
                 </button>
               </div>
             </div>
@@ -95,18 +95,18 @@
 
     <!-- Reopen button when panel is closed -->
     <div v-if="!showPlaces" class="collapsed-toggle-btn" @click="showPlaces = true">
-      <i class="fas fa-chevron-right"></i>
+      <font-awesome-icon icon="chevron-right" />
     </div>
 
     <!-- Floating panel - Editor -->
     <div v-if="selectedPlace !== null" class="floating-panel editor-panel">
       <div class="panel-header">
         <div class="panel-title">
-          <i class="fas fa-edit mr-2"></i>
+          <font-awesome-icon icon="edit" class="mr-2" />
           {{ currentPlace.content[currentLang]?.title || currentPlace.id }}
         </div>
         <button @click="selectedPlace = null" class="close-btn">
-          <i class="fas fa-times"></i>
+          <font-awesome-icon icon="times" />
         </button>
       </div>
 
@@ -221,15 +221,13 @@
         @click="removeToast(toast.id)"
       >
         <div class="toast-content">
-          <i class="fas" :class="{
-            'fa-check-circle': toast.type === 'success',
-            'fa-exclamation-circle': toast.type === 'error',
-            'fa-info-circle': toast.type === 'info'
-          }"></i>
+          <font-awesome-icon
+            :icon="toast.type === 'success' ? 'check-circle' : toast.type === 'error' ? 'exclamation-circle' : 'info-circle'"
+          />
           <span>{{ toast.message }}</span>
         </div>
         <button class="toast-close" @click.stop="removeToast(toast.id)">
-          <i class="fas fa-times"></i>
+          <font-awesome-icon icon="times" />
         </button>
       </div>
     </div>
@@ -239,6 +237,7 @@
 <script setup lang="ts">
 import { ref, reactive, onMounted, computed } from 'vue'
 import L from 'leaflet'
+import { getFontAwesomeSVG } from './fontawesome-helper.js'
 
 const data = reactive({
   config: {
@@ -355,6 +354,7 @@ const getLanguageName = (lang: string) => {
 const createCustomIcon = (place: Place) => {
   const color = place.markerColor || data.config.markers?.defaultColor || '#B87333'
   const iconClass = place.markerIcon || data.config.markers?.place || 'fa-monument'
+  const iconSVG = getFontAwesomeSVG(iconClass)
 
   return L.divIcon({
     className: 'custom-marker',
@@ -370,7 +370,7 @@ const createCustomIcon = (place: Place) => {
         justify-content: center;
         box-shadow: 0 2px 6px rgba(0,0,0,0.3);
       ">
-        <i class="fas ${iconClass}" style="color: white; font-size: 14px;"></i>
+        ${iconSVG}
       </div>
     `,
     iconSize: [30, 30],
@@ -1150,5 +1150,12 @@ onMounted(() => {
   }
 }
 
+/* Styles pour les SVG dans les marqueurs */
+.custom-marker svg {
+  width: 14px;
+  height: 14px;
+  fill: white;
+  display: block;
+}
 
 </style>

@@ -25,7 +25,7 @@
           <div v-show="currentStep === 2" class="content">
             <div class="has-text-primary mb-5">
               <span class="icon is-large user-location-icon">
-                <i :class="`fas ${markerStyle.defaultUserLocationIcon} fa-3x`"></i>
+                <font-awesome-icon :icon="markerStyle.defaultUserLocationIcon?.replace('fa-', '') || 'person-walking'" size="3x" />
               </span>
             </div>
             <h2 class="title is-4">{{ $t('mapIntro.step1.title') }}</h2>
@@ -35,7 +35,7 @@
           <div v-show="currentStep === 3" class="content">
             <div class="has-text-primary mb-5">
               <span class="icon is-large place-location-icon">
-                <i :class="`fas ${markerStyle.defaultPlaceIcon} fa-3x`"></i>
+                <font-awesome-icon :icon="markerStyle.defaultPlaceIcon?.replace('fa-', '') || 'monument'" size="3x" />
               </span>
             </div>
             <h2 class="title is-4">{{ $t('mapIntro.step2.title') }}</h2>
@@ -46,15 +46,15 @@
               <div class="audio-volume-container">
                 <div class="audio-button-container">
                   <span class="icon is-large play-button has-pulse-animation">
-                    <i class="fas fa-play fa-3x"></i>
+                    <font-awesome-icon icon="play" size="3x" />
                   </span>
                 </div>
                 <div class="volume-icons-container">
                   <span class="icon is-medium volume-icon">
-                    <i class="fas fa-volume-up fa-lg"></i>
+                    <font-awesome-icon icon="volume-up" size="lg" />
                   </span>
                   <span class="icon is-medium headphones-icon">
-                    <i class="fas fa-headphones fa-lg"></i>
+                    <font-awesome-icon icon="headphones" size="lg" />
                   </span>
                 </div>
               </div>
@@ -74,7 +74,7 @@
             @click="previousStep"
           >
             <span class="icon">
-              <i class="fas fa-chevron-left"></i>
+              <font-awesome-icon icon="chevron-left" />
             </span>
             <span>{{ $t('mapIntro.previousButton') }}</span>
           </button>
@@ -82,13 +82,13 @@
           <button v-if="currentStep < 4" class="button is-primary" @click="nextStep">
             <span>{{ $t('mapIntro.nextButton') }}</span>
             <span class="icon">
-              <i class="fas fa-chevron-right"></i>
+              <font-awesome-icon icon="chevron-right" />
             </span>
           </button>
 
           <button v-if="currentStep === 4" class="button is-primary" @click="startExploring">
             <span class="icon">
-              <i class="fas fa-map"></i>
+              <font-awesome-icon icon="map" />
             </span>
             <span>{{ $t('mapIntro.visitButton') }}</span>
           </button>

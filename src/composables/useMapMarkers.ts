@@ -1,6 +1,7 @@
 import { ref, type Ref } from 'vue'
 import L from 'leaflet'
 import type { Place, Position } from '@/types'
+import { getFontAwesomeSVG } from '@/utils/fontawesome-helper'
 
 // Types simplifiés
 type ExtendedMarker = L.Marker & {
@@ -35,13 +36,14 @@ export function useMapMarkers(
   const createPlaceIcon = (place: Place, isActive = false) => {
     const color = isActive ? 'var(--color-warm)' : place.markerColor || markerStyle.defaultColor
     const iconClass = place.markerIcon || markerStyle.defaultPlaceIcon
+    const iconSVG = getFontAwesomeSVG(iconClass)
 
     return L.divIcon({
       className: 'place-marker',
       html: `
         <div class="place-marker-icon">
           <div class="place-marker-circle" style="background-color: ${color};">
-            <i class="fas ${iconClass}"></i>
+            ${iconSVG}
           </div>
         </div>
       `,
@@ -54,12 +56,14 @@ export function useMapMarkers(
   const createUserIcon = () => {
     const userColor =
       markerStyle.defaultUserLocationColor || getCSSVariable('--color-user') || '#007bff'
+    const iconSVG = getFontAwesomeSVG(markerStyle.defaultUserLocationIcon)
+
     return L.divIcon({
       className: 'user-location-marker',
       html: `
         <div class="user-location-icon">
           <div class="user-location-circle" style="background-color: ${userColor};">
-            <i class="fas ${markerStyle.defaultUserLocationIcon}"></i>
+            ${iconSVG}
           </div>
         </div>
       `,

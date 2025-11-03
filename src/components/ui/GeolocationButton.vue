@@ -9,7 +9,7 @@
     :title="buttonTitle"
   >
     <span class="icon">
-      <i class="fas" :class="iconClass"></i>
+      <font-awesome-icon :icon="iconName" :spin="geolocationStore.permissionStatus === 'requesting'" />
     </span>
     <span v-if="showText" class="ml-1">{{ buttonText }}</span>
   </button>
@@ -61,16 +61,16 @@ const buttonClass = computed(() => {
   return classes
 })
 
-const iconClass = computed(() => {
+const iconName = computed(() => {
   switch (geolocationStore.permissionStatus) {
     case 'granted':
-      return 'fa-location-crosshairs'
+      return 'location-crosshairs'
     case 'denied':
-      return 'fa-location-slash'
+      return 'location-arrow'
     case 'requesting':
-      return 'fa-spinner fa-spin'
+      return 'spinner'
     default:
-      return 'fa-location-crosshairs'
+      return 'location-crosshairs'
   }
 })
 
